@@ -6,7 +6,7 @@ public class DBResourceManager {
 
     private final static DBResourceManager instance = new DBResourceManager();
 
-//todo узнать насчёт расположения для getBundle()
+//TODO узнать насчёт расположения для getBundle()
     private final ResourceBundle bundle = ResourceBundle.getBundle("db.properties");
 
     private DBResourceManager() {
