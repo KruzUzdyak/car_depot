@@ -2,6 +2,8 @@ package com.epam.volodko.entity.cars;
 
 import com.epam.volodko.entity.users.Driver;
 
+import java.util.Objects;
+
 public class Car {
 
     private final int carId;
@@ -83,5 +85,35 @@ public class Car {
         this.driver = driver;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Car car = (Car) o;
+        return carId == car.carId && fuelLevel == car.fuelLevel && mileage == car.mileage &&
+                isBroken == car.isBroken && Objects.equals(plateNumber, car.plateNumber) &&
+                Objects.equals(model, car.model) && Objects.equals(driver, car.driver);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(carId, plateNumber, fuelLevel, mileage, isBroken, model, driver);
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "carId=" + carId +
+                ", plateNumber='" + plateNumber + '\'' +
+                ", fuelLevel=" + fuelLevel +
+                ", mileage=" + mileage +
+                ", isBroken=" + isBroken +
+                ", model=" + model +
+                ", driver=" + driver +
+                '}';
+    }
 }

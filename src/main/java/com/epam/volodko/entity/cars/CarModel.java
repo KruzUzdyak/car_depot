@@ -1,5 +1,7 @@
 package com.epam.volodko.entity.cars;
 
+import java.util.Objects;
+
 public class CarModel {
 
     private final int carModelId;
@@ -40,5 +42,36 @@ public class CarModel {
 
     public String getLoadType() {
         return loadType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CarModel carModel = (CarModel) o;
+        return carModelId == carModel.carModelId && capacity == carModel.capacity &&
+                fuelTank == carModel.fuelTank && Objects.equals(modelName, carModel.modelName) &&
+                type == carModel.type && Objects.equals(loadType, carModel.loadType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(carModelId, modelName, capacity, fuelTank, type, loadType);
+    }
+
+    @Override
+    public String toString() {
+        return "CarModel{" +
+                "carModelId=" + carModelId +
+                ", modelName='" + modelName + '\'' +
+                ", capacity=" + capacity +
+                ", fuelTank=" + fuelTank +
+                ", type=" + type +
+                ", loadType='" + loadType + '\'' +
+                '}';
     }
 }

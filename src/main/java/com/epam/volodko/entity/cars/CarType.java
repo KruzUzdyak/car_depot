@@ -19,4 +19,11 @@ public enum CarType {
     public DriverLicenseType getRequiredDriverLicenseType() {
         return requiredDriverLicenseType;
     }
+
+    @Override
+    public String toString() {
+        return "CarType{" +
+                "requiredDriverLicenseType=" + requiredDriverLicenseType +
+                '}';
+    }
 }

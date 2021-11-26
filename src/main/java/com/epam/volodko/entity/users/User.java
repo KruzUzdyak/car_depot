@@ -1,5 +1,7 @@
 package com.epam.volodko.entity.users;
 
+import java.util.Objects;
+
 public abstract class User {
 
     private final int userId;
@@ -61,5 +63,36 @@ public abstract class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return userId == user.userId && Objects.equals(login, user.login) &&
+                Objects.equals(password, user.password) && Objects.equals(name, user.name) &&
+                Objects.equals(phone, user.phone) && role == user.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, login, password, name, phone, role);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", role=" + role +
+                '}';
     }
 }
