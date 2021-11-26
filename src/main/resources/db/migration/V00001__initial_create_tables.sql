@@ -26,7 +26,6 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`car_types`
 (
     `type_id`               INT          NOT NULL AUTO_INCREMENT,
     `car_type`              VARCHAR(100) NOT NULL,
-    `load_type`             VARCHAR(100) NOT NULL,
     `required_license_type` INT          NOT NULL,
     PRIMARY KEY (`type_id`),
     UNIQUE INDEX `type_UNIQUE` (`car_type` ASC) VISIBLE,
@@ -48,6 +47,7 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`car_models`
     `model_id`  INT          NOT NULL AUTO_INCREMENT,
     `car_model` VARCHAR(200) NOT NULL,
     `capacity`  INT          NOT NULL,
+    `load_type` VARCHAR(100) NOT NULL,
     `fuel_tank` INT          NOT NULL,
     `car_type`  INT          NOT NULL,
     PRIMARY KEY (`model_id`),

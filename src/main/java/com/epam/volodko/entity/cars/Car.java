@@ -51,6 +51,18 @@ public class Car {
         return driver;
     }
 
+    public int getFuelTankCapacity(){
+        return model.getFuelTank();
+    }
+
+    public int getCargoCapacity(){
+        return model.getCapacity();
+    }
+
+    public String getLoadType(){
+        return model.getLoadType();
+    }
+
     public void setPlateNumber(String plateNumber) {
         this.plateNumber = plateNumber;
     }
@@ -70,4 +82,6 @@ public class Car {
     public void setDriver(Driver driver) {
         this.driver = driver;
     }
+
+
 }

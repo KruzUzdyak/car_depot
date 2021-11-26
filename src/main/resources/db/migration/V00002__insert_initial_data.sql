@@ -29,26 +29,26 @@ VALUES (11, 'I');
 -- Data for table `car_depot`.`car_types`
 -- -----------------------------------------------------
 
-INSERT INTO `car_depot`.`car_types` (`type_id`, `car_type`, `load_type`, `required_license_type`)
-VALUES (1, 'small bus', 'people', 4);
-INSERT INTO `car_depot`.`car_types` (`type_id`, `car_type`, `load_type`, `required_license_type`)
-VALUES (2, 'bus', 'people', 6);
-INSERT INTO `car_depot`.`car_types` (`type_id`, `car_type`, `load_type`, `required_license_type`)
-VALUES (3, 'small truck', 'goods', 5);
-INSERT INTO `car_depot`.`car_types` (`type_id`, `car_type`, `load_type`, `required_license_type`)
-VALUES (4, 'big truck with trailer', 'goods', 8);
+INSERT INTO `car_depot`.`car_types` (`type_id`, `car_type`, `required_license_type`)
+VALUES (1, 'small bus', 4);
+INSERT INTO `car_depot`.`car_types` (`type_id`, `car_type`, `required_license_type`)
+VALUES (2, 'bus', 6);
+INSERT INTO `car_depot`.`car_types` (`type_id`, `car_type`, `required_license_type`)
+VALUES (3, 'small truck', 5);
+INSERT INTO `car_depot`.`car_types` (`type_id`, `car_type`, `required_license_type`)
+VALUES (4, 'big truck with trailer', 8);
 
 -- -----------------------------------------------------
 -- Data for table `car_depot`.`car_models`
 -- -----------------------------------------------------
-INSERT INTO `car_depot`.`car_models` (`model_id`, `car_model`, `capacity`, `fuel_tank`, `car_type`)
-VALUES (1, 'VolksWagen Transporter T4', 8, 70, 1);
-INSERT INTO `car_depot`.`car_models` (`model_id`, `car_model`, `capacity`, `fuel_tank`, `car_type`)
-VALUES (2, 'MAZ 232', 35, 300, 2);
-INSERT INTO `car_depot`.`car_models` (`model_id`, `car_model`, `capacity`, `fuel_tank`, `car_type`)
-VALUES (3, 'Scania P', 1000, 150, 3);
-INSERT INTO `car_depot`.`car_models` (`model_id`, `car_model`, `capacity`, `fuel_tank`, `car_type`)
-VALUES (4, 'Scania S', 5000, 600, 4);
+INSERT INTO `car_depot`.`car_models` (`model_id`, `car_model`, `capacity`, `load_type`, `fuel_tank`, `car_type`)
+VALUES (1, 'VolksWagen Transporter T4', 8, 'people', 70, 1);
+INSERT INTO `car_depot`.`car_models` (`model_id`, `car_model`, `capacity`, `load_type`, `fuel_tank`, `car_type`)
+VALUES (2, 'MAZ 232', 35, 'people', 300, 2);
+INSERT INTO `car_depot`.`car_models` (`model_id`, `car_model`, `capacity`, `load_type`, `fuel_tank`, `car_type`)
+VALUES (3, 'Scania P', 1000, 'goods', 150, 3);
+INSERT INTO `car_depot`.`car_models` (`model_id`, `car_model`, `capacity`, `load_type`, `fuel_tank`, `car_type`)
+VALUES (4, 'Scania S', 5000, 'goods', 600, 4);
 
 -- -----------------------------------------------------
 -- Data for table `car_depot`.`roles`

@@ -4,21 +4,16 @@ import com.epam.volodko.entity.users.DriverLicenseType;
 
 public enum CarType {
 
-    SMALL_BUS("people", DriverLicenseType.B),
-    BUS("people",DriverLicenseType.D),
-    SMALL_TRUCK("goods",DriverLicenseType.C),
-    TRUCK("goods",DriverLicenseType.CE);
+    SMALL_BUS(DriverLicenseType.B),
+    BUS(DriverLicenseType.D),
+    SMALL_TRUCK(DriverLicenseType.C),
+    TRUCK(DriverLicenseType.CE);
 
-    private final String loadType;
+
     private final DriverLicenseType requiredDriverLicenseType;
 
-    CarType(String loadType, DriverLicenseType requiredDriverLicenseType) {
-        this.loadType = loadType;
+    CarType(DriverLicenseType requiredDriverLicenseType) {
         this.requiredDriverLicenseType = requiredDriverLicenseType;
-    }
-
-    public String getLoadType() {
-        return loadType;
     }
 
     public DriverLicenseType getRequiredDriverLicenseType() {
