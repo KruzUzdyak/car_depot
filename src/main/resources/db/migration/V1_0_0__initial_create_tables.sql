@@ -129,18 +129,18 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`cars`
 
 
 -- -----------------------------------------------------
--- Table `car_depot`.`driver_info`
+-- Table `car_depot`.`driver_licenses`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `car_depot`.`driver_info`;
+DROP TABLE IF EXISTS `car_depot`.`driver_licenses`;
 
-CREATE TABLE IF NOT EXISTS `car_depot`.`driver_info`
+CREATE TABLE IF NOT EXISTS `car_depot`.`driver_licenses`
 (
     `user_id`         INT         NOT NULL,
     `license_type`    INT         NOT NULL,
     `obtaining_date`  DATE        NOT NULL,
     `license_number` VARCHAR(45) NOT NULL,
     INDEX `license_type_idx` (`license_type` ASC) VISIBLE,
-    CONSTRAINT `users_id_driver_info`
+    CONSTRAINT `users_id_driver_licenses`
         FOREIGN KEY (`user_id`)
             REFERENCES `car_depot`.`users` (`user_id`)
             ON DELETE CASCADE

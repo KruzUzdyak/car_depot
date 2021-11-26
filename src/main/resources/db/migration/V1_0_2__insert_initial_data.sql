@@ -92,13 +92,13 @@ VALUES (4, '8301KO-5', 400, 30000, 0, 4, 3);
 
 
 -- -----------------------------------------------------
--- Data for table `car_depot`.`driver_info`
+-- Data for table `car_depot`.`driver_licenses`
 -- -----------------------------------------------------
-INSERT INTO `car_depot`.`driver_info` (`user_id`, `license_type`, `obtaining_date`, `license_number`)
+INSERT INTO `car_depot`.`driver_licenses` (`user_id`, `license_type`, `obtaining_date`, `license_number`)
 VALUES (2, 5, '2011.11.11', '7AB250666');
-INSERT INTO `car_depot`.`driver_info` (`user_id`, `license_type`, `obtaining_date`, `license_number`)
+INSERT INTO `car_depot`.`driver_licenses` (`user_id`, `license_type`, `obtaining_date`, `license_number`)
 VALUES (3, 5, '2012.12.12', '6BC654899');
-INSERT INTO `car_depot`.`driver_info` (`user_id`, `license_type`, `obtaining_date`, `license_number`)
+INSERT INTO `car_depot`.`driver_licenses` (`user_id`, `license_type`, `obtaining_date`, `license_number`)
 VALUES (3, 8, '2017.12.17', '6MM645211');
 
 -- -----------------------------------------------------
