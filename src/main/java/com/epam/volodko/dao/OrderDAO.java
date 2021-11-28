@@ -23,4 +23,12 @@ public interface OrderDAO {
     List<Order> retrieveOpenOrders() throws DAOException;
 
     List<Order> retrieveCompletedOrders() throws DAOException;
+
+    List<Order> retrieveOrdersByDestFrom(String destFrom) throws DAOException;
+
+    List<Order> retrieveOrdersByDestTo(String destTo) throws DAOException;
+
+    void saveOrder(Order order) throws DAOException;
+
+    void deleteOrderById(int orderId) throws DAOException;
 }

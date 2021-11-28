@@ -11,6 +11,8 @@ public interface UserDAO {
 
     User retrieveUserByName(String name) throws DAOException;
 
+    User retrieveUserByLogin(String login) throws DAOException;
+
     List<User> retrieveAllUsers() throws DAOException;
 
     List<User> retrieveAllUsers(Role role) throws DAOException;
@@ -25,6 +27,6 @@ public interface UserDAO {
 
     void deleteUserById(int userId) throws DAOException;
 
-    void deleteUserByName(String name) throws DAOException;
+    void deleteUserByLogin(String login) throws DAOException;
 
 }

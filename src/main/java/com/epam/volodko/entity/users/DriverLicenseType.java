@@ -2,15 +2,25 @@ package com.epam.volodko.entity.users;
 
 public enum DriverLicenseType {
 
-    AM,
-    A,
-    A1,
-    B,
-    C,
-    D,
-    BE,
-    CE,
-    DE,
-    F,
-    I;
+    AM(1),
+    A(2),
+    A1(3),
+    B(4),
+    C(5),
+    D(6),
+    BE(7),
+    CE(8),
+    DE(9),
+    F(10),
+    I(11);
+
+    final int id;
+
+    DriverLicenseType(int id){
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

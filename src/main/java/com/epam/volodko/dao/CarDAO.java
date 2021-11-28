@@ -13,6 +13,8 @@ public interface CarDAO {
 
     Car retrieveCarByDriver(Driver driver) throws DAOException;
 
+    Car retrieveCarByPlateNumber(String plateNumber) throws DAOException;
+
     List<Car> retrieveAllCars() throws DAOException;
 
     List<Car> retrieveBrokenCars() throws DAOException;
@@ -22,4 +24,8 @@ public interface CarDAO {
     List<Car> retrieveCarsByModel(CarModel model) throws DAOException;
 
     List<Car> retrieveLowFuelCars(int lowFuelLevelPercent) throws DAOException;
+
+    void saveCar(Car car) throws DAOException;
+
+    void deleteCar(Car car) throws DAOException;
 }

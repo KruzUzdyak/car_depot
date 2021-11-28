@@ -11,17 +11,17 @@ public class DriverLicenseProvider {
 
     private DriverLicenseProvider(){
         licenseTypes = new HashMap<>();
-        licenseTypes.put(1, DriverLicenseType.AM);
-        licenseTypes.put(2, DriverLicenseType.A);
-        licenseTypes.put(3, DriverLicenseType.A1);
-        licenseTypes.put(4, DriverLicenseType.B);
-        licenseTypes.put(5, DriverLicenseType.C);
-        licenseTypes.put(6, DriverLicenseType.D);
-        licenseTypes.put(7, DriverLicenseType.BE);
-        licenseTypes.put(8, DriverLicenseType.CE);
-        licenseTypes.put(9, DriverLicenseType.DE);
-        licenseTypes.put(10, DriverLicenseType.F);
-        licenseTypes.put(11, DriverLicenseType.I);
+        licenseTypes.put(DriverLicenseType.AM.getId(), DriverLicenseType.AM);
+        licenseTypes.put(DriverLicenseType.A.getId(), DriverLicenseType.A);
+        licenseTypes.put(DriverLicenseType.A1.getId(), DriverLicenseType.A1);
+        licenseTypes.put(DriverLicenseType.B.getId(), DriverLicenseType.B);
+        licenseTypes.put(DriverLicenseType.C.getId(), DriverLicenseType.C);
+        licenseTypes.put(DriverLicenseType.D.getId(), DriverLicenseType.D);
+        licenseTypes.put(DriverLicenseType.BE.getId(), DriverLicenseType.BE);
+        licenseTypes.put(DriverLicenseType.CE.getId(), DriverLicenseType.CE);
+        licenseTypes.put(DriverLicenseType.DE.getId(), DriverLicenseType.DE);
+        licenseTypes.put(DriverLicenseType.F.getId(), DriverLicenseType.F);
+        licenseTypes.put(DriverLicenseType.I.getId(), DriverLicenseType.I);
     }
 
     public static DriverLicenseType getLicenseType(int licenseTypeId){

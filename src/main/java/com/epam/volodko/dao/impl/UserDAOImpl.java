@@ -60,6 +60,11 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public User retrieveUserByLogin(String login) throws DAOException {
+        return new User();
+    }
+
+    @Override
     public List<User> retrieveAllUsers() {
         //TODO
         return new ArrayList<>();
@@ -111,7 +116,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void deleteUserByName(String name) throws DAOException {
+    public void deleteUserByLogin(String login) throws DAOException {
 
     }
 }
