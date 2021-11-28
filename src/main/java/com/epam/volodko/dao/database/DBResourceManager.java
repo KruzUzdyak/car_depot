@@ -7,7 +7,7 @@ public class DBResourceManager {
     private final static DBResourceManager instance = new DBResourceManager();
 
 //TODO узнать насчёт расположения для getBundle()
-    private final ResourceBundle bundle = ResourceBundle.getBundle("db.properties");
+    private final ResourceBundle bundle = ResourceBundle.getBundle("db");
 
     private DBResourceManager() {
     }
@@ -19,4 +19,5 @@ public class DBResourceManager {
     public String getValue(String key){
         return bundle.getString(key);
     }
+
 }
