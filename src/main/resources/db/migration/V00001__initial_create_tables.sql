@@ -88,7 +88,6 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`users`
     `role_id`  INT          NOT NULL,
     PRIMARY KEY (`user_id`),
     UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE,
-    UNIQUE INDEX `password_UNIQUE` (`password` ASC) VISIBLE,
     INDEX `role_id_idx` (`role_id` ASC) VISIBLE,
     CONSTRAINT `role_id_for_user`
         FOREIGN KEY (`role_id`)

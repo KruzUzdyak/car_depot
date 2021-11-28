@@ -1,5 +1,6 @@
 package com.epam.volodko.dao;
 
+import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.entity.cars.Car;
 import com.epam.volodko.entity.cars.CarModel;
 import com.epam.volodko.entity.users.Driver;
@@ -8,17 +9,17 @@ import java.util.List;
 
 public interface CarDAO {
 
-    Car retrieveCarById(int carId);
+    Car retrieveCarById(int carId) throws DAOException;
 
-    Car retrieveCarByDriver(Driver driver);
+    Car retrieveCarByDriver(Driver driver) throws DAOException;
 
-    List<Car> retrieveAllCars();
+    List<Car> retrieveAllCars() throws DAOException;
 
-    List<Car> retrieveBrokenCars();
+    List<Car> retrieveBrokenCars() throws DAOException;
 
-    List<Car> retrieveNonBrokenCars();
+    List<Car> retrieveNonBrokenCars() throws DAOException;
 
-    List<Car> retrieveCarsByModel(CarModel model);
+    List<Car> retrieveCarsByModel(CarModel model) throws DAOException;
 
-    List<Car> retrieveLowFuelCars(int lowFuelLevelPercent);
+    List<Car> retrieveLowFuelCars(int lowFuelLevelPercent) throws DAOException;
 }

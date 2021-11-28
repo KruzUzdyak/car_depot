@@ -11,9 +11,9 @@ public class RoleProvider {
 
     private RoleProvider(){
         roles = new HashMap<>();
-        roles.put(1, Role.ADMIN);
-        roles.put(2, Role.DRIVER);
-        roles.put(3, Role.CLIENT);
+        roles.put(Role.ADMIN.getRole_id(), Role.ADMIN);
+        roles.put(Role.DRIVER.getRole_id(), Role.DRIVER);
+        roles.put(Role.CLIENT.getRole_id(), Role.CLIENT);
     }
 
     public static Role getRole(int roleId){

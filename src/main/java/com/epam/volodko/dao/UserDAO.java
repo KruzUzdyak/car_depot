@@ -1,10 +1,7 @@
 package com.epam.volodko.dao;
 
 import com.epam.volodko.dao.exception.DAOException;
-import com.epam.volodko.entity.users.Admin;
-import com.epam.volodko.entity.users.Client;
-import com.epam.volodko.entity.users.Driver;
-import com.epam.volodko.entity.users.User;
+import com.epam.volodko.entity.users.*;
 
 import java.util.List;
 
@@ -12,13 +9,22 @@ public interface UserDAO {
 
     User retrieveUserById(int userId) throws DAOException;
 
-    List<User> retrieveAllUsers();
+    User retrieveUserByName(String name) throws DAOException;
 
-    List<Admin> retrieveAllAdmins();
+    List<User> retrieveAllUsers() throws DAOException;
 
-    List<Client> retrieveAllClients();
+    List<User> retrieveAllUsers(Role role) throws DAOException;
 
-    List<Driver> retrieveAllDrivers();
+    void saveUser(User user) throws DAOException;
 
+    void saveUser(List<User> users) throws DAOException;
+
+    void deleteUser(User user) throws  DAOException;
+
+    void deleteAllUsers() throws DAOException;
+
+    void deleteUserById(int userId) throws DAOException;
+
+    void deleteUserByName(String name) throws DAOException;
 
 }
