@@ -6,13 +6,17 @@ import java.util.Objects;
 
 public class Car {
 
-    private final int carId;
+    private int carId;
     private String plateNumber;
     private int fuelLevel;
     private int mileage;
     private boolean isBroken;
     private final CarModel model;
     private Driver driver;
+
+    public Car(){
+        model = new CarModel(0, "stub", 0, 0, CarType.SMALL_BUS, "stub load");
+    }
 
     public Car(int carId, String plateNumber, int fuelLevel,
                int mileage, boolean isBroken, CarModel model, Driver driver) {
@@ -83,6 +87,10 @@ public class Car {
 
     public void setDriver(Driver driver) {
         this.driver = driver;
+    }
+
+    public void setCarId(int carId) {
+        this.carId = carId;
     }
 
     @Override

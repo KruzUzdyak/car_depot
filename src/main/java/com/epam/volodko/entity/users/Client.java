@@ -7,6 +7,9 @@ public class Client extends User{
     private String company;
     private String note;
 
+    public Client(){
+    }
+
     public Client(int userId, String login, String password, String name,
                   String phone, Role role, String company, String note) {
         super(userId, login, password, name, phone, role);

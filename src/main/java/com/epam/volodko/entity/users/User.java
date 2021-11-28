@@ -4,12 +4,15 @@ import java.util.Objects;
 
 public abstract class User {
 
-    private final int userId;
+    private int userId;
     private String login;
     private String password;
     private String name;
     private String phone;
     private Role role;
+
+    public User(){
+    }
 
     public User(int id, String login, String password,
                 String name, String phone, Role role) {
@@ -63,6 +66,10 @@ public abstract class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.epam.volodko.entity.orders;
 
 import com.epam.volodko.entity.cars.Car;
-import com.epam.volodko.entity.users.Administrator;
+import com.epam.volodko.entity.users.Admin;
 import com.epam.volodko.entity.users.Client;
 
 import java.text.SimpleDateFormat;
@@ -20,7 +20,7 @@ public class Order {
     private boolean completed;
     private int payment;
     private Client client;
-    private Administrator admin;
+    private Admin admin;
     private Car car;
 
     public Order() {
@@ -114,11 +114,11 @@ public class Order {
         this.client = client;
     }
 
-    public Administrator getAdmin() {
+    public Admin getAdmin() {
         return admin;
     }
 
-    public void setAdmin(Administrator admin) {
+    public void setAdmin(Admin admin) {
         this.admin = admin;
     }
 

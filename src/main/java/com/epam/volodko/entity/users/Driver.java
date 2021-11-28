@@ -9,6 +9,9 @@ public class Driver extends User{
 
     private List<DriverLicense> licenses = new ArrayList<>();
 
+    public Driver(){
+    }
+
     public Driver(int userId, String login, String password,
                   String name, String phone, Role role) {
         super(userId, login, password, name, phone, role);
