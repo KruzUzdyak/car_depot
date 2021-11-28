@@ -2,7 +2,7 @@ package com.epam.volodko.entity.users;
 
 import java.util.Objects;
 
-public abstract class User {
+public class User {
 
     private int userId;
     private String login;

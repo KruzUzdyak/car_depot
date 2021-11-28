@@ -21,7 +21,7 @@ public class ConnectionPool {
     private String password;
     private int poolSize;
 
-    private ConnectionPool(){
+    ConnectionPool() {
         DBResourceManager dbResourceManager = DBResourceManager.getInstance();
         this.driverName = dbResourceManager.getValue(DBParameter.DB_DRIVER);
         this.url = dbResourceManager.getValue(DBParameter.DB_URL);
@@ -29,7 +29,7 @@ public class ConnectionPool {
         this.password = dbResourceManager.getValue(DBParameter.DB_PASSWORD);
         try {
             this.poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POOL_SIZE));
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             this.poolSize = 5;
         }
     }
@@ -79,12 +79,6 @@ public class ConnectionPool {
 
     public void closeConnection(Connection con, Statement st, ResultSet rs){
         try {
-            con.close();
-        } catch (SQLException e){
-            //todo logger.log(Level.ERROR, "Connection isn't return to the pool.");
-        }
-
-        try {
             rs.close();
         } catch (SQLException e){
             //todo logger.log(Level.ERROR, "ResultSet isn't closed.");
@@ -95,19 +89,24 @@ public class ConnectionPool {
         } catch (SQLException e){
             //todo logger.log(Level.ERROR, "Statement isn't closed.");
         }
-    }
 
-    public void closeConnection(Connection con, Statement st){
         try {
             con.close();
         } catch (SQLException e){
             //todo logger.log(Level.ERROR, "Connection isn't return to the pool.");
         }
+    }
 
+    public void closeConnection(Connection con, Statement st){
         try {
             st.close();
         } catch (SQLException e){
             //todo logger.log(Level.ERROR, "Statement isn't closed.");
+        }
+        try {
+            con.close();
+        } catch (SQLException e){
+            //todo logger.log(Level.ERROR, "Connection isn't return to the pool.");
         }
     }
 
@@ -131,6 +130,7 @@ public class ConnectionPool {
 
         public void reallyClose() throws SQLException {
             connection.clearWarnings();
+            connection.close(); //added
         }
 
         @Override

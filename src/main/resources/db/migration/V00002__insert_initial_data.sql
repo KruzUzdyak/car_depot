@@ -42,7 +42,7 @@ VALUES (4, 'big truck with trailer', 8);
 -- Data for table `car_depot`.`car_models`
 -- -----------------------------------------------------
 INSERT INTO `car_depot`.`car_models` (`model_id`, `car_model`, `capacity`, `load_type`, `fuel_tank`, `car_type`)
-VALUES (1, 'VolksWagen Transporter T4', 8, 'people', 70, 1);
+VALUES (1, 'Volkswagen Transporter T4', 8, 'people', 70, 1);
 INSERT INTO `car_depot`.`car_models` (`model_id`, `car_model`, `capacity`, `load_type`, `fuel_tank`, `car_type`)
 VALUES (2, 'MAZ 232', 35, 'people', 300, 2);
 INSERT INTO `car_depot`.`car_models` (`model_id`, `car_model`, `capacity`, `load_type`, `fuel_tank`, `car_type`)
