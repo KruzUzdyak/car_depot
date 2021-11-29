@@ -61,11 +61,13 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User retrieveUserByLogin(String login) throws DAOException {
+        //todo
         return new User();
     }
 
     @Override
     public User retrieveUserByPhone(String phone) throws DAOException {
+        //todo
         return new User();
     }
 
