@@ -4,8 +4,8 @@ import com.epam.volodko.dao.UserDAO;
 import com.epam.volodko.dao.database.ConnectionPoolFactory;
 import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
 import com.epam.volodko.dao.exception.DAOException;
-import com.epam.volodko.dao.impl.builders.UserBuilder;
-import com.epam.volodko.entity.users.*;
+import com.epam.volodko.dao.impl.builder.UserBuilder;
+import com.epam.volodko.entity.user.*;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

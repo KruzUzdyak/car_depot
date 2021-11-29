@@ -1,4 +1,4 @@
-package com.epam.volodko.entity.cars;
+package com.epam.volodko.entity.car;
 
 import java.util.Objects;
 

@@ -1,7 +1,7 @@
 package com.epam.volodko.dao;
 
 import com.epam.volodko.dao.exception.DAOException;
-import com.epam.volodko.entity.users.*;
+import com.epam.volodko.entity.user.*;
 
 import java.util.List;
 

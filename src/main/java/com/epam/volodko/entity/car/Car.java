@@ -1,6 +1,6 @@
-package com.epam.volodko.entity.cars;
+package com.epam.volodko.entity.car;
 
-import com.epam.volodko.entity.users.Driver;
+import com.epam.volodko.entity.user.Driver;
 
 import java.util.Objects;
 

@@ -2,8 +2,8 @@ package com.epam.volodko.dao.impl;
 
 import com.epam.volodko.dao.UserDAO;
 import com.epam.volodko.dao.exception.DAOException;
-import com.epam.volodko.entity.users.Role;
-import com.epam.volodko.entity.users.User;
+import com.epam.volodko.entity.user.Role;
+import com.epam.volodko.entity.user.User;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

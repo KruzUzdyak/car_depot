@@ -1,10 +1,10 @@
 package com.epam.volodko.dao;
 
 import com.epam.volodko.dao.exception.DAOException;
-import com.epam.volodko.entity.cars.Car;
-import com.epam.volodko.entity.orders.Order;
-import com.epam.volodko.entity.users.Admin;
-import com.epam.volodko.entity.users.Client;
+import com.epam.volodko.entity.car.Car;
+import com.epam.volodko.entity.order.Order;
+import com.epam.volodko.entity.user.Admin;
+import com.epam.volodko.entity.user.Client;
 
 import java.util.List;
 

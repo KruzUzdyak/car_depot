@@ -35,8 +35,6 @@ public class ConnectionPool {
     }
 
     public void initPoolData() throws ConnectionPoolException {
-        Locale.setDefault(Locale.ENGLISH);
-
         try {
             Class.forName(driverName);
             givenAwayConQueue = new ArrayBlockingQueue<>(poolSize);
@@ -129,8 +127,7 @@ public class ConnectionPool {
         }
 
         public void reallyClose() throws SQLException {
-            connection.clearWarnings();
-            connection.close(); //added
+            connection.close();
         }
 
         @Override
@@ -141,6 +138,11 @@ public class ConnectionPool {
 
             if (connection.isReadOnly()) {
                 connection.setReadOnly(false);
+            }
+
+            if (!connection.getAutoCommit()){
+                connection.commit();
+                connection.setAutoCommit(true);
             }
 
             if (!givenAwayConQueue.remove(this)) {

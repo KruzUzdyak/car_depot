@@ -1,4 +1,4 @@
-package com.epam.volodko.entity.users;
+package com.epam.volodko.entity.user;
 
 import java.util.Objects;
 

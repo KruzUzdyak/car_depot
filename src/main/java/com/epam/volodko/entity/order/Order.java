@@ -1,8 +1,8 @@
-package com.epam.volodko.entity.orders;
+package com.epam.volodko.entity.order;
 
-import com.epam.volodko.entity.cars.Car;
-import com.epam.volodko.entity.users.Admin;
-import com.epam.volodko.entity.users.Client;
+import com.epam.volodko.entity.car.Car;
+import com.epam.volodko.entity.user.Admin;
+import com.epam.volodko.entity.user.Client;
 
 import java.text.SimpleDateFormat;
 import java.util.Objects;

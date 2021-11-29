@@ -2,9 +2,9 @@ package com.epam.volodko.dao.impl;
 
 import com.epam.volodko.dao.CarDAO;
 import com.epam.volodko.dao.exception.DAOException;
-import com.epam.volodko.entity.cars.Car;
-import com.epam.volodko.entity.cars.CarModel;
-import com.epam.volodko.entity.users.Driver;
+import com.epam.volodko.entity.car.Car;
+import com.epam.volodko.entity.car.CarModel;
+import com.epam.volodko.entity.user.Driver;
 
 import java.util.ArrayList;
 import java.util.List;
