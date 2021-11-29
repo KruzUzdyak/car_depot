@@ -13,6 +13,8 @@ public interface UserDAO {
 
     User retrieveUserByLogin(String login) throws DAOException;
 
+    User retrieveUserByPhone(String phone) throws DAOException;
+
     List<User> retrieveAllUsers() throws DAOException;
 
     List<User> retrieveAllUsers(Role role) throws DAOException;

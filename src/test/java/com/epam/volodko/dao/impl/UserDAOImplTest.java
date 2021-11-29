@@ -27,13 +27,29 @@ public class UserDAOImplTest {
     }
 
     @Test
-    public void checkSaveUser() throws DAOException {
+    public void checkSaveAndDeleteUser() throws DAOException {
         String userName = "Denis";
-        User user = new User(0, "Denis", "Kul", userName, "+37529666000", Role.ADMIN);
+        User user = new User(100, "Denis", "Kul", userName, "+37529666000", Role.ADMIN);
         userDAO.saveUser(user);
 
         User actualUser = userDAO.retrieveUserByName(userName);
         assertEquals(userName, actualUser.getName());
+
+        userDAO.deleteUserById(user.getUserId());
+
+//        actualUser = userDAO.retrieveUserByName(userName);
+//        System.out.println(actualUser);
     }
+
+    @Test
+    public void checkDeleteUserById() throws DAOException {
+
+        User user = new User(12, "Denis", "Kul", "Denis", "+37529666000", Role.ADMIN);
+
+        userDAO.deleteUser(user);
+
+    }
+
+
 
 }

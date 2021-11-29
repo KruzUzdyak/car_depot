@@ -65,6 +65,11 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public User retrieveUserByPhone(String phone) throws DAOException {
+        return new User();
+    }
+
+    @Override
     public List<User> retrieveAllUsers() {
         //TODO
         return new ArrayList<>();
@@ -102,7 +107,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void deleteUser(User user) throws DAOException {
-
+        deleteUserById(user.getUserId());
     }
 
     @Override
@@ -112,7 +117,18 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void deleteUserById(int userId) throws DAOException {
-
+        try {
+            Connection con = ConnectionPoolFactory.getConnectionPool().takeConnection();
+            Statement statement = con.createStatement();
+            String sqlQuery = String.format("DELETE FROM users WHERE user_id = %d;", userId);
+            statement.execute(sqlQuery);
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("ConnectionException in UserDAOImpl.deleteUserById()", e);
+        } catch (SQLException e) {
+            throw new DAOException("SQLException in UserDAOImpl.deleteUserById()", e);
+        } finally {
+            //TODO
+        }
     }
 
     @Override
