@@ -33,21 +33,18 @@ public class UserDAOImplTest {
         userDAO.saveUser(user);
 
         User actualUser = userDAO.retrieveUserByName(userName);
+        System.out.println(actualUser);
         assertEquals(userName, actualUser.getName());
 
-        userDAO.deleteUserById(user.getUserId());
-
-//        actualUser = userDAO.retrieveUserByName(userName);
-//        System.out.println(actualUser);
+        userDAO.deleteUserById(actualUser.getUserId());
     }
 
     @Test
     public void checkDeleteUserById() throws DAOException {
 
-        User user = new User(12, "Denis", "Kul", "Denis", "+37529666000", Role.ADMIN);
+        User user = new User(27, "Denis", "Kul", "Denis", "+37529666000", Role.ADMIN);
 
         userDAO.deleteUser(user);
-
     }
 
 

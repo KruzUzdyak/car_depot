@@ -106,10 +106,10 @@ VALUES (3, 8, '2017.12.17', '6MM645211');
 -- -----------------------------------------------------
 
 INSERT INTO `car_depot`.`orders` (`order_id`, `dest_from`, `dest_to`, `distance`, `date_start`, `date_finish`, `load`,
-                                  `load_note`, `completed`, `payment`, `client_id`, `admin_id`, `cars_id`)
+                                  `load_note`, `completed`, `payment`, `client_id`, `admin_id`, `car_id`)
 VALUES (1, 'Uzda', 'Minsk', 70, '2021.12.20', '2021.12.20', 400, 'Packaged milk', 0, 1000, 4, 1, NULL);
 INSERT INTO `car_depot`.`orders` (`order_id`, `dest_from`, `dest_to`, `distance`, `date_start`, `date_finish`, `load`,
-                                  `load_note`, `completed`, `payment`, `client_id`, `admin_id`, `cars_id`)
+                                  `load_note`, `completed`, `payment`, `client_id`, `admin_id`, `car_id`)
 VALUES (2, 'Farm', 'Uzda', 10, '2021.10.18', '2021.12.18', 3000, 'Milk in tank', 0, 1500, 4, 1, NULL);
 
 -- -----------------------------------------------------

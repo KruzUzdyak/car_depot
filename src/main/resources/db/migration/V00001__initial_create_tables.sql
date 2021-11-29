@@ -171,11 +171,11 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`orders`
     `payment`     INT          NOT NULL,
     `client_id`   INT          NOT NULL,
     `admin_id`    INT          NOT NULL,
-    `cars_id`     INT          NULL,
+    `car_id`     INT          NULL,
     PRIMARY KEY (`order_id`),
     INDEX `clients_id_idx` (`client_id` ASC) VISIBLE,
     INDEX `admins_id_idx` (`admin_id` ASC) VISIBLE,
-    INDEX `cars_id_idx` (`cars_id` ASC) VISIBLE,
+    INDEX `car_id_idx` (`car_id` ASC) VISIBLE,
     CONSTRAINT `clients_id_orders`
         FOREIGN KEY (`client_id`)
             REFERENCES `car_depot`.`users` (`user_id`)
@@ -186,8 +186,8 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`orders`
             REFERENCES `car_depot`.`users` (`user_id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
-    CONSTRAINT `cars_id_orders`
-        FOREIGN KEY (`cars_id`)
+    CONSTRAINT `car_id_orders`
+        FOREIGN KEY (`car_id`)
             REFERENCES `car_depot`.`cars` (`car_id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION

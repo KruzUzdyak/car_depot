@@ -25,8 +25,8 @@ public class UserDAOImpl implements UserDAO {
     public User retrieveUserById(int userId) throws DAOException {
         User user;
         try {
-            Connection con = ConnectionPoolFactory.getConnectionPool().takeConnection();
-            Statement st = con.createStatement();
+            Connection connection = ConnectionPoolFactory.getConnectionPool().takeConnection();
+            Statement st = connection.createStatement();
             String sqlQuery = String.format("SELECT * FROM USERS WHERE user_id = %d;", userId);
             ResultSet resultSet = st.executeQuery(sqlQuery);
             user = builder.buildUser(resultSet);
@@ -44,8 +44,8 @@ public class UserDAOImpl implements UserDAO {
     public User retrieveUserByName(String name) throws DAOException {
         User user;
         try {
-            Connection con = ConnectionPoolFactory.getConnectionPool().takeConnection();
-            Statement st = con.createStatement();
+            Connection connection = ConnectionPoolFactory.getConnectionPool().takeConnection();
+            Statement st = connection.createStatement();
             String sqlQuery = String.format("SELECT * FROM USERS WHERE name = '%s';", name);
             ResultSet resultSet = st.executeQuery(sqlQuery);
             user = builder.buildUser(resultSet);
@@ -85,10 +85,10 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void saveUser(User user) throws DAOException {
         try {
-            Connection con = ConnectionPoolFactory.getConnectionPool().takeConnection();
-            Statement statement = con.createStatement();
+            Connection connection = ConnectionPoolFactory.getConnectionPool().takeConnection();
+            Statement statement = connection.createStatement();
             String sqlQuery = String.format("INSERT INTO users (login, password, name, phone, role_id)\n" +
-                            "VALUES ('%s', '%s', '%s', '%s', %d);", user.getLogin(), user.getPassword(),
+                    "VALUES ('%s', '%s', '%s', '%s', %d);", user.getLogin(), user.getPassword(),
                     user.getName(), user.getPhone(), user.getRole().getRole_id());
             statement.executeUpdate(sqlQuery);
         } catch (ConnectionPoolException e) {
@@ -120,10 +120,10 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void deleteUserById(int userId) throws DAOException {
         try {
-            Connection con = ConnectionPoolFactory.getConnectionPool().takeConnection();
-            Statement statement = con.createStatement();
+            Connection connection = ConnectionPoolFactory.getConnectionPool().takeConnection();
+            Statement statement = connection.createStatement();
             String sqlQuery = String.format("DELETE FROM users WHERE user_id = %d;", userId);
-            statement.execute(sqlQuery);
+            statement.executeUpdate(sqlQuery);
         } catch (ConnectionPoolException e) {
             throw new DAOException("ConnectionException in UserDAOImpl.deleteUserById()", e);
         } catch (SQLException e) {

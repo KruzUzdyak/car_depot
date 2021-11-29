@@ -1,6 +1,6 @@
-package com.epam.volodko.dao.impl.builders;
+package com.epam.volodko.dao.impl.table_column_name;
 
-public class UserTableColumn {
+public class UserColumn {
 
     public static final String USER_ID = "user_id";
     public static final String LOGIN = "login";
