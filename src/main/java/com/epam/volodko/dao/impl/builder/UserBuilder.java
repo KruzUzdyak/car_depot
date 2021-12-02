@@ -1,6 +1,6 @@
 package com.epam.volodko.dao.impl.builder;
 
-import com.epam.volodko.dao.impl.table_name.UserColumn;
+import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.entity.user.Role;
 import com.epam.volodko.entity.user.RoleProvider;
 import com.epam.volodko.entity.user.User;
@@ -24,12 +24,12 @@ public class UserBuilder {
 
     public User buildUser(ResultSet resultSet) throws SQLException {
         resultSet.next();
-        int id = resultSet.getInt(UserColumn.USER_ID);
-        String login = resultSet.getString(UserColumn.LOGIN);
-        String password = resultSet.getString(UserColumn.PASSWORD);
-        String name = resultSet.getString(UserColumn.NAME);
-        String phone = resultSet.getString(UserColumn.PHONE);
-        Role role = RoleProvider.getRole(resultSet.getInt(UserColumn.ROLE_ID));
+        int id = resultSet.getInt(Column.USERS_USER_ID);
+        String login = resultSet.getString(Column.USERS_LOGIN);
+        String password = resultSet.getString(Column.USERS_PASSWORD);
+        String name = resultSet.getString(Column.USERS_NAME);
+        String phone = resultSet.getString(Column.USERS_PHONE);
+        Role role = RoleProvider.getRole(resultSet.getInt(Column.USERS_ROLE_ID));
         return new User(id, login, password, name, phone, role);
     }
 

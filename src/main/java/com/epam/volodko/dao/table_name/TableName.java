@@ -1,4 +1,4 @@
-package com.epam.volodko.dao.impl.table_name;
+package com.epam.volodko.dao.table_name;
 
 public enum TableName {
 
