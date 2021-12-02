@@ -1,6 +1,6 @@
 package com.epam.volodko.dao.impl.builder;
 
-import com.epam.volodko.dao.impl.table_column_name.UserColumn;
+import com.epam.volodko.dao.impl.table_name.UserColumn;
 import com.epam.volodko.entity.user.Role;
 import com.epam.volodko.entity.user.RoleProvider;
 import com.epam.volodko.entity.user.User;

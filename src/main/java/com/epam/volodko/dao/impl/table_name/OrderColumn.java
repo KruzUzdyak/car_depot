@@ -1,4 +1,4 @@
-package com.epam.volodko.dao.impl.table_column_name;
+package com.epam.volodko.dao.impl.table_name;
 
 public class OrderColumn {
 

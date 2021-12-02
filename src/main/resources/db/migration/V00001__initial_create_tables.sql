@@ -195,11 +195,11 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`orders`
 
 
 -- -----------------------------------------------------
--- Table `car_depot`.`repair_station`
+-- Table `car_depot`.`repair_records`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `car_depot`.`repair_station`;
+DROP TABLE IF EXISTS `car_depot`.`repair_records`;
 
-CREATE TABLE IF NOT EXISTS `car_depot`.`repair_station`
+CREATE TABLE IF NOT EXISTS `car_depot`.`repair_records`
 (
     `repair_record_id` INT  NOT NULL AUTO_INCREMENT,
     `repair_start`     DATE NOT NULL,
@@ -236,11 +236,11 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`client_info`
 
 
 -- -----------------------------------------------------
--- Table `car_depot`.`gas_station`
+-- Table `car_depot`.`refuel_records`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `car_depot`.`gas_station`;
+DROP TABLE IF EXISTS `car_depot`.`refuel_records`;
 
-CREATE TABLE IF NOT EXISTS `car_depot`.`gas_station`
+CREATE TABLE IF NOT EXISTS `car_depot`.`refuel_records`
 (
     `refuel_record_id` INT  NOT NULL AUTO_INCREMENT,
     `refuel_date`      DATE NOT NULL,
