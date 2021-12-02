@@ -1,9 +1,10 @@
 package com.epam.volodko.entity.user;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
 
-public class DriverLicense {
+public class DriverLicense implements Serializable {
 
     private final DriverLicenseType licenseType;
     private final SimpleDateFormat obtainingDate;

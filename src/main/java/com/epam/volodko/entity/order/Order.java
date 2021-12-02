@@ -4,10 +4,11 @@ import com.epam.volodko.entity.car.Car;
 import com.epam.volodko.entity.user.Admin;
 import com.epam.volodko.entity.user.Client;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
 
-public class Order {
+public class Order implements Serializable {
 
     private int orderId;
     private String destFrom;

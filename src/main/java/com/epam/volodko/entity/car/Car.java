@@ -2,9 +2,10 @@ package com.epam.volodko.entity.car;
 
 import com.epam.volodko.entity.user.Driver;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Car {
+public class Car implements Serializable {
 
     private int carId;
     private String plateNumber;

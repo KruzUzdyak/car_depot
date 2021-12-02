@@ -1,8 +1,9 @@
 package com.epam.volodko.entity.user;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Client extends User{
+public class Client extends User implements Serializable {
 
     private String company;
     private String note;

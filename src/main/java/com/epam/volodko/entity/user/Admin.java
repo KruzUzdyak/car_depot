@@ -1,8 +1,10 @@
 package com.epam.volodko.entity.user;
 
-public class Admin extends User{
+import java.io.Serializable;
 
-    public Admin(){
+public class Admin extends User implements Serializable {
+
+    public Admin() {
     }
 
     public Admin(int id, String login, String password,

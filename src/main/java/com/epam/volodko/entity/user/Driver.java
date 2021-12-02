@@ -1,11 +1,12 @@
 package com.epam.volodko.entity.user;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Driver extends User{
+public class Driver extends User implements Serializable {
 
     private List<DriverLicense> licenses = new ArrayList<>();
 

@@ -1,8 +1,9 @@
 package com.epam.volodko.entity.car;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class CarModel {
+public class CarModel implements Serializable {
 
     private final int carModelId;
     private final String modelName;
