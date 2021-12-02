@@ -1,12 +1,12 @@
 package com.epam.volodko.dao.impl;
 
 import com.epam.volodko.dao.UserDAO;
+import com.epam.volodko.dao.builder.BuilderFactory;
 import com.epam.volodko.dao.database.ConnectionPool;
 import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
 import com.epam.volodko.dao.exception.DAOException;
-import com.epam.volodko.dao.impl.builder.UserBuilder;
+import com.epam.volodko.dao.builder.UserBuilder;
 import com.epam.volodko.entity.user.Role;
-import com.epam.volodko.entity.user.RoleProvider;
 import com.epam.volodko.entity.user.User;
 
 import java.sql.*;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
 
-    private UserBuilder builder = UserBuilder.getInstance();
+    private final UserBuilder builder = BuilderFactory.getUserBuilder();
 
     public UserDAOImpl() {
     }
@@ -40,6 +40,7 @@ public class UserDAOImpl implements UserDAO {
             closeConnection(connection, statement);
         }
         return userCount;
+
     }
 
     @Override
@@ -53,7 +54,7 @@ public class UserDAOImpl implements UserDAO {
             statement = connection.prepareStatement("SELECT * FROM users WHERE user_id=?;");
             statement.setInt(1, userId);
             resultSet = statement.executeQuery();
-            user = builder.buildUser(resultSet);
+            user = builder.build(resultSet);
         } catch (ConnectionPoolException e) {
             throw new DAOException("ConnectionPoolException in UserDAO.retrieveUserById()", e);
             //todo logger

@@ -1,4 +1,4 @@
-package com.epam.volodko.dao.impl.builder;
+package com.epam.volodko.dao.builder;
 
 import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.entity.user.Role;
@@ -12,17 +12,10 @@ public class UserBuilder {
 
     private static UserBuilder instance;
 
-    private UserBuilder(){
+    UserBuilder(){
     }
 
-    public static UserBuilder getInstance() {
-        if (instance == null){
-            instance = new UserBuilder();
-        }
-        return instance;
-    }
-
-    public User buildUser(ResultSet resultSet) throws SQLException {
+    public User build(ResultSet resultSet) throws SQLException {
         resultSet.next();
         int id = resultSet.getInt(Column.USERS_USER_ID);
         String login = resultSet.getString(Column.USERS_LOGIN);
