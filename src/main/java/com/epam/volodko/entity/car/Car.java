@@ -93,6 +93,10 @@ public class Car {
         this.carId = carId;
     }
 
+    public boolean hasDriver(){
+        return driver != null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

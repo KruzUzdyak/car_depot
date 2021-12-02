@@ -12,6 +12,8 @@ import java.util.concurrent.Executor;
 
 public class ConnectionPool {
 
+    private static ConnectionPool instance;
+
     private BlockingQueue<Connection> connectionQueue;
     private BlockingQueue<Connection> givenAwayConQueue;
 
@@ -34,7 +36,15 @@ public class ConnectionPool {
         }
     }
 
-    public void initPoolData() throws ConnectionPoolException {
+    public static ConnectionPool getInstance() throws ConnectionPoolException {
+        if (instance == null){
+            instance = new ConnectionPool();
+            instance.initPoolData();
+        }
+        return instance;
+    }
+
+    private void initPoolData() throws ConnectionPoolException {
         try {
             Class.forName(driverName);
             givenAwayConQueue = new ArrayBlockingQueue<>(poolSize);

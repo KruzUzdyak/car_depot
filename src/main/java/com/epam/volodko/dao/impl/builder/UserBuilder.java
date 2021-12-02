@@ -10,6 +10,18 @@ import java.sql.SQLException;
 
 public class UserBuilder {
 
+    private static UserBuilder instance;
+
+    private UserBuilder(){
+    }
+
+    public static UserBuilder getInstance() {
+        if (instance == null){
+            instance = new UserBuilder();
+        }
+        return instance;
+    }
+
     public User buildUser(ResultSet resultSet) throws SQLException {
         resultSet.next();
         int id = resultSet.getInt(UserColumn.USER_ID);
