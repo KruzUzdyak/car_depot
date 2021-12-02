@@ -6,6 +6,7 @@ import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
 import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.dao.impl.builder.UserBuilder;
 import com.epam.volodko.entity.user.Role;
+import com.epam.volodko.entity.user.RoleProvider;
 import com.epam.volodko.entity.user.User;
 
 import java.sql.*;
@@ -81,13 +82,47 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void updateUser(User user) {
-
+    public void updateUser(User user) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            String sqlQuery = String.format("UPDATE users SET login = '%s', password = '%s', " +
+                    "name = '%s', phone = '%s', role_id = %d WHERE user_id = %d;", user.getLogin(), user.getPassword(),
+                    user.getName(), user.getPhone(), user.getRole().getRole_id(), user.getUserId());
+            statement = connection.prepareStatement(sqlQuery);
+            statement.executeUpdate();
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("ConnectionPoolException in UserDAO.updateUser()", e);
+            //todo logger
+        } catch (SQLException e) {
+            throw new DAOException("SQLException in UserDAO.updateUser()", e);
+            //todo logger
+        } finally {
+            closeConnection(connection, statement);
+        }
     }
 
     @Override
-    public void saveNewUser(User user) {
-
+    public void saveNewUser(User user) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            String sqlQuery = String.format("INSERT INTO users (login, password, name, phone, role_id) " +
+                    "VALUES ('%s', '%s', '%s', '%s', %d);", user.getLogin(), user.getPassword(), user.getName(),
+                    user.getPhone(), user.getRole().getRole_id());
+            statement = connection.prepareStatement(sqlQuery);
+            statement.executeUpdate();
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("ConnectionPoolException in UserDAO.saveNewUser()", e);
+            //todo logger
+        } catch (SQLException e) {
+            throw new DAOException("SQLException in UserDAO.saveNewUser()", e);
+            //todo logger
+        } finally {
+            closeConnection(connection, statement);
+        }
     }
 
     @Override
@@ -96,8 +131,23 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void deleteUserByLogin(int userLogin) {
-
+    public void deleteUserByLogin(String userLogin) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            String sqlQuery = String.format("DELETE FROM users WHERE login='%s';", userLogin);
+            statement = connection.prepareStatement(sqlQuery);
+            statement.executeUpdate();
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("ConnectionPoolException in UserDAO.deleteUserByLogin()", e);
+            //todo logger
+        } catch (SQLException e) {
+            throw new DAOException("SQLException in UserDAO.deleteUserByLogin()", e);
+            //todo logger
+        } finally {
+            closeConnection(connection, statement);
+        }
     }
 
     private void closeConnection(Connection connection, Statement statement, ResultSet resultSet) throws DAOException {

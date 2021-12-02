@@ -28,5 +28,24 @@ public class UserDAOImplTest {
         assertEquals(expectedUser, actualUser);
     }
 
+    @Test
+    public void checkUpdateUser() throws DAOException {
+        User expectedUser = new User(1, "updateLogin", "testPassword", "testName", "+375test", Role.ADMIN);
+        userDAO.updateUser(expectedUser);
+        User actualUser = userDAO.retrieveUserById(expectedUser.getUserId());
+        assertEquals(expectedUser, actualUser);
+    }
+
+    @Test
+    public void checkSaveUser() throws DAOException {
+        User user = new User(1, "testLogin", "testPassword", "testName", "+375test", Role.ADMIN);
+        userDAO.saveNewUser(user);
+    }
+
+    @Test
+    public void checkDeleteUserByLogin() throws DAOException {
+        User user = new User(1, "testLogin", "testPassword", "testName", "+375test", Role.ADMIN);
+        userDAO.deleteUserByLogin(user.getLogin());
+    }
 
 }

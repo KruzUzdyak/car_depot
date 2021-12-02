@@ -16,10 +16,10 @@ public interface UserDAO {
     List<? extends User> retrieveUsersByRole(Role role);
     //todo add retrieving by more parameters
 
-    void updateUser(User user);
-    void saveNewUser(User user);
+    void updateUser(User user) throws DAOException;
+    void saveNewUser(User user) throws DAOException;
 
     void deleteUserById(int userId);
-    void deleteUserByLogin(int userLogin);
+    void deleteUserByLogin(String userLogin)throws DAOException;
 
 }
