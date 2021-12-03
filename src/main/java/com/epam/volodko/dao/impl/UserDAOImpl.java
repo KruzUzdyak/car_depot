@@ -16,7 +16,6 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
 
-    private static final String RETRIEVE_USER_COUNT_QUERY = "{call getUserCount(?)}";
     private static final String RETRIEVE_USER_BY_ID_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=?;",
             Table.USERS, Column.USERS_ID);
@@ -28,30 +27,6 @@ public class UserDAOImpl implements UserDAO {
     private final UserBuilder builder = BuilderFactory.getUserBuilder();
 
     public UserDAOImpl() {
-    }
-
-    @Override
-    public int retrieveUserCount() throws DAOException {
-        Connection connection = null;
-        CallableStatement statement = null;
-        int userCount;
-        try{
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareCall(RETRIEVE_USER_COUNT_QUERY);
-            statement.registerOutParameter("userCount", Types.INTEGER);
-            statement.execute();
-            userCount = statement.getInt("userCount");
-        } catch (ConnectionPoolException e) {
-            throw new DAOException("ConnectionPoolException in UserDAO.retrieveUserCount()", e);
-            //todo logger
-        } catch (SQLException e) {
-            throw new DAOException("SQLException in UserDAO.retrieveUserCount()", e);
-            //todo logger
-        } finally {
-            closeConnection(connection, statement);
-        }
-        return userCount;
-
     }
 
     @Override

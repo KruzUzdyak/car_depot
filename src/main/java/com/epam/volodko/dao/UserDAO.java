@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface UserDAO {
 
-    int retrieveUserCount() throws DAOException;
-
     User retrieveUserById(int userId) throws DAOException;
     User retrieveUserByLogin(String userLogin);
     List<User> retrieveAllUsers();

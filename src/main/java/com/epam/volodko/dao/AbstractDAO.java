@@ -10,7 +10,7 @@ public interface AbstractDAO<T> {
 
     int save(T entity) throws DAOException;
 
-    List<T> findAll() throws DAOException;
+    List<T> retrieveAll() throws DAOException;
 
     int update(T entity) throws DAOException;
 

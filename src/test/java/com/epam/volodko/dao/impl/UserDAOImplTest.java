@@ -14,13 +14,6 @@ public class UserDAOImplTest {
     UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 
     @Test
-    public void checkRetrieveUsersCount() throws DAOException {
-        int expectedUserCount = 4;
-        int actualUserCount = userDAO.retrieveUserCount();
-        assertEquals(expectedUserCount, actualUserCount);
-    }
-
-    @Test
     public void checkRetrieveUserById() throws DAOException {
         int userId = 1;
         User expectedUser = new User(1,"admin", "admin", "Strelkov Viktor", "+375297766858", Role.ADMIN);
