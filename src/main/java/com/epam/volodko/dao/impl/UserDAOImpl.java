@@ -14,7 +14,7 @@ import com.epam.volodko.entity.user.User;
 import java.sql.*;
 import java.util.List;
 
-public class UserDAOImpl implements UserDAO {
+public class UserDAOImpl extends AbstractDAOImpl<User> implements UserDAO {
 
     private static final String RETRIEVE_USER_BY_ID_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=?;",
@@ -27,6 +27,7 @@ public class UserDAOImpl implements UserDAO {
     private final UserBuilder builder = BuilderFactory.getUserBuilder();
 
     public UserDAOImpl() {
+        super(BuilderFactory.getUserBuilder(), Table.USERS, Column.USERS_ID);
     }
 
     @Override

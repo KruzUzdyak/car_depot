@@ -9,8 +9,8 @@ import java.util.List;
 
 public abstract class AbstractDAOImpl<T> implements AbstractDAO<T> {
 
-    private static final String SELECT_ALL_QUERY = "SELECT * FROM ";
     private static final String RETRIEVE_BY_ID_QUERY = "SELECT * FROM ";
+    private static final String RETRIEVE_ALL_QUERY = "SELECT * FROM ";
     private static final String DELETE_BY_ID_QUERY = "DELETE FROM ";
 
 
@@ -28,17 +28,19 @@ public abstract class AbstractDAOImpl<T> implements AbstractDAO<T> {
 
     @Override
     public T retrieveById(int id) throws DAOException {
-        String query = String.format("%s %s WHERE %s=?;", SELECT_ALL_QUERY, tableName, idName);
+        String query = String.format("%s %s WHERE %s=?;", RETRIEVE_BY_ID_QUERY, tableName, idName);
         return queryOperator.executeSingleEntityQuery(query);
     }
 
     @Override
     public List<T> retrieveAll() throws DAOException {
-        return null;
+        String query = String.format("%s %s;", RETRIEVE_ALL_QUERY, tableName);
+        return queryOperator.executeQuery(query);
     }
 
     @Override
     public int deleteByID(int id) throws DAOException {
-        return 0;
+        String query = String.format("%s %s WHERE %s=;", DELETE_BY_ID_QUERY, tableName, idName);
+        return queryOperator.executeUpdate(query, id);
     }
 }
