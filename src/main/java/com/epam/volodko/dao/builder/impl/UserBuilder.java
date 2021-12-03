@@ -11,7 +11,6 @@ import java.sql.SQLException;
 public class UserBuilder {
 
     public User build(ResultSet resultSet) throws SQLException {
-        resultSet.next();
         int id = resultSet.getInt(Column.USERS_ID);
         String login = resultSet.getString(Column.USERS_LOGIN);
         String password = resultSet.getString(Column.USERS_PASSWORD);

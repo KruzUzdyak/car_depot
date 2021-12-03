@@ -73,7 +73,8 @@ public class RepairRecord implements Serializable {
             return false;
         }
         RepairRecord that = (RepairRecord) o;
-        return id == that.id && expenses == that.expenses && Objects.equals(repairStart, that.repairStart) && Objects.equals(repairEnd, that.repairEnd) && Objects.equals(car, that.car);
+        return id == that.id && expenses == that.expenses && Objects.equals(repairStart, that.repairStart) &&
+                Objects.equals(repairEnd, that.repairEnd) && Objects.equals(car, that.car);
     }
 
     @Override

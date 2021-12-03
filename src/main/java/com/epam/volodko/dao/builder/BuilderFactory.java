@@ -13,7 +13,6 @@ public class BuilderFactory {
     private static final OrderBuilder orderBuilder = new OrderBuilder();
     private static final RefuelRecordBuilder refuelRecordBuilder = new RefuelRecordBuilder();
     private static final RepairRecordBuilder repairRecordBuilder = new RepairRecordBuilder();
-    private static final RoleBuilder roleBuilder = new RoleBuilder();
     private static final UserBuilder userBuilder = new UserBuilder();
 
     public static UserBuilder getUserBuilder() {
@@ -54,9 +53,5 @@ public class BuilderFactory {
 
     public static RepairRecordBuilder getRepairRecordBuilder() {
         return repairRecordBuilder;
-    }
-
-    public static RoleBuilder getRoleBuilder() {
-        return roleBuilder;
     }
 }
