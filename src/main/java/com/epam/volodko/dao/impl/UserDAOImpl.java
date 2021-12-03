@@ -31,36 +31,22 @@ public class UserDAOImpl extends AbstractDAOImpl<User> implements UserDAO {
     }
 
     @Override
-    public User retrieveUserById(int userId) throws DAOException {
-        User user;
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareStatement(RETRIEVE_USER_BY_ID_QUERY);
-            statement.setObject(1, userId);
-            resultSet = statement.executeQuery();
-            user = builder.build(resultSet);
-        } catch (ConnectionPoolException e) {
-            throw new DAOException("ConnectionPoolException in UserDAO.retrieveUserById()", e);
-            //todo logger
-        } catch (SQLException e) {
-            throw new DAOException("SQLException in UserDAO.retrieveUserById()", e);
-            //todo logger
-        } finally {
-            closeConnection(connection, statement, resultSet);
-        }
-        return user;
+    public int save(User entity) throws DAOException {
+        return 0;
     }
 
     @Override
-    public User retrieveUserByLogin(String userLogin) {
+    public int update(User entity) throws DAOException {
+        return 0;
+    }
+
+    @Override
+    public User retrieveUserById(int userId) throws DAOException {
         return null;
     }
 
     @Override
-    public List<User> retrieveAllUsers() {
+    public User retrieveUserByLogin(String userLogin) {
         return null;
     }
 
@@ -71,92 +57,16 @@ public class UserDAOImpl extends AbstractDAOImpl<User> implements UserDAO {
 
     @Override
     public void updateUser(User user) throws DAOException {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try{
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareStatement(UPDATE_USER_QUERY);
-            statement.setObject(1, user.getLogin());
-            statement.setObject(1, user.getLogin());
-            statement.setObject(1, user.getLogin());
-            statement.setObject(1, user.getLogin());
-            statement.setObject(1, user.getLogin());
-            statement.setObject(1, user.getLogin());
 
-            statement.executeUpdate();
-        } catch (ConnectionPoolException e) {
-            throw new DAOException("ConnectionPoolException in UserDAO.updateUser()", e);
-            //todo logger
-        } catch (SQLException e) {
-            throw new DAOException("SQLException in UserDAO.updateUser()", e);
-            //todo logger
-        } finally {
-            closeConnection(connection, statement);
-        }
     }
 
     @Override
     public void saveNewUser(User user) throws DAOException {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try{
-            connection = ConnectionPool.getInstance().takeConnection();
-            String sqlQuery = String.format("INSERT INTO users (login, password, name, phone, role_id) " +
-                    "VALUES ('%s', '%s', '%s', '%s', %d);", user.getLogin(), user.getPassword(), user.getName(),
-                    user.getPhone(), user.getRole().getRole_id());
-            statement = connection.prepareStatement(sqlQuery);
-            statement.executeUpdate();
-        } catch (ConnectionPoolException e) {
-            throw new DAOException("ConnectionPoolException in UserDAO.saveNewUser()", e);
-            //todo logger
-        } catch (SQLException e) {
-            throw new DAOException("SQLException in UserDAO.saveNewUser()", e);
-            //todo logger
-        } finally {
-            closeConnection(connection, statement);
-        }
-    }
-
-    @Override
-    public void deleteUserById(int userId) {
 
     }
 
     @Override
     public void deleteUserByLogin(String userLogin) throws DAOException {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try{
-            connection = ConnectionPool.getInstance().takeConnection();
-            String sqlQuery = String.format("DELETE FROM users WHERE login='%s';", userLogin);
-            statement = connection.prepareStatement(sqlQuery);
-            statement.executeUpdate();
-        } catch (ConnectionPoolException e) {
-            throw new DAOException("ConnectionPoolException in UserDAO.deleteUserByLogin()", e);
-            //todo logger
-        } catch (SQLException e) {
-            throw new DAOException("SQLException in UserDAO.deleteUserByLogin()", e);
-            //todo logger
-        } finally {
-            closeConnection(connection, statement);
-        }
-    }
 
-    private void closeConnection(Connection connection, Statement statement, ResultSet resultSet) throws DAOException {
-        try {
-            ConnectionPool.getInstance().closeConnection(connection, statement, resultSet);
-        } catch (ConnectionPoolException e) {
-            throw new DAOException("ConnectionPoolException while closing connection in UserDAO", e);
-            //todo logger
-        }
-    }
-
-    private void closeConnection(Connection connection, Statement statement) throws DAOException {
-        try {
-            ConnectionPool.getInstance().closeConnection(connection, statement);
-        } catch (ConnectionPoolException e) {
-            throw new DAOException("ConnectionPoolException while closing connection in UserDAO", e);
-            //todo logger
-        }
     }
 }

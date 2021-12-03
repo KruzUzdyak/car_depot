@@ -147,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`driver_licenses`
     CONSTRAINT `license_type_for_driver`
         FOREIGN KEY (`license_id`)
             REFERENCES `car_depot`.`license_types` (`license_id`)
-            ON DELETE CASCADE
+            ON DELETE NO ACTION
             ON UPDATE NO ACTION
 );
 
@@ -230,10 +230,27 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`client_info`
     CONSTRAINT `users_id_client_info`
         FOREIGN KEY (`user_id`)
             REFERENCES `car_depot`.`users` (`user_id`)
-            ON DELETE CASCADE
+            ON DELETE NO ACTION
             ON UPDATE NO ACTION
 );
 
+-- -----------------------------------------------------
+-- Table `car_depot`.`admin_info`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `car_depot`.`admin_info` ;
+
+CREATE TABLE IF NOT EXISTS `car_depot`.`admin_info` (
+    `user_id` INT NOT NULL,
+    `works_since` DATE NOT NULL,
+     `note` TEXT NULL,
+     PRIMARY KEY (`user_id`),
+     UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
+     CONSTRAINT `admin_info_user_id`
+     FOREIGN KEY (`user_id`)
+     REFERENCES `car_depot`.`users` (`user_id`)
+     ON DELETE NO ACTION
+     ON UPDATE NO ACTION
+);
 
 -- -----------------------------------------------------
 -- Table `car_depot`.`refuel_records`

@@ -127,6 +127,12 @@ INSERT INTO `car_depot`.`client_info` (`user_id`, `company`, `note`)
 VALUES (4, 'LTD Co Inc', 'Nice guy');
 
 -- -----------------------------------------------------
+-- Data for table `car_depot`.`admin_info`
+-- -----------------------------------------------------
+INSERT INTO `car_depot`.`admin_info` (`user_id`, `works_since`, `note`)
+VALUES (1, '2020.02.14', 'Best worker');
+
+-- -----------------------------------------------------
 -- Data for table `car_depot`.`refuel_records`
 -- -----------------------------------------------------
 INSERT INTO `car_depot`.`refuel_records` (`refuel_record_id`, `refuel_date`, `fuel_price`, `refuel_amount`, `car_id`)

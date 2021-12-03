@@ -19,7 +19,7 @@ public class UserBuilder implements Builder<User> {
         String name = resultSet.getString(Column.USERS_NAME);
         String phone = resultSet.getString(Column.USERS_PHONE);
         Role role = RoleProvider.getRole(resultSet.getInt(Column.USERS_ROLE_ID));
-        return new User(id, login, password, name, phone, role);
+        return null; //todo
     }
 
 
