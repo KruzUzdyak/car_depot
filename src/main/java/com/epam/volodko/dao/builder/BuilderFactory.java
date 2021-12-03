@@ -1,11 +1,13 @@
 package com.epam.volodko.dao.builder;
 
+import com.epam.volodko.dao.builder.impl.*;
+
 public class BuilderFactory {
 
     private static final CarBuilder carBuilder = new CarBuilder();
     private static final CarModelBuilder carModelBuilder = new CarModelBuilder();
     private static final CarTypeBuilder carTypeBuilder = new CarTypeBuilder();
-    private static final ClientInfoBuilder clientInfoBuilder = new ClientInfoBuilder();
+    private static final ClientBuilder clientInfoBuilder = new ClientBuilder();
     private static final DriverLicenseBuilder driverLicenseBuilder = new DriverLicenseBuilder();
     private static final LicenseTypeBuilder licenseTypeBuilder = new LicenseTypeBuilder();
     private static final OrderBuilder orderBuilder = new OrderBuilder();
@@ -30,7 +32,7 @@ public class BuilderFactory {
         return carTypeBuilder;
     }
 
-    public static ClientInfoBuilder getClientInfoBuilder() {
+    public static ClientBuilder getClientInfoBuilder() {
         return clientInfoBuilder;
     }
 

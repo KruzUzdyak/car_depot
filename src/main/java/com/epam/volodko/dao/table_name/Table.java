@@ -1,6 +1,6 @@
 package com.epam.volodko.dao.table_name;
 
-public enum TableName {
+public enum Table {
 
     CAR_MODELS,
     CAR_TYPES,

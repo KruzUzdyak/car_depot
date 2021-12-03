@@ -30,7 +30,7 @@ public class UserDAOImplTest {
 
     @Test
     public void checkUpdateUser() throws DAOException {
-        User expectedUser = new User(1, "updateLogin", "testPassword", "testName", "+375test", Role.ADMIN);
+        User expectedUser = new User(2, "updateLogin", "testPassword", "testName", "+375test", Role.ADMIN);
         userDAO.updateUser(expectedUser);
         User actualUser = userDAO.retrieveUserById(expectedUser.getUserId());
         assertEquals(expectedUser, actualUser);

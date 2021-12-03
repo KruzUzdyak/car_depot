@@ -5,7 +5,9 @@ import com.epam.volodko.dao.builder.BuilderFactory;
 import com.epam.volodko.dao.database.ConnectionPool;
 import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
 import com.epam.volodko.dao.exception.DAOException;
-import com.epam.volodko.dao.builder.UserBuilder;
+import com.epam.volodko.dao.builder.impl.UserBuilder;
+import com.epam.volodko.dao.table_name.Column;
+import com.epam.volodko.dao.table_name.Table;
 import com.epam.volodko.entity.user.Role;
 import com.epam.volodko.entity.user.User;
 
@@ -13,6 +15,15 @@ import java.sql.*;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
+
+    private static final String RETRIEVE_USER_COUNT_QUERY = "{call getUserCount(?)}";
+    private static final String RETRIEVE_USER_BY_ID_QUERY = String.format(
+            "SELECT * FROM %s WHERE %s=?;",
+            Table.USERS, Column.USERS_ID);
+    private static final String UPDATE_USER_QUERY = String.format(
+            "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?;",
+            Table.USERS, Column.USERS_LOGIN, Column.USERS_PASSWORD, Column.USERS_NAME,
+            Column.USERS_PHONE, Column.USERS_ROLE_ID, Column.USERS_ID);
 
     private final UserBuilder builder = BuilderFactory.getUserBuilder();
 
@@ -26,7 +37,7 @@ public class UserDAOImpl implements UserDAO {
         int userCount;
         try{
             connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareCall("{call getUserCount(?)}");
+            statement = connection.prepareCall(RETRIEVE_USER_COUNT_QUERY);
             statement.registerOutParameter("userCount", Types.INTEGER);
             statement.execute();
             userCount = statement.getInt("userCount");
@@ -51,8 +62,8 @@ public class UserDAOImpl implements UserDAO {
         ResultSet resultSet = null;
         try {
             connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareStatement("SELECT * FROM users WHERE user_id=?;");
-            statement.setInt(1, userId);
+            statement = connection.prepareStatement(RETRIEVE_USER_BY_ID_QUERY);
+            statement.setObject(1, userId);
             resultSet = statement.executeQuery();
             user = builder.build(resultSet);
         } catch (ConnectionPoolException e) {
@@ -88,10 +99,14 @@ public class UserDAOImpl implements UserDAO {
         PreparedStatement statement = null;
         try{
             connection = ConnectionPool.getInstance().takeConnection();
-            String sqlQuery = String.format("UPDATE users SET login = '%s', password = '%s', " +
-                    "name = '%s', phone = '%s', role_id = %d WHERE user_id = %d;", user.getLogin(), user.getPassword(),
-                    user.getName(), user.getPhone(), user.getRole().getRole_id(), user.getUserId());
-            statement = connection.prepareStatement(sqlQuery);
+            statement = connection.prepareStatement(UPDATE_USER_QUERY);
+            statement.setObject(1, user.getLogin());
+            statement.setObject(1, user.getLogin());
+            statement.setObject(1, user.getLogin());
+            statement.setObject(1, user.getLogin());
+            statement.setObject(1, user.getLogin());
+            statement.setObject(1, user.getLogin());
+
             statement.executeUpdate();
         } catch (ConnectionPoolException e) {
             throw new DAOException("ConnectionPoolException in UserDAO.updateUser()", e);

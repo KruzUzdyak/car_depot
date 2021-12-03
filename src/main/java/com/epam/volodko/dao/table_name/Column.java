@@ -2,7 +2,7 @@ package com.epam.volodko.dao.table_name;
 
 public class Column {
 
-    public static final String USERS_USER_ID = "user_id";
+    public static final String USERS_ID = "user_id";
     public static final String USERS_LOGIN = "login";
     public static final String USERS_PASSWORD = "password";
     public static final String USERS_NAME = "name";
