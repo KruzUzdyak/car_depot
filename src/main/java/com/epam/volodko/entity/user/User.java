@@ -3,7 +3,7 @@ package com.epam.volodko.entity.user;
 import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class User implements Serializable {
+public class User implements Serializable {
 
     private int userId;
     private String login;

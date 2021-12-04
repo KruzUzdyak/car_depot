@@ -6,16 +6,12 @@ import com.epam.volodko.entity.user.User;
 
 import java.util.List;
 
-public interface UserDAO extends AbstractDAO<User>{
+public interface UserDAO {
 
-    User retrieveUserById(int userId) throws DAOException;
-    User retrieveUserByLogin(String userLogin);
-    List<? extends User> retrieveUsersByRole(Role role);
-    //todo add retrieving by more parameters
+    User findById(int userId) throws DAOException;
 
-    void updateUser(User user) throws DAOException;
-    void saveNewUser(User user) throws DAOException;
+    List<User> findAll() throws DAOException;
 
-    void deleteUserByLogin(String userLogin)throws DAOException;
+    List<User> findByRole(Role role) throws DAOException;
 
 }
