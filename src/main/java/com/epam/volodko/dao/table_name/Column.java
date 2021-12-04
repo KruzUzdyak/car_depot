@@ -13,6 +13,10 @@ public class Column {
     public static final String CLIENT_INFO_COMPANY = "company";
     public static final String CLIENT_INFO_NOTE = "note";
 
+    public static final String ADMIN_INFO_USER_ID = "user_id";
+    public static final String ADMIN_INDO_WORKS_SINCE = "works_since";
+    public static final String ADMIN_INFO_NOTE = "note";
+
     public static final String ROLES_ROLE_ID = "role_id";
     public static final String ROLES_ROLE = "role";
 

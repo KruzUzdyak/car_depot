@@ -6,6 +6,8 @@ import com.epam.volodko.entity.user.Client;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 public class Order implements Serializable {
@@ -14,8 +16,8 @@ public class Order implements Serializable {
     private String destFrom;
     private String destTo;
     private int distance;
-    private SimpleDateFormat dateStart;
-    private SimpleDateFormat dateFinish;
+    private Date dateStart;
+    private Date dateFinish;
     private int load;
     private String loadNote;
     private boolean completed;
@@ -59,19 +61,19 @@ public class Order implements Serializable {
         this.distance = distance;
     }
 
-    public SimpleDateFormat getDateStart() {
+    public Date getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(SimpleDateFormat dateStart) {
+    public void setDateStart(Date dateStart) {
         this.dateStart = dateStart;
     }
 
-    public SimpleDateFormat getDateFinish() {
+    public Date getDateFinish() {
         return dateFinish;
     }
 
-    public void setDateFinish(SimpleDateFormat dateFinish) {
+    public void setDateFinish(Date dateFinish) {
         this.dateFinish = dateFinish;
     }
 

@@ -2,12 +2,14 @@ package com.epam.volodko.entity.car;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 public class RefuelRecord implements Serializable {
 
     private int id;
-    private SimpleDateFormat refuelDate;
+    private Date refuelDate;
     private int fuelPrice;
     private int refuelAmount;
     private Car car;
@@ -15,7 +17,7 @@ public class RefuelRecord implements Serializable {
     public RefuelRecord() {
     }
 
-    public RefuelRecord(int id, SimpleDateFormat refuelDate, int fuelPrice,
+    public RefuelRecord(int id, Date refuelDate, int fuelPrice,
                         int refuelAmount, Car car) {
         this.id = id;
         this.refuelDate = refuelDate;
@@ -32,11 +34,11 @@ public class RefuelRecord implements Serializable {
         this.id = id;
     }
 
-    public SimpleDateFormat getRefuelDate() {
+    public Date getRefuelDate() {
         return refuelDate;
     }
 
-    public void setRefuelDate(SimpleDateFormat refuelDate) {
+    public void setRefuelDate(Date refuelDate) {
         this.refuelDate = refuelDate;
     }
 

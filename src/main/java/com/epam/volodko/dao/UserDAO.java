@@ -6,7 +6,7 @@ import com.epam.volodko.entity.user.User;
 
 import java.util.List;
 
-public interface UserDAO extends AbstractDAO{
+public interface UserDAO extends AbstractDAO<User>{
 
     User retrieveUserById(int userId) throws DAOException;
     User retrieveUserByLogin(String userLogin);

@@ -2,21 +2,23 @@ package com.epam.volodko.entity.car;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 public class RepairRecord implements Serializable {
 
     private int id;
-    private SimpleDateFormat repairStart;
-    private SimpleDateFormat repairEnd;
+    private Date repairStart;
+    private Date repairEnd;
     private int expenses;
     private Car car;
 
     public RepairRecord() {
     }
 
-    public RepairRecord(int id, SimpleDateFormat repairStart,
-                        SimpleDateFormat repairEnd, int expenses, Car car) {
+    public RepairRecord(int id, Date repairStart,
+                        Date repairEnd, int expenses, Car car) {
         this.id = id;
         this.repairStart = repairStart;
         this.repairEnd = repairEnd;
@@ -32,19 +34,19 @@ public class RepairRecord implements Serializable {
         this.id = id;
     }
 
-    public SimpleDateFormat getRepairStart() {
+    public Date getRepairStart() {
         return repairStart;
     }
 
-    public void setRepairStart(SimpleDateFormat repairStart) {
+    public void setRepairStart(Date repairStart) {
         this.repairStart = repairStart;
     }
 
-    public SimpleDateFormat getRepairEnd() {
+    public Date getRepairEnd() {
         return repairEnd;
     }
 
-    public void setRepairEnd(SimpleDateFormat repairEnd) {
+    public void setRepairEnd(Date repairEnd) {
         this.repairEnd = repairEnd;
     }
 

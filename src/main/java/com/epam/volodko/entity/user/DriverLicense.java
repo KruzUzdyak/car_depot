@@ -2,16 +2,18 @@ package com.epam.volodko.entity.user;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 public class DriverLicense implements Serializable {
 
     private final DriverLicenseType licenseType;
-    private final SimpleDateFormat obtainingDate;
+    private final Date obtainingDate;
     private final String licenseNumber;
 
     public DriverLicense(DriverLicenseType licenseType,
-                         SimpleDateFormat obtainingDate, String licenseNumber) {
+                         Date obtainingDate, String licenseNumber) {
         this.licenseType = licenseType;
         this.obtainingDate = obtainingDate;
         this.licenseNumber = licenseNumber;
@@ -21,7 +23,7 @@ public class DriverLicense implements Serializable {
         return licenseType;
     }
 
-    public SimpleDateFormat getObtainingDate() {
+    public Date getObtainingDate() {
         return obtainingDate;
     }
 

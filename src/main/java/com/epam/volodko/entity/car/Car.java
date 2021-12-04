@@ -12,11 +12,11 @@ public class Car implements Serializable {
     private int fuelLevel;
     private int mileage;
     private boolean isBroken;
-    private final CarModel model;
+    private CarModel model;
     private Driver driver;
 
+
     public Car(){
-        model = new CarModel(0, "stub", 0, 0, CarType.SMALL_BUS, "stub load");
     }
 
     public Car(int carId, String plateNumber, int fuelLevel,

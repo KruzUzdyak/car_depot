@@ -2,28 +2,30 @@ package com.epam.volodko.entity.user;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 public class Admin extends User implements Serializable {
 
-    private SimpleDateFormat worksSince;
+    private Date worksSince;
     private String note;
 
     public Admin() {
     }
 
     public Admin(int id, String login, String password, String name,
-                 String phone, Role role, SimpleDateFormat worksSince, String note) {
+                 String phone, Role role, Date worksSince, String note) {
         super(id, login, password, name, phone, role);
         this.worksSince = worksSince;
         this.note = note;
     }
 
-    public SimpleDateFormat getWorksSince() {
+    public Date getWorksSince() {
         return worksSince;
     }
 
-    public void setWorksSince(SimpleDateFormat worksSince) {
+    public void setWorksSince(Date worksSince) {
         this.worksSince = worksSince;
     }
 
