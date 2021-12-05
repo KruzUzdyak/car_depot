@@ -10,16 +10,17 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
 
-    private AdminDAOImpl adminDAO;
-    private ClientDAOImpl clientDAO;
-    private DriverDAOImpl driverDAO;
     private final RoleDAOImpl roleDAO = new RoleDAOImpl();
 
     @Override
     public User findById(int userId) throws DAOException {
         Role role = roleDAO.findRoleByUserId(userId);
         return UserDAOProvider.getAbstractUserDAO(role).findById(userId);
+    }
 
+    @Override
+    public User findByLogin(String userLogin) throws DAOException {
+        return null;
     }
 
     @Override
@@ -40,5 +41,10 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void saveNewUser(User user) throws DAOException {
         UserDAOProvider.getAbstractUserDAO(user.getRole()).saveNewUser(user);
+    }
+
+    @Override
+    public void deleteUser(User user) throws DAOException {
+        UserDAOProvider.getAbstractUserDAO(user.getRole()).deleteUser(user.getUserId());
     }
 }

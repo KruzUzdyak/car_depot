@@ -32,7 +32,7 @@ public class RoleDAOImpl {
             resultSet.next();
             role = BuilderFactory.getRoleBuilder().build(resultSet);
         }catch (ConnectionPoolException e) {
-            throw new DAOException("ConnectionPoolException when try to find role by user id.", e);
+            throw new DAOException(e);
         } catch (SQLException e) {
             throw new DAOException("SQLException when try to find role by user id.", e);
         } finally {

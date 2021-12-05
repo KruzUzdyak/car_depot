@@ -50,7 +50,7 @@ public class DriverDAOImpl extends AbstractUserDAO<Driver>{
                 driver = new Driver();
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException("ConnectionPoolException when try to find driver by id.", e);
+            throw new DAOException(e);
         } catch (SQLException e) {
             throw new DAOException("SQLException when try to find driver by id.", e);
         } finally {
@@ -74,7 +74,7 @@ public class DriverDAOImpl extends AbstractUserDAO<Driver>{
                 drivers.add(BuilderFactory.getDriverBuilder().build(resultSet));
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException("ConnectionPoolException when try to find all drivers.", e);
+            throw new DAOException(e);
         } catch (SQLException e) {
             throw new DAOException("SQLException when try to find all drivers.", e);
         } finally {
@@ -93,10 +93,10 @@ public class DriverDAOImpl extends AbstractUserDAO<Driver>{
             statement = connection.prepareStatement(SAVE_NEW_USER_QUERY);
             prepareSaveUserStatement(driver, statement);
             statement.executeUpdate();
-            licenseDAO.prepareSaveDriverLicensesStatement(driver, connection, statement);
+            licenseDAO.prepareSaveDriverLicensesStatement(driver, connection);
             connection.commit();
         } catch (ConnectionPoolException e) {
-            throw new DAOException("ConnectionPoolException when saving new driver.", e);
+            throw new DAOException(e);
         } catch (SQLException e) {
             throw new DAOException("SQLException when saving new driver.", e);
         } finally {

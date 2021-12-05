@@ -16,13 +16,32 @@ public abstract class AbstractUserDAO<T extends User> {
             "INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?);",
             Table.USERS, Column.USERS_LOGIN, Column.USERS_PASSWORD, Column.USERS_NAME,
             Column.USERS_PHONE, Column.USERS_ROLE_ID);
+    protected static final String DELETE_USER_QUERY = String.format(
+            "DELETE FROM %s WHERE %s = ?;",
+            Table.USERS, Column.USERS_ID);
 
     abstract T findById(int userId) throws DAOException;
 
     abstract List<T> findAll() throws DAOException;
 
-    public abstract void saveNewUser(T user) throws DAOException;
+    abstract void saveNewUser(T user) throws DAOException;
 
+    void deleteUser(int userId) throws DAOException{
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(DELETE_USER_QUERY);
+            statement.setInt(1, userId);
+            statement.executeUpdate();
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException("SQLException while try to delete user.", e);
+        } finally {
+            closeConnection(connection, statement);
+        }
+    }
 
     void closeConnection(Connection connection, Statement statement, ResultSet resultSet) throws DAOException {
         try {

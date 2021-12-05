@@ -48,7 +48,7 @@ public class ClientDAOImpl extends AbstractUserDAO<Client>{
                 client = new Client();
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException("ConnectionPoolException when try to find client by id.", e);
+            throw new DAOException(e);
         } catch (SQLException e) {
             throw new DAOException("SQLException when try to find client by id.", e);
         } finally {
@@ -72,7 +72,7 @@ public class ClientDAOImpl extends AbstractUserDAO<Client>{
                 clients.add(BuilderFactory.getClientBuilder().build(resultSet));
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException("ConnectionPoolException when try to find all clients.", e);
+            throw new DAOException(e);
         } catch (SQLException e) {
             throw new DAOException("SQLException when try to find admin all clients.", e);
         } finally {
@@ -98,7 +98,7 @@ public class ClientDAOImpl extends AbstractUserDAO<Client>{
             statement.executeUpdate();
             connection.commit();
         } catch (ConnectionPoolException e) {
-            throw new DAOException("ConnectionPoolException when saving new client.", e);
+            throw new DAOException(e);
         } catch (SQLException e) {
             throw new DAOException("SQLException when saving new client.", e);
         } finally {

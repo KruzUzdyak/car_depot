@@ -31,6 +31,7 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
             Table.ADMIN_INFO, Column.ADMIN_INFO_USER_ID, Column.ADMIN_INDO_WORKS_SINCE, Column.ADMIN_INFO_NOTE,
             Column.USERS_ID, Table.USERS, Column.USERS_LOGIN);
 
+
     @Override
     Admin findById(int userId) throws DAOException {
         Admin admin;
@@ -48,7 +49,7 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
                 admin = new Admin();
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException("ConnectionPoolException when try to find admin by id.", e);
+            throw new DAOException(e);
         } catch (SQLException e) {
             throw new DAOException("SQLException when try to find admin by id.", e);
         } finally {
@@ -72,7 +73,7 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
                 admins.add(BuilderFactory.getAdminBuilder().build(resultSet));
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException("ConnectionPoolException when try to find all admins.", e);
+            throw new DAOException(e);
         } catch (SQLException e) {
             throw new DAOException("SQLException when try to find all admins.", e);
         } finally {
@@ -98,12 +99,11 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
             statement.executeUpdate();
             connection.commit();
         } catch (ConnectionPoolException e) {
-            throw new DAOException("ConnectionPoolException when saving new admin.", e);
+            throw new DAOException(e);
         } catch (SQLException e) {
             throw new DAOException("SQLException when saving new admin.", e);
         } finally {
             closeConnection(connection, statement);
         }
     }
-
 }

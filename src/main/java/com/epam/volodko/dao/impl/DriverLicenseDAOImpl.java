@@ -1,5 +1,6 @@
 package com.epam.volodko.dao.impl;
 
+import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.dao.table_name.Table;
 import com.epam.volodko.entity.user.Driver;
@@ -17,15 +18,18 @@ public class DriverLicenseDAOImpl{
             Column.DRIVER_LICENSES_OBTAINING_DATE, Column.DRIVER_LICENSES_LICENSE_NUMBER, Column.USERS_ID,
             Table.USERS, Column.USERS_LOGIN);
 
-    void prepareSaveDriverLicensesStatement(Driver driver, Connection connection,
-                                            PreparedStatement statement) throws SQLException {
-        for (DriverLicense license : driver.getLicenses()) {
-            statement = connection.prepareStatement(SAVE_NEW_DRIVER_LICENSE_QUERY);
-            statement.setString(1, driver.getLogin());
-            statement.setInt(2, license.getLicenseType().getId());
-            statement.setLong(3, license.getObtainingDate().getTime());
-            statement.setString(4, license.getLicenseNumber());
-            statement.executeUpdate();
+    void prepareSaveDriverLicensesStatement(Driver driver, Connection connection) throws DAOException {
+        try {
+            for (DriverLicense license : driver.getLicenses()) {
+                PreparedStatement statement = connection.prepareStatement(SAVE_NEW_DRIVER_LICENSE_QUERY);
+                statement.setString(1, driver.getLogin());
+                statement.setInt(2, license.getLicenseType().getId());
+                statement.setLong(3, license.getObtainingDate().getTime());
+                statement.setString(4, license.getLicenseNumber());
+                statement.executeUpdate();
+            }
+        } catch (SQLException e){
+            throw new DAOException("SQLException when preparing for Save driver licenses in statement.", e);
         }
     }
 

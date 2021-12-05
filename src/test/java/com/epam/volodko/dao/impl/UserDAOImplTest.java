@@ -73,4 +73,24 @@ public class UserDAOImplTest {
         driver.addLicense(new DriverLicense(DriverLicenseType.D, new Date(), "testLicenseNumber"));
         userDAO.saveNewUser(driver);
     }
+
+    @Test
+    public void checkDeleteUser() throws DAOException{
+        Admin admin = new Admin(100, "testLogin1", "testPassword1", "testName1",
+                "testPhone1", Role.ADMIN, new Date(), "testNote1");
+        userDAO.saveNewUser(admin);
+
+        Client client = new Client(100, "testLoginClient", "testPasswordClient", "testNameClient",
+                "testPhoneClient", Role.CLIENT, "JST IRAY", "China guys");
+        userDAO.saveNewUser(client);
+
+        Driver driver = new Driver(100, "driverLogin", "driverPass", "driverName",
+                "driverPhone", Role.DRIVER);
+        driver.addLicense(new DriverLicense(DriverLicenseType.D, new Date(), "testLicenseNumber"));
+        userDAO.saveNewUser(driver);
+
+        userDAO.deleteUser(admin);
+        userDAO.deleteUser(client);
+        userDAO.deleteUser(driver);
+    }
 }
