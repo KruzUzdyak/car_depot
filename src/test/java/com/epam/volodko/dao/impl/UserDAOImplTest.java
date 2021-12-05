@@ -18,15 +18,39 @@ public class UserDAOImplTest {
     @Test
     public void checkFindById() throws DAOException {
         int userId = 1;
-        User expectedUser = new User(userId, "admin1", null, "Strelkov Viktor", "+375297766858", Role.ADMIN);
         User actualUser = userDAO.findById(userId);
+        System.out.println(actualUser);
+        System.out.println();
 
-        assertEquals(expectedUser, actualUser);
+        userId = 3;
+        actualUser = userDAO.findById(userId);
+        System.out.println(actualUser);
+        System.out.println();
+
+        userId = 4;
+        actualUser = userDAO.findById(userId);
+        System.out.println(actualUser);
     }
 
     @Test
     public void checkFindAll() throws DAOException {
         List<User> actualUsers = userDAO.findAll();
+        actualUsers.forEach(System.out::println);
+
+        //todo make full test.
+    }
+
+    @Test
+    public void checkFindByRole() throws DAOException {
+        List<User> actualUsers = userDAO.findUsersByRole(Role.ADMIN);
+        actualUsers.forEach(System.out::println);
+        System.out.println();
+
+        actualUsers = userDAO.findUsersByRole(Role.CLIENT);
+        actualUsers.forEach(System.out::println);
+        System.out.println();
+
+        actualUsers = userDAO.findUsersByRole(Role.DRIVER);
         actualUsers.forEach(System.out::println);
 
         //todo make full test.

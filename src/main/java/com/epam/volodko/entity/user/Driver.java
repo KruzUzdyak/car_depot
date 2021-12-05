@@ -54,6 +54,6 @@ public class Driver extends User implements Serializable {
     public String toString() {
         return "Driver{" +
                 "licenses=" + licenses +
-                '}';
+                "} " + super.toString();
     }
 }

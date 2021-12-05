@@ -62,6 +62,6 @@ public class Admin extends User implements Serializable {
         return "Admin{" +
                 "worksSince=" + worksSince +
                 ", note='" + note + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }

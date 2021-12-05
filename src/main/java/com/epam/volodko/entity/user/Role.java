@@ -6,13 +6,13 @@ public enum Role {
     DRIVER(2),
     CLIENT(3);
 
-    final int role_id;
+    final int roleId;
 
-    Role(int role_id){
-        this.role_id = role_id;
+    Role(int roleId){
+        this.roleId = roleId;
     }
 
-    public int getRole_id() {
-        return role_id;
+    public int getRoleId() {
+        return roleId;
     }
 }

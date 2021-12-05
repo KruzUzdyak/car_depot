@@ -34,7 +34,6 @@ public class Client extends User implements Serializable {
         this.note = note;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -55,11 +54,12 @@ public class Client extends User implements Serializable {
         return Objects.hash(super.hashCode(), company, note);
     }
 
+
     @Override
     public String toString() {
         return "Client{" +
                 "company='" + company + '\'' +
                 ", note='" + note + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }

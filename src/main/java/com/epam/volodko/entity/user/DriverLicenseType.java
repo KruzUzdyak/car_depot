@@ -24,13 +24,6 @@ public enum DriverLicenseType {
         return id;
     }
 
-    @Override
-    public String toString() {
-        return "DriverLicenseType{"+
-                "id=" + id +
-                '}';
-    }
-
     public static void main(String[] args) {
         System.out.println(DriverLicenseType.A);
     }
