@@ -14,7 +14,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class AdminDAOImpl extends AbstractUserDAO<Admin> {
@@ -27,10 +26,6 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
             "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s ai ON u.%s = ai.%s WHERE r.%s = ?;",
             Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ROLE_ID, Table.ADMIN_INFO,
             Column.USERS_ID, Column.ADMIN_INFO_USER_ID, Column.ROLES_ROLE_ID);
-    private static final String SAVE_NEW_ADMIN_QUERY = String.format(
-            "INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?);",
-            Table.USERS, Column.USERS_LOGIN, Column.USERS_PASSWORD, Column.USERS_NAME,
-            Column.USERS_PHONE, Column.USERS_ROLE_ID);
     private static final String SAVE_NEW_ADMIN_INFO_QUERY = String.format(
             "INSERT INTO %s (%s, %s, %s) VALUES ((SELECT %s FROM %s WHERE %s = ?), ?, ?);",
             Table.ADMIN_INFO, Column.ADMIN_INFO_USER_ID, Column.ADMIN_INDO_WORKS_SINCE, Column.ADMIN_INFO_NOTE,
@@ -93,16 +88,15 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
         try{
             connection = ConnectionPool.getInstance().takeConnection();
             connection.setAutoCommit(false);
-            statement = connection.prepareStatement(SAVE_NEW_ADMIN_QUERY);
-            statement.setString(1, admin.getLogin());
-            statement.setString(2, admin.getPassword());
-            statement.setString(3, admin.getName());
-            statement.setString(4, admin.getPhone());
-            statement.setInt(5, admin.getRole().getRoleId());
+            statement = connection.prepareStatement(SAVE_NEW_USER_QUERY);
+            prepareSaveUserStatement(admin, statement);
             statement.executeUpdate();
             statement = connection.prepareStatement(SAVE_NEW_ADMIN_INFO_QUERY);
             statement.setString(1, admin.getLogin());
             statement.setLong(2, admin.getWorksSince().getTime());
+            statement.setString(3, admin.getNote());
+            statement.executeUpdate();
+            connection.commit();
         } catch (ConnectionPoolException e) {
             throw new DAOException("ConnectionPoolException when saving new admin.", e);
         } catch (SQLException e) {
@@ -112,7 +106,4 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
         }
     }
 
-    public static void main(String[] args) {
-
-    }
 }

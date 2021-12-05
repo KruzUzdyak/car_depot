@@ -3,14 +3,19 @@ package com.epam.volodko.dao.impl;
 import com.epam.volodko.dao.database.ConnectionPool;
 import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
 import com.epam.volodko.dao.exception.DAOException;
+import com.epam.volodko.dao.table_name.Column;
+import com.epam.volodko.dao.table_name.Table;
 import com.epam.volodko.entity.user.User;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 public abstract class AbstractUserDAO<T extends User> {
+
+    protected static final String SAVE_NEW_USER_QUERY = String.format(
+            "INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?);",
+            Table.USERS, Column.USERS_LOGIN, Column.USERS_PASSWORD, Column.USERS_NAME,
+            Column.USERS_PHONE, Column.USERS_ROLE_ID);
 
     abstract T findById(int userId) throws DAOException;
 
@@ -33,6 +38,14 @@ public abstract class AbstractUserDAO<T extends User> {
         } catch (ConnectionPoolException e) {
             throw new DAOException(e);
         }
+    }
+
+    void prepareSaveUserStatement(T user, PreparedStatement statement) throws SQLException {
+        statement.setString(1, user.getLogin());
+        statement.setString(2, user.getPassword());
+        statement.setString(3, user.getName());
+        statement.setString(4, user.getPhone());
+        statement.setInt(5, user.getRole().getRoleId());
     }
 
 }

@@ -30,6 +30,8 @@ public class DriverDAOImpl extends AbstractUserDAO<Driver>{
             Column.USERS_ID, Column.DRIVER_LICENSES_USER_ID, Table.LICENSE_TYPES,
             Column.DRIVER_LICENSES_LICENSE_ID, Column.LICENSE_ID);
 
+    DriverLicenseDAOImpl licenseDAO = new DriverLicenseDAOImpl();
+
     @Override
     Driver findById(int userId) throws DAOException {
         Driver driver;
@@ -82,7 +84,23 @@ public class DriverDAOImpl extends AbstractUserDAO<Driver>{
     }
 
     @Override
-    public void saveNewUser(Driver user) throws DAOException {
-
+    public void saveNewUser(Driver driver) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement(SAVE_NEW_USER_QUERY);
+            prepareSaveUserStatement(driver, statement);
+            statement.executeUpdate();
+            licenseDAO.prepareSaveDriverLicensesStatement(driver, connection, statement);
+            connection.commit();
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("ConnectionPoolException when saving new driver.", e);
+        } catch (SQLException e) {
+            throw new DAOException("SQLException when saving new driver.", e);
+        } finally {
+            closeConnection(connection, statement);
+        }
     }
 }

@@ -26,6 +26,10 @@ public class ClientDAOImpl extends AbstractUserDAO<Client>{
             "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s ci ON u.%s = ci.%s WHERE r.%s = ?;",
             Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ROLE_ID, Table.CLIENT_INFO,
             Column.USERS_ID, Column.CLIENT_INFO_USER_ID, Column.ROLES_ROLE_ID);
+    private static final String SAVE_NEW_CLIENT_INFO_QUERY = String.format(
+            "INSERT INTO %s (%s, %s, %s) VALUES ((SELECT %s FROM %s WHERE %s = ?), ?, ?);",
+            Table.CLIENT_INFO, Column.CLIENT_INFO_USER_ID, Column.CLIENT_INFO_COMPANY, Column.CLIENT_INFO_NOTE,
+            Column.USERS_ID, Table.USERS, Column.USERS_LOGIN);
 
     @Override
     Client findById(int userId) throws DAOException {
@@ -78,7 +82,27 @@ public class ClientDAOImpl extends AbstractUserDAO<Client>{
     }
 
     @Override
-    public void saveNewUser(Client user) throws DAOException {
-
+    public void saveNewUser(Client client) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement(SAVE_NEW_USER_QUERY);
+            prepareSaveUserStatement(client, statement);
+            statement.executeUpdate();
+            statement = connection.prepareStatement(SAVE_NEW_CLIENT_INFO_QUERY);
+            statement.setString(1, client.getLogin());
+            statement.setString(2, client.getCompany());
+            statement.setString(3, client.getNote());
+            statement.executeUpdate();
+            connection.commit();
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("ConnectionPoolException when saving new client.", e);
+        } catch (SQLException e) {
+            throw new DAOException("SQLException when saving new client.", e);
+        } finally {
+            closeConnection(connection, statement);
+        }
     }
 }

@@ -3,9 +3,7 @@ package com.epam.volodko.dao.impl;
 import com.epam.volodko.dao.DAOFactory;
 import com.epam.volodko.dao.UserDAO;
 import com.epam.volodko.dao.exception.DAOException;
-import com.epam.volodko.entity.user.Admin;
-import com.epam.volodko.entity.user.Role;
-import com.epam.volodko.entity.user.User;
+import com.epam.volodko.entity.user.*;
 import org.junit.Test;
 
 import java.util.Date;
@@ -62,8 +60,17 @@ public class UserDAOImplTest {
 
     @Test
     public void checkSaveNewUser() throws DAOException{
-        Admin admin = new Admin(100, "testLogin1", "testPasswprd1", "testName1",
-                "testPhpne1", Role.ADMIN, new Date(29389391211L), "testNote1");
+        Admin admin = new Admin(100, "testLogin1", "testPassword1", "testName1",
+                "testPhone1", Role.ADMIN, new Date(), "testNote1");
         userDAO.saveNewUser(admin);
+
+        Client client = new Client(100, "testLoginClient", "testPasswordClient", "testNameClient",
+                "testPhoneClient", Role.CLIENT, "JST IRAY", "China guys");
+        userDAO.saveNewUser(client);
+
+        Driver driver = new Driver(100, "driverLogin", "driverPass", "driverName",
+                "driverPhone", Role.DRIVER);
+        driver.addLicense(new DriverLicense(DriverLicenseType.D, new Date(), "testLicenseNumber"));
+        userDAO.saveNewUser(driver);
     }
 }
