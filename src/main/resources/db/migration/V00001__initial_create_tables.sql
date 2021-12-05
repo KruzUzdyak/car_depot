@@ -136,8 +136,8 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`driver_licenses`
 (
     `user_id`         INT         NOT NULL,
     `license_id`      INT         NOT NULL,
-    `obtaining_date`  DATE        NOT NULL,
-    `license_number` VARCHAR(45) NOT NULL,
+    `obtaining_date` BIGINT       NOT NULL,
+    `license_number` VARCHAR(45)  NOT NULL,
     INDEX `license_type_idx` (`license_id` ASC) VISIBLE,
     CONSTRAINT `users_id_driver_licenses`
         FOREIGN KEY (`user_id`)
@@ -147,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`driver_licenses`
     CONSTRAINT `license_type_for_driver`
         FOREIGN KEY (`license_id`)
             REFERENCES `car_depot`.`license_types` (`license_id`)
-            ON DELETE NO ACTION
+            ON DELETE CASCADE
             ON UPDATE NO ACTION
 );
 
@@ -163,8 +163,8 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`orders`
     `dest_from`   VARCHAR(200) NOT NULL,
     `dest_to`     VARCHAR(200) NOT NULL,
     `distance`    INT          NOT NULL,
-    `date_start`  DATE         NOT NULL,
-    `date_finish` DATE         NOT NULL,
+    `date_start`  BIGINT       NOT NULL,
+    `date_finish` BIGINT       NOT NULL,
     `load`        INT          NOT NULL,
     `load_note`   VARCHAR(200) NOT NULL,
     `completed`   BIT          NOT NULL DEFAULT 0,
@@ -202,8 +202,8 @@ DROP TABLE IF EXISTS `car_depot`.`repair_records`;
 CREATE TABLE IF NOT EXISTS `car_depot`.`repair_records`
 (
     `repair_record_id` INT  NOT NULL AUTO_INCREMENT,
-    `repair_start`     DATE NOT NULL,
-    `repair_end`       DATE NOT NULL,
+    `repair_start`   BIGINT NOT NULL,
+    `repair_end`     BIGINT NOT NULL,
     `expenses`         INT  NOT NULL,
     `car_id`           INT  NOT NULL,
     PRIMARY KEY (`repair_record_id`),
@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`client_info`
     CONSTRAINT `users_id_client_info`
         FOREIGN KEY (`user_id`)
             REFERENCES `car_depot`.`users` (`user_id`)
-            ON DELETE NO ACTION
+            ON DELETE CASCADE
             ON UPDATE NO ACTION
 );
 
@@ -241,14 +241,14 @@ DROP TABLE IF EXISTS `car_depot`.`admin_info` ;
 
 CREATE TABLE IF NOT EXISTS `car_depot`.`admin_info` (
     `user_id` INT NOT NULL,
-    `works_since` DATE NOT NULL,
+    `works_since` BIGINT NOT NULL,
      `note` TEXT NULL,
      PRIMARY KEY (`user_id`),
      UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
      CONSTRAINT `admin_info_user_id`
      FOREIGN KEY (`user_id`)
      REFERENCES `car_depot`.`users` (`user_id`)
-     ON DELETE NO ACTION
+     ON DELETE CASCADE
      ON UPDATE NO ACTION
 );
 
@@ -260,7 +260,7 @@ DROP TABLE IF EXISTS `car_depot`.`refuel_records`;
 CREATE TABLE IF NOT EXISTS `car_depot`.`refuel_records`
 (
     `refuel_record_id` INT  NOT NULL AUTO_INCREMENT,
-    `refuel_date`      DATE NOT NULL,
+    `refuel_date`    BIGINT NOT NULL,
     `fuel_price`       INT  NOT NULL,
     `refuel_amount`    INT  NOT NULL,
     `car_id`           INT  NOT NULL,

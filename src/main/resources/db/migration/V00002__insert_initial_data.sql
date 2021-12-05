@@ -99,30 +99,30 @@ VALUES (4, '8301KO-5', 400, 30000, 0, 4, 3);
 -- Data for table `car_depot`.`driver_licenses`
 -- -----------------------------------------------------
 INSERT INTO `car_depot`.`driver_licenses` (`user_id`, `license_id`, `obtaining_date`, `license_number`)
-VALUES (2, 5, '2011.11.11', '7AB250666');
+VALUES (2, 5, 1638121395, '7AB250666');
 INSERT INTO `car_depot`.`driver_licenses` (`user_id`, `license_id`, `obtaining_date`, `license_number`)
-VALUES (3, 5, '2012.12.12', '6BC654899');
+VALUES (3, 5, 1638121395, '6BC654899');
 INSERT INTO `car_depot`.`driver_licenses` (`user_id`, `license_id`, `obtaining_date`, `license_number`)
-VALUES (3, 8, '2017.12.17', '6MM645211');
-
+VALUES (3, 8, 1631111395, '6MM645211');
 -- -----------------------------------------------------
 -- Data for table `car_depot`.`orders`
 -- -----------------------------------------------------
 
-INSERT INTO `car_depot`.`orders` (`order_id`, `dest_from`, `dest_to`, `distance`, `date_start`, `date_finish`, `load`,
-                                  `load_note`, `completed`, `payment`, `client_id`, `admin_id`, `car_id`)
-VALUES (1, 'Uzda', 'Minsk', 70, '2021.12.20', '2021.12.20', 400, 'Packaged milk', 0, 1000, 4, 1, NULL);
-INSERT INTO `car_depot`.`orders` (`order_id`, `dest_from`, `dest_to`, `distance`, `date_start`, `date_finish`, `load`,
-                                  `load_note`, `completed`, `payment`, `client_id`, `admin_id`, `car_id`)
-VALUES (2, 'Farm', 'Uzda', 10, '2021.10.18', '2021.12.18', 3000, 'Milk in tank', 0, 1500, 4, 1, NULL);
+INSERT INTO `car_depot`.`orders` (`order_id`, `dest_from`, `dest_to`, `distance`, `date_start`, `date_finish`,
+`load`, `load_note`, `completed`, `payment`, `client_id`, `admin_id`, `car_id`)
+VALUES (1, 'Uzda', 'Minsk', 70, 1638121475, 1638221475, 400, 'Packaget milk', 0, 1000, 4, 1, NULL);
+INSERT INTO `car_depot`.`orders` (`order_id`, `dest_from`, `dest_to`, `distance`, `date_start`, `date_finish`,
+`load`, `load_note`, `completed`, `payment`, `client_id`, `admin_id`, `car_id`)
+ VALUES (2, 'Village', 'Uzda', 10, 1638221475, 1638321475, 3000, 'Milk in tank', 0, 1500, 4, 1, NULL);
+
 
 -- -----------------------------------------------------
 -- Data for table `car_depot`.`repair_records`
 -- -----------------------------------------------------
 INSERT INTO `car_depot`.`repair_records` (`repair_record_id`, `repair_start`, `repair_end`, `expenses`, `car_id`)
-VALUES (1, '2021.10.10', '2022.02.20', 10000, 1);
+VALUES (1, 1638121475, 1638621475, 10000, 1);
 INSERT INTO `car_depot`.`repair_records` (`repair_record_id`, `repair_start`, `repair_end`, `expenses`, `car_id`)
-VALUES (2, '2021.11.11', '2022.02.20', 30000, 2);
+VALUES (2, 1631621475, 1633621475, 30000, 2);
 
 -- -----------------------------------------------------
 -- Data for table `car_depot`.`client_info`
@@ -136,20 +136,20 @@ VALUES (6, 'JST Infrared', 'China');
 -- Data for table `car_depot`.`admin_info`
 -- -----------------------------------------------------
 INSERT INTO `car_depot`.`admin_info` (`user_id`, `works_since`, `note`)
-VALUES (1, '2020.02.14', 'Best worker');
+VALUES (1, 1638621475, 'Best worker');
 INSERT INTO `car_depot`.`admin_info` (`user_id`, `works_since`, `note`)
-VALUES (5, '2020.05.25', 'New worker');
+VALUES (5, 1638621475, 'New worker');
 
 -- -----------------------------------------------------
 -- Data for table `car_depot`.`refuel_records`
 -- -----------------------------------------------------
 INSERT INTO `car_depot`.`refuel_records` (`refuel_record_id`, `refuel_date`, `fuel_price`, `refuel_amount`, `car_id`)
-VALUES (1, '2021.10.02', 1.8, 30, 1);
+VALUES (1, 1633921475, 1.8, 30, 1);
 INSERT INTO `car_depot`.`refuel_records` (`refuel_record_id`, `refuel_date`, `fuel_price`, `refuel_amount`, `car_id`)
-VALUES (2, '2021.10.01', 2.1, 50, 2);
+VALUES (2, 1633621475, 2.1, 50, 2);
 INSERT INTO `car_depot`.`refuel_records` (`refuel_record_id`, `refuel_date`, `fuel_price`, `refuel_amount`, `car_id`)
-VALUES (3, '2021.10.10', 2.1, 40, 3);
+VALUES (3, 1633321475, 2.1, 40, 3);
 INSERT INTO `car_depot`.`refuel_records` (`refuel_record_id`, `refuel_date`, `fuel_price`, `refuel_amount`, `car_id`)
-VALUES (4, '2021.09.23', 2, 200, 4);
+VALUES (4, 1635621475, 2, 200, 4);
 
 

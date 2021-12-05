@@ -13,4 +13,6 @@ public interface UserDAO {
     List<User> findAll() throws DAOException;
 
     List<User> findUsersByRole(Role role) throws DAOException;
+
+    void saveNewUser(User user) throws DAOException;
 }

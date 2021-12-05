@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientDAOImpl extends UserDAOImpl{
+public class ClientDAOImpl extends AbstractUserDAO<Client>{
 
     private static final String FIND_CLIENT_BY_ID_QUERY = String.format(
             "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s ci ON u.%s = ci.%s WHERE u.%s = ?;",
@@ -27,7 +27,8 @@ public class ClientDAOImpl extends UserDAOImpl{
             Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ROLE_ID, Table.CLIENT_INFO,
             Column.USERS_ID, Column.CLIENT_INFO_USER_ID, Column.ROLES_ROLE_ID);
 
-    Client findClientById(int userId) throws ConnectionPoolException, DAOException, SQLException {
+    @Override
+    Client findById(int userId) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -42,13 +43,18 @@ public class ClientDAOImpl extends UserDAOImpl{
             } else {
                 client = new Client();
             }
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("ConnectionPoolException when try to find client by id.", e);
+        } catch (SQLException e) {
+            throw new DAOException("SQLException when try to find client by id.", e);
         } finally {
             closeConnection(connection, statement, resultSet);
         }
         return client;
     }
 
-    List<Client> findAllClients() throws ConnectionPoolException, SQLException, DAOException {
+    @Override
+    List<Client> findAll() throws DAOException {
         List<Client> clients = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -61,9 +67,18 @@ public class ClientDAOImpl extends UserDAOImpl{
             while(resultSet.next()){
                 clients.add(BuilderFactory.getClientBuilder().build(resultSet));
             }
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("ConnectionPoolException when try to find all clients.", e);
+        } catch (SQLException e) {
+            throw new DAOException("SQLException when try to find admin all clients.", e);
         } finally {
             closeConnection(connection, statement, resultSet);
         }
         return clients;
+    }
+
+    @Override
+    public void saveNewUser(Client user) throws DAOException {
+
     }
 }

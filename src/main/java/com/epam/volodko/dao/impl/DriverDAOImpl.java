@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DriverDAOImpl extends UserDAOImpl{
+public class DriverDAOImpl extends AbstractUserDAO<Driver>{
 
     private static final String FIND_DRIVER_BY_ID_QUERY = String.format(
             "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s AS dl ON u.%s = dl.%s JOIN " +
@@ -30,7 +30,8 @@ public class DriverDAOImpl extends UserDAOImpl{
             Column.USERS_ID, Column.DRIVER_LICENSES_USER_ID, Table.LICENSE_TYPES,
             Column.DRIVER_LICENSES_LICENSE_ID, Column.LICENSE_ID);
 
-    Driver findDriverById(int userId) throws ConnectionPoolException, SQLException, DAOException {
+    @Override
+    Driver findById(int userId) throws DAOException {
         Driver driver;
         Connection connection = null;
         PreparedStatement statement = null;
@@ -46,13 +47,18 @@ public class DriverDAOImpl extends UserDAOImpl{
             } else {
                 driver = new Driver();
             }
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("ConnectionPoolException when try to find driver by id.", e);
+        } catch (SQLException e) {
+            throw new DAOException("SQLException when try to find driver by id.", e);
         } finally {
             closeConnection(connection, statement, resultSet);
         }
         return driver;
     }
 
-    List<Driver> findAllDrivers() throws ConnectionPoolException, SQLException, DAOException {
+    @Override
+    List<Driver> findAll() throws DAOException {
         List<Driver> drivers = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -65,9 +71,18 @@ public class DriverDAOImpl extends UserDAOImpl{
             while(resultSet.next()){
                 drivers.add(BuilderFactory.getDriverBuilder().build(resultSet));
             }
+        } catch (ConnectionPoolException e) {
+            throw new DAOException("ConnectionPoolException when try to find all drivers.", e);
+        } catch (SQLException e) {
+            throw new DAOException("SQLException when try to find all drivers.", e);
         } finally {
             closeConnection(connection, statement, resultSet);
         }
         return drivers;
+    }
+
+    @Override
+    public void saveNewUser(Driver user) throws DAOException {
+
     }
 }

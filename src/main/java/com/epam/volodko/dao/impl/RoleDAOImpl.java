@@ -3,6 +3,7 @@ package com.epam.volodko.dao.impl;
 import com.epam.volodko.dao.builder.BuilderFactory;
 import com.epam.volodko.dao.database.ConnectionPool;
 import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
+import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.dao.table_name.Table;
 import com.epam.volodko.entity.user.Role;
@@ -18,7 +19,7 @@ public class RoleDAOImpl {
             "SELECT * FROM %s AS u JOIN %s r ON u.%s = r.%s WHERE u.%s = ?;",
             Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ROLE_ID, Column.USERS_ID);
 
-    Role findRoleByUserId(int userId) throws ConnectionPoolException, SQLException {
+    Role findRoleByUserId(int userId) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -30,8 +31,16 @@ public class RoleDAOImpl {
             resultSet = statement.executeQuery();
             resultSet.next();
             role = BuilderFactory.getRoleBuilder().build(resultSet);
+        }catch (ConnectionPoolException e) {
+            throw new DAOException("ConnectionPoolException when try to find role by user id.", e);
+        } catch (SQLException e) {
+            throw new DAOException("SQLException when try to find role by user id.", e);
         } finally {
-            ConnectionPool.getInstance().closeConnection(connection, statement, resultSet);
+            try {
+                ConnectionPool.getInstance().closeConnection(connection, statement, resultSet);
+            } catch (ConnectionPoolException e) {
+                throw new DAOException(e);
+            }
         }
         return role;
     }
