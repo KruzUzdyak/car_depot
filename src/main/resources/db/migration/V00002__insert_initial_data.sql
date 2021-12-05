@@ -54,7 +54,7 @@ VALUES (4, 'Scania S', 5000, 'goods', 600, 4);
 -- Data for table `car_depot`.`roles`
 -- -----------------------------------------------------
 INSERT INTO `car_depot`.`roles` (`role_id`, `role`)
-VALUES (1, 'administrator');
+VALUES (1, 'admin');
 INSERT INTO `car_depot`.`roles` (`role_id`, `role`)
 VALUES (2, 'driver');
 INSERT INTO `car_depot`.`roles` (`role_id`, `role`)
@@ -65,13 +65,17 @@ VALUES (3, 'client');
 -- -----------------------------------------------------
 
 INSERT INTO `car_depot`.`users` (`user_id`, `login`, `password`, `name`, `phone`, `role_id`)
-VALUES (1, 'admin', 'admin', 'Strelkov Viktor', '+375297766858', 1);
+VALUES (1, 'admin1', 'admin1', 'Strelkov Viktor', '+375297766858', 1);
 INSERT INTO `car_depot`.`users` (`user_id`, `login`, `password`, `name`, `phone`, `role_id`)
 VALUES (2, 'driver1', 'driver1', 'Gruzdev Anatoly', '+375336462214', 2);
 INSERT INTO `car_depot`.`users` (`user_id`, `login`, `password`, `name`, `phone`, `role_id`)
 VALUES (3, 'driver2', 'driver2', 'Samsonov Semen',  '+375354789476', 2);
 INSERT INTO `car_depot`.`users` (`user_id`, `login`, `password`, `name`, `phone`, `role_id`)
-VALUES (4, 'client', 'client', 'Zuzkin Gennadiy', '+375356794315', 3);
+VALUES (4, 'client1', 'client1', 'Zuzkin Gennadiy', '+375356794315', 3);
+INSERT INTO `car_depot`.`users` (`user_id`, `login`, `password`, `name`, `phone`, `role_id`)
+VALUES (5, 'admin2', 'admin2', 'Starkin Andrey', '+37529774544', 1);
+INSERT INTO `car_depot`.`users` (`user_id`, `login`, `password`, `name`, `phone`, `role_id`)
+VALUES (6, 'client2', 'client2', 'Kertov Grigoriy', '+375356634315', 3);
 
 -- -----------------------------------------------------
 -- Data for table `car_depot`.`cars`
@@ -125,12 +129,16 @@ VALUES (2, '2021.11.11', '2022.02.20', 30000, 2);
 -- -----------------------------------------------------
 INSERT INTO `car_depot`.`client_info` (`user_id`, `company`, `note`)
 VALUES (4, 'LTD Co Inc', 'Nice guy');
+INSERT INTO `car_depot`.`client_info` (`user_id`, `company`, `note`)
+VALUES (6, 'JST Infrared', 'China');
 
 -- -----------------------------------------------------
 -- Data for table `car_depot`.`admin_info`
 -- -----------------------------------------------------
 INSERT INTO `car_depot`.`admin_info` (`user_id`, `works_since`, `note`)
 VALUES (1, '2020.02.14', 'Best worker');
+INSERT INTO `car_depot`.`admin_info` (`user_id`, `works_since`, `note`)
+VALUES (5, '2020.05.25', 'New worker');
 
 -- -----------------------------------------------------
 -- Data for table `car_depot`.`refuel_records`

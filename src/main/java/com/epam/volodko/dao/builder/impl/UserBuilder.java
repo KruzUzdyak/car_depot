@@ -1,7 +1,7 @@
 package com.epam.volodko.dao.builder.impl;
 
+import com.epam.volodko.dao.builder.BuilderFactory;
 import com.epam.volodko.dao.table_name.Column;
-import com.epam.volodko.entity.user.Role;
 import com.epam.volodko.entity.user.User;
 
 import java.sql.ResultSet;
@@ -15,7 +15,7 @@ public class UserBuilder {
         user.setLogin(resultSet.getString(Column.USERS_LOGIN));
         user.setName(resultSet.getString(Column.USERS_NAME));
         user.setPhone(resultSet.getString(Column.USERS_PHONE));
-        user.setRole(Role.valueOf(resultSet.getString(Column.ROLES_ROLE).toUpperCase()));
+        user.setRole(BuilderFactory.getRoleBuilder().build(resultSet));
         return user;
     }
 }

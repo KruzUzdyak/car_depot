@@ -21,9 +21,13 @@ public class UserDAOImpl implements UserDAO {
 
     //todo дописать джоины
     private static final String FIND_USER_BY_ID_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=?", Table.USERS, Column.USERS_ID);
+            "SELECT * FROM %s, %s WHERE %s.%s=? AND %s.%s=%s.%s;",
+            Table.USERS, Table.ROLES, Table.USERS, Column.USERS_ID, Table.USERS,
+            Column.USERS_ROLE_ID, Table.ROLES, Column.ROLES_ROLE_ID);
     private static final String FIND_ALL_USERS_QUERY = String.format(
-            "SELECT * FROM %s", Table.USERS);
+            "SELECT * FROM %s, %s WHERE %s.%s=%s.%s;",
+            Table.USERS, Table.ROLES, Table.USERS, Column.USERS_ROLE_ID,
+            Table.ROLES, Column.ROLES_ROLE_ID);
 
     @Override
     public User findById(int userId) throws DAOException {
