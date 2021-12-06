@@ -22,6 +22,12 @@ public abstract class AbstractUserDAO<T extends User> {
     protected static final String UPDATE_USER_QUERY = String.format(
             "UPDATE %s SET %s = ?, %s = ?, %s = ? WHERE %s = ?;",
             Table.USERS, Column.USERS_LOGIN, Column.USERS_NAME, Column.USERS_PHONE, Column.USERS_ID);
+    protected static final String UPDATE_USER_PASSWORD_QUERY = String.format(
+            "UPDATE %s SET %s = ? WHERE %s = ?;",
+            Table.USERS, Column.USERS_PASSWORD, Column.USERS_ID);
+    protected static final String GET_LAST_ADDED_USER_ID_QUERY = String.format(
+            "SELECT %s FROM %s WHERE %s = ?;",
+            Column.USERS_ID, Table.USERS, Column.USERS_LOGIN);
 
     abstract T findById(int userId) throws DAOException;
 
@@ -32,6 +38,14 @@ public abstract class AbstractUserDAO<T extends User> {
     abstract void saveNewUser(T user) throws DAOException;
 
     abstract void updateUser(T user) throws DAOException;
+
+    int getLastAddedUserId(T user, Connection connection, PreparedStatement statement) throws SQLException {
+        statement = connection.prepareStatement(GET_LAST_ADDED_USER_ID_QUERY);
+        statement.setString(1, user.getLogin());
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt(Column.USERS_ID);
+    }
 
     void deleteUser(int userId) throws DAOException{
         Connection connection = null;
@@ -45,6 +59,23 @@ public abstract class AbstractUserDAO<T extends User> {
             throw new DAOException(e);
         } catch (SQLException e) {
             throw new DAOException("SQLException while try to delete user.", e);
+        } finally {
+            closeConnection(connection, statement);
+        }
+    }
+
+    void updateUserPassword(T user) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(UPDATE_USER_PASSWORD_QUERY);
+            statement.setString(1, user.getPassword());
+            statement.setInt(2, user.getUserId());
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException("SQLException while try to update user password.", e);
         } finally {
             closeConnection(connection, statement);
         }

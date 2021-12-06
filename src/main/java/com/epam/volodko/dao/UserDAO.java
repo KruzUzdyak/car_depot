@@ -22,5 +22,5 @@ public interface UserDAO {
 
     void updateUser(User user) throws DAOException;
 
-    //todo add method for updating password.
+    void updateUserPassword(User user) throws DAOException;
 }

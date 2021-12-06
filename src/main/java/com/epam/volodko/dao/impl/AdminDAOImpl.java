@@ -40,6 +40,7 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
             Table.ADMIN_INFO, Column.ADMIN_INDO_WORKS_SINCE, Column.ADMIN_INFO_NOTE, Column.ADMIN_INFO_USER_ID);
 
 
+
     @Override
     Admin findById(int userId) throws DAOException {
         Admin admin;
@@ -131,6 +132,8 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
             statement.setLong(2, admin.getWorksSince().getTime());
             statement.setString(3, admin.getNote());
             statement.executeUpdate();
+            int userId = getLastAddedUserId(admin, connection, statement);
+            admin.setUserId(userId);
             connection.commit();
         } catch (ConnectionPoolException e) {
             throw new DAOException(e);
@@ -139,6 +142,7 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
         } finally {
             closeConnection(connection, statement);
         }
+
     }
 
     @Override

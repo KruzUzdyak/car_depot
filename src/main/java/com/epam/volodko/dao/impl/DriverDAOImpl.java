@@ -128,6 +128,8 @@ public class DriverDAOImpl extends AbstractUserDAO<Driver>{
             prepareSaveUserStatement(driver, statement);
             statement.executeUpdate();
             licenseDAO.prepareSaveDriverLicensesStatement(driver, connection);
+            int userId = getLastAddedUserId(driver, connection, statement);
+            driver.setUserId(userId);
             connection.commit();
         } catch (ConnectionPoolException e) {
             throw new DAOException(e);
@@ -136,6 +138,7 @@ public class DriverDAOImpl extends AbstractUserDAO<Driver>{
         } finally {
             closeConnection(connection, statement);
         }
+
     }
 
     @Override

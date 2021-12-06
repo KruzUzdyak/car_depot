@@ -127,6 +127,8 @@ public class ClientDAOImpl extends AbstractUserDAO<Client>{
             statement.setString(2, client.getCompany());
             statement.setString(3, client.getNote());
             statement.executeUpdate();
+            int userId = getLastAddedUserId(client, connection, statement);
+            client.setUserId(userId);
             connection.commit();
         } catch (ConnectionPoolException e) {
             throw new DAOException(e);

@@ -53,4 +53,12 @@ public class UserDAOImpl implements UserDAO {
     public void updateUser(User user) throws DAOException {
         UserDAOProvider.getAbstractUserDAO(user.getRole()).updateUser(user);
     }
+
+    @Override
+    public void updateUserPassword(User user) throws DAOException {
+        if (user.getPassword() == null){
+            return;
+        }
+        UserDAOProvider.getAbstractUserDAO(user.getRole()).updateUserPassword(user);
+    }
 }

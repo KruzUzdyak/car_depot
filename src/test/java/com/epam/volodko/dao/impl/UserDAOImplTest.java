@@ -91,6 +91,10 @@ public class UserDAOImplTest {
                 "driverPhone", Role.DRIVER);
         driver.addLicense(new DriverLicense(DriverLicenseType.D, new Date(), "testLicenseNumber"));
         userDAO.saveNewUser(driver);
+
+        System.out.println(admin);
+        System.out.println(client);
+        System.out.println(driver);
     }
 
     @Test
