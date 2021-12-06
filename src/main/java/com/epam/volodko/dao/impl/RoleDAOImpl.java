@@ -16,14 +16,17 @@ import java.sql.SQLException;
 public class RoleDAOImpl {
 
     private static final String FIND_ROLE_BY_USER_ID_QUERY = String.format(
-            "SELECT * FROM %s AS u JOIN %s r ON u.%s = r.%s WHERE u.%s = ?;",
-            Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ROLE_ID, Column.USERS_ID);
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s WHERE u.%s = ?;",
+            Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Column.USERS_ID);
+    private static final String FIND_ROLE_BY_USER_LOGIN_QUERY = String.format(
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s WHERE u.%s = ?;",
+            Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Column.USERS_LOGIN);
 
     Role findRoleByUserId(int userId) throws DAOException {
+        Role role;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        Role role;
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(FIND_ROLE_BY_USER_ID_QUERY);
@@ -31,10 +34,36 @@ public class RoleDAOImpl {
             resultSet = statement.executeQuery();
             resultSet.next();
             role = BuilderFactory.getRoleBuilder().build(resultSet);
-        }catch (ConnectionPoolException e) {
+        } catch (ConnectionPoolException e) {
             throw new DAOException(e);
         } catch (SQLException e) {
             throw new DAOException("SQLException when try to find role by user id.", e);
+        } finally {
+            try {
+                ConnectionPool.getInstance().closeConnection(connection, statement, resultSet);
+            } catch (ConnectionPoolException e) {
+                throw new DAOException(e);
+            }
+        }
+        return role;
+    }
+
+    public Role findRoleByUserLogin(String userLogin) throws DAOException {
+        Role role;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(FIND_ROLE_BY_USER_LOGIN_QUERY);
+            statement.setString(1, userLogin);
+            resultSet = statement.executeQuery();
+            resultSet.next();
+            role = BuilderFactory.getRoleBuilder().build(resultSet);
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException("SQLException when try to find role by user login.", e);
         } finally {
             try {
                 ConnectionPool.getInstance().closeConnection(connection, statement, resultSet);

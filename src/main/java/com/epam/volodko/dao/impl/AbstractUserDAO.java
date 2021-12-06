@@ -22,6 +22,8 @@ public abstract class AbstractUserDAO<T extends User> {
 
     abstract T findById(int userId) throws DAOException;
 
+    abstract T findByLogin(String userLogin) throws DAOException;
+
     abstract List<T> findAll() throws DAOException;
 
     abstract void saveNewUser(T user) throws DAOException;

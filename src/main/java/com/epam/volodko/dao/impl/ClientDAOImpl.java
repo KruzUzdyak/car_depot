@@ -20,12 +20,16 @@ public class ClientDAOImpl extends AbstractUserDAO<Client>{
 
     private static final String FIND_CLIENT_BY_ID_QUERY = String.format(
             "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s ci ON u.%s = ci.%s WHERE u.%s = ?;",
-            Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ROLE_ID, Table.CLIENT_INFO,
+            Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.CLIENT_INFO,
             Column.USERS_ID, Column.CLIENT_INFO_USER_ID, Column.USERS_ID);
+    private static final String FIND_CLIENT_BY_LOGIN_QUERY = String.format(
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s ci ON u.%s = ci.%s WHERE u.%s = ?;",
+            Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.CLIENT_INFO,
+            Column.USERS_ID, Column.CLIENT_INFO_USER_ID, Column.USERS_LOGIN);
     private static final String FIND_ALL_CLIENTS_QUERY = String.format(
             "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s ci ON u.%s = ci.%s WHERE r.%s = ?;",
-            Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ROLE_ID, Table.CLIENT_INFO,
-            Column.USERS_ID, Column.CLIENT_INFO_USER_ID, Column.ROLES_ROLE_ID);
+            Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.CLIENT_INFO,
+            Column.USERS_ID, Column.CLIENT_INFO_USER_ID, Column.ROLES_ID);
     private static final String SAVE_NEW_CLIENT_INFO_QUERY = String.format(
             "INSERT INTO %s (%s, %s, %s) VALUES ((SELECT %s FROM %s WHERE %s = ?), ?, ?);",
             Table.CLIENT_INFO, Column.CLIENT_INFO_USER_ID, Column.CLIENT_INFO_COMPANY, Column.CLIENT_INFO_NOTE,
@@ -51,6 +55,32 @@ public class ClientDAOImpl extends AbstractUserDAO<Client>{
             throw new DAOException(e);
         } catch (SQLException e) {
             throw new DAOException("SQLException when try to find client by id.", e);
+        } finally {
+            closeConnection(connection, statement, resultSet);
+        }
+        return client;
+    }
+
+    @Override
+    Client findByLogin(String userLogin) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        Client client;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(FIND_CLIENT_BY_LOGIN_QUERY);
+            statement.setString(1, userLogin);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                client = BuilderFactory.getClientBuilder().build(resultSet);
+            } else {
+                client = new Client();
+            }
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException("SQLException when try to find client by login.", e);
         } finally {
             closeConnection(connection, statement, resultSet);
         }

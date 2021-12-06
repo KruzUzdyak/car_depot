@@ -35,6 +35,25 @@ public class UserDAOImplTest {
     }
 
     @Test
+    public void checkFindByLogin() throws DAOException {
+        String adminLogin = "admin1";
+        User actualAdmin = userDAO.findByLogin(adminLogin);
+        System.out.println(actualAdmin);
+        System.out.println();
+
+        String clientLogin = "client1";
+        User actualClient = userDAO.findByLogin(clientLogin);
+        System.out.println(actualClient);
+        System.out.println();
+
+        String driverLogin = "driver2";
+        User actualDriver = userDAO.findByLogin(driverLogin);
+        System.out.println(actualDriver);
+
+        //todo make full test.
+    }
+
+    @Test
     public void checkFindAll() throws DAOException {
         List<User> actualUsers = userDAO.findAll();
         actualUsers.forEach(System.out::println);
@@ -59,7 +78,7 @@ public class UserDAOImplTest {
     }
 
     @Test
-    public void checkSaveNewUser() throws DAOException{
+    public void checkSaveNewUser() throws DAOException {
         Admin admin = new Admin(100, "testLogin1", "testPassword1", "testName1",
                 "testPhone1", Role.ADMIN, new Date(), "testNote1");
         userDAO.saveNewUser(admin);
@@ -75,22 +94,26 @@ public class UserDAOImplTest {
     }
 
     @Test
-    public void checkDeleteUser() throws DAOException{
-        Admin admin = new Admin(100, "testLogin1", "testPassword1", "testName1",
+    public void checkDeleteUser() throws DAOException {
+        Admin admin = new Admin(100, "testLogin2", "testPassword1", "testName1",
                 "testPhone1", Role.ADMIN, new Date(), "testNote1");
         userDAO.saveNewUser(admin);
 
-        Client client = new Client(100, "testLoginClient", "testPasswordClient", "testNameClient",
+        Client client = new Client(100, "testLoginClient2", "testPasswordClient", "testNameClient",
                 "testPhoneClient", Role.CLIENT, "JST IRAY", "China guys");
         userDAO.saveNewUser(client);
 
-        Driver driver = new Driver(100, "driverLogin", "driverPass", "driverName",
+        Driver driver = new Driver(100, "driverLogin2", "driverPass", "driverName",
                 "driverPhone", Role.DRIVER);
         driver.addLicense(new DriverLicense(DriverLicenseType.D, new Date(), "testLicenseNumber"));
         userDAO.saveNewUser(driver);
 
-        userDAO.deleteUser(admin);
-        userDAO.deleteUser(client);
-        userDAO.deleteUser(driver);
+        User actualAdmin = userDAO.findByLogin(admin.getLogin());
+        User actualClient = userDAO.findByLogin(client.getLogin());
+        User actualDriver = userDAO.findByLogin(driver.getLogin());
+
+        userDAO.deleteUser(actualAdmin);
+        userDAO.deleteUser(actualClient);
+        userDAO.deleteUser(actualDriver);
     }
 }

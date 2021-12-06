@@ -20,13 +20,19 @@ public class DriverDAOImpl extends AbstractUserDAO<Driver>{
     private static final String FIND_DRIVER_BY_ID_QUERY = String.format(
             "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s AS dl ON u.%s = dl.%s JOIN " +
                     "%s AS lt ON dl.%s = lt.%s WHERE u.%s = ?;",
-            Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ROLE_ID, Table.DRIVER_LICENSES,
+            Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.DRIVER_LICENSES,
             Column.USERS_ID, Column.DRIVER_LICENSES_USER_ID, Table.LICENSE_TYPES, Column.DRIVER_LICENSES_LICENSE_ID,
             Column.LICENSE_ID, Column.USERS_ID);
+    private static final String FIND_DRIVER_BY_LOGIN_QUERY = String.format(
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s AS dl ON u.%s = dl.%s JOIN " +
+                    "%s AS lt ON dl.%s = lt.%s WHERE u.%s = ?;",
+            Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.DRIVER_LICENSES,
+            Column.USERS_ID, Column.DRIVER_LICENSES_USER_ID, Table.LICENSE_TYPES, Column.DRIVER_LICENSES_LICENSE_ID,
+            Column.LICENSE_ID, Column.USERS_LOGIN);
     private static final String FIND_ALL_DRIVERS_QUERY = String.format(
             "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s dl " +
                     "ON u.%s = dl.%s JOIN %s lt ON dl.%s = lt.%s",
-            Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ROLE_ID, Table.DRIVER_LICENSES,
+            Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.DRIVER_LICENSES,
             Column.USERS_ID, Column.DRIVER_LICENSES_USER_ID, Table.LICENSE_TYPES,
             Column.DRIVER_LICENSES_LICENSE_ID, Column.LICENSE_ID);
 
@@ -58,6 +64,32 @@ public class DriverDAOImpl extends AbstractUserDAO<Driver>{
         }
         return driver;
     }
+
+    @Override
+    Driver findByLogin(String userLogin) throws DAOException {
+        Driver driver;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(FIND_DRIVER_BY_LOGIN_QUERY,
+                    ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            statement.setString(1, userLogin);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()){
+                driver = BuilderFactory.getDriverBuilder().build(resultSet);
+            } else {
+                driver = new Driver();
+            }
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException("SQLException when try to find driver by login.", e);
+        } finally {
+            closeConnection(connection, statement, resultSet);
+        }
+        return driver;    }
 
     @Override
     List<Driver> findAll() throws DAOException {

@@ -20,7 +20,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User findByLogin(String userLogin) throws DAOException {
-        return null;
+        Role role = roleDAO.findRoleByUserLogin(userLogin);
+        return UserDAOProvider.getAbstractUserDAO(role).findByLogin(userLogin.trim());
     }
 
     @Override
