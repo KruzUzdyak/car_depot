@@ -49,12 +49,12 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`car_models`
     `capacity`  INT          NOT NULL,
     `load_type` VARCHAR(100) NOT NULL,
     `fuel_tank` INT          NOT NULL,
-    `car_type`  INT          NOT NULL,
+    `car_type_id`  INT          NOT NULL,
     PRIMARY KEY (`model_id`),
-    INDEX `model_type_idx` (`car_type` ASC) VISIBLE,
+    INDEX `model_type_idx` (`car_type_id` ASC) VISIBLE,
     UNIQUE INDEX `model_UNIQUE` (`car_model` ASC) VISIBLE,
     CONSTRAINT `model_type_car_type`
-        FOREIGN KEY (`car_type`)
+        FOREIGN KEY (`car_type_id`)
             REFERENCES `car_depot`.`car_types` (`type_id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
@@ -108,14 +108,14 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`cars`
     `fuel_level`    INT         NOT NULL,
     `mileage`       INT         NOT NULL DEFAULT 10000,
     `broken`        BIT         NOT NULL DEFAULT 0,
-    `car_model`     INT         NOT NULL,
+    `car_model_id`  INT         NOT NULL,
     `driver_id`     INT         NULL,
     PRIMARY KEY (`car_id`),
-    INDEX `car_model_idx` (`car_model` ASC) VISIBLE,
+    INDEX `car_model_idx` (`car_model_id` ASC) VISIBLE,
     UNIQUE INDEX `plate_number_UNIQUE` (`plate_number` ASC) VISIBLE,
     INDEX `drivers_id_idx` (`driver_id` ASC) VISIBLE,
     CONSTRAINT `car_model_cars`
-        FOREIGN KEY (`car_model`)
+        FOREIGN KEY (`car_model_id`)
             REFERENCES `car_depot`.`car_models` (`model_id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,

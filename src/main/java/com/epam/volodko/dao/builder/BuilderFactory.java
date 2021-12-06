@@ -11,6 +11,9 @@ public class BuilderFactory {
     private static final RoleBuilder roleBuilder = new RoleBuilder();
     private static final LicenseTypeBuilder licenseTypeBuilder = new LicenseTypeBuilder();
     private static final DriverLicenseBuilder driverLicenseBuilder = new DriverLicenseBuilder();
+    private static final CarBuilder carBuilder = new CarBuilder();
+    private static final CarModelBuilder modelBuilder = new CarModelBuilder();
+    private static final CarTypeBuilder carTypeBuilder = new CarTypeBuilder();
 
 
     public static UserBuilder getUserBuilder() {
@@ -39,5 +42,17 @@ public class BuilderFactory {
 
     public static DriverLicenseBuilder getDriverLicenseBuilder() {
         return driverLicenseBuilder;
+    }
+
+    public static CarBuilder getCarBuilder() {
+        return carBuilder;
+    }
+
+    public static CarModelBuilder getModelBuilder() {
+        return modelBuilder;
+    }
+
+    public static CarTypeBuilder getCarTypeBuilder() {
+        return carTypeBuilder;
     }
 }

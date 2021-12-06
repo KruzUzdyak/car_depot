@@ -42,24 +42,24 @@ public class Column {
     public static final String ORDERS_ADMIN_ID = "admin_id";
     public static final String ORDERS_CAR_ID = "car_id";
 
-    public static final String CARS_CAR_ID = "car_id";
+    public static final String CARS_ID = "car_id";
     public static final String CARS_PLATE_NUMBER = "plate_number";
     public static final String CARS_FUEL_LEVEL = "fuel_level";
     public static final String CARS_MILEAGE = "mileage";
     public static final String CARS_BROKEN = "broken";
-    public static final String CARS_CAR_MODEL = "car_model";
+    public static final String CARS_MODEL_ID = "car_model_id";
     public static final String CARS_DRIVER_ID = "driver_id";
 
-    public static final String CAR_MODELS_MODEL_ID = "model_id";
-    public static final String CAR_MODELS_CAR_MODEL = "car_model";
+    public static final String CAR_MODELS_ID = "model_id";
+    public static final String CAR_MODELS_NAME = "car_model";
     public static final String CAR_MODELS_CAPACITY = "capacity";
     public static final String CAR_MODELS_LOAD_TYPE = "load_type";
     public static final String CAR_MODELS_FUEL_TANK = "fuel_tank";
-    public static final String CAR_MODELS_CAR_TYPE = "car_type";
+    public static final String CAR_MODELS_TYPE_ID = "car_type_id";
 
-    public static final String CAR_TYPES_TYPE_ID = "type_id";
-    public static final String CAR_TYPES_CAR_TYPE = "car_type";
-    public static final String CAR_TYPES_REQUIRED_LICENSE_TYPE = "required_license_type";
+    public static final String CAR_TYPES_ID = "type_id";
+    public static final String CAR_TYPES_NAME = "car_type";
+    public static final String CAR_TYPES_REQUIRED_LICENSE = "required_license_type";
 
     public static final String REFUEL_RECORDS_ID = "refuel_record_id";
     public static final String REFUEL_RECORDS_REFUEL_DATE = "refuel_date";

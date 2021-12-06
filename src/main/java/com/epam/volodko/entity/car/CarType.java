@@ -2,35 +2,56 @@ package com.epam.volodko.entity.car;
 
 import com.epam.volodko.entity.user.DriverLicenseType;
 
-public enum CarType {
+import java.util.Objects;
 
-    SMALL_BUS(1, DriverLicenseType.B),
-    BUS(2, DriverLicenseType.D),
-    SMALL_TRUCK(3, DriverLicenseType.C),
-    TRUCK_WITH_TRAILER(4, DriverLicenseType.CE);
+public class CarType {
 
     private final int carTypeId;
-    private final DriverLicenseType requiredDriverLicenseType;
+    private final String typeName;
+    private final DriverLicenseType requiredLicense;
 
-    CarType(int carTypeId, DriverLicenseType requiredDriverLicenseType) {
+    public CarType(int carTypeId, String typeName, DriverLicenseType requiredLicense) {
         this.carTypeId = carTypeId;
-        this.requiredDriverLicenseType = requiredDriverLicenseType;
+        this.typeName = typeName;
+        this.requiredLicense = requiredLicense;
     }
 
-    public DriverLicenseType getRequiredDriverLicenseType() {
-        return requiredDriverLicenseType;
+    public DriverLicenseType getRequiredLicense() {
+        return requiredLicense;
     }
 
     public int getCarTypeId() {
         return carTypeId;
     }
 
+    public String getTypeName() {
+        return typeName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CarType carType = (CarType) o;
+        return carTypeId == carType.carTypeId && Objects.equals(typeName, carType.typeName) &&
+                requiredLicense == carType.requiredLicense;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(carTypeId, typeName, requiredLicense);
+    }
+
     @Override
     public String toString() {
         return "CarType{" +
                 "carTypeId=" + carTypeId +
-                ", requiredDriverLicenseType=" + requiredDriverLicenseType +
+                ", typeName='" + typeName + '\'' +
+                ", requiredLicense=" + requiredLicense +
                 '}';
     }
-
 }

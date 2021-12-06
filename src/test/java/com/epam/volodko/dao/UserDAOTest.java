@@ -1,4 +1,4 @@
-package com.epam.volodko.dao.impl;
+package com.epam.volodko.dao;
 
 import com.epam.volodko.dao.DAOFactory;
 import com.epam.volodko.dao.UserDAO;
@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class UserDAOImplTest {
+public class UserDAOTest {
 
     UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 

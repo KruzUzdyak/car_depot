@@ -94,6 +94,10 @@ public class Car implements Serializable {
         this.carId = carId;
     }
 
+    public void setModel(CarModel model) {
+        this.model = model;
+    }
+
     public boolean hasDriver(){
         return driver != null;
     }
