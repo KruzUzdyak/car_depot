@@ -17,6 +17,9 @@ public class DriverLicenseDAOImpl{
             Table.DRIVER_LICENSES, Column.DRIVER_LICENSES_USER_ID, Column.DRIVER_LICENSES_LICENSE_ID,
             Column.DRIVER_LICENSES_OBTAINING_DATE, Column.DRIVER_LICENSES_LICENSE_NUMBER, Column.USERS_ID,
             Table.USERS, Column.USERS_LOGIN);
+    private static final String DELETE_DRIVER_LICENSE_BY_ID_QUERY = String.format(
+            "DELETE FROM %s WHERE %s = ?;",
+            Table.DRIVER_LICENSES, Column.DRIVER_LICENSES_USER_ID);
 
     void prepareSaveDriverLicensesStatement(Driver driver, Connection connection) throws DAOException {
         try {
@@ -31,6 +34,22 @@ public class DriverLicenseDAOImpl{
         } catch (SQLException e){
             throw new DAOException("SQLException when preparing for Save driver licenses in statement.", e);
         }
+    }
+
+    void prepareUpdateDriverLicensesStatement(Driver driver, Connection connection) throws DAOException{
+        prepareDeleteDriverLicensesStatement(driver, connection);
+        prepareSaveDriverLicensesStatement(driver, connection);
+    }
+
+    void prepareDeleteDriverLicensesStatement(Driver driver, Connection connection) throws DAOException{
+        try {
+            PreparedStatement statement = connection.prepareStatement(DELETE_DRIVER_LICENSE_BY_ID_QUERY);
+            statement.setInt(1, driver.getUserId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("SQLException while try to delete driver licenses.", e);
+        }
+
     }
 
 }

@@ -7,6 +7,8 @@ import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.dao.table_name.Table;
 import com.epam.volodko.entity.user.Driver;
+import com.epam.volodko.entity.user.DriverLicense;
+import com.epam.volodko.entity.user.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -134,5 +136,27 @@ public class DriverDAOImpl extends AbstractUserDAO<Driver>{
         } finally {
             closeConnection(connection, statement);
         }
+    }
+
+    @Override
+    void updateUser(Driver driver) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement(UPDATE_USER_QUERY);
+            prepareUpdateUserStatement(driver, statement);
+            statement.executeUpdate();
+            licenseDAO.prepareUpdateDriverLicensesStatement(driver, connection);
+            connection.commit();
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException("SQLException when updating driver.", e);
+        } finally {
+            closeConnection(connection, statement);
+        }
+
     }
 }

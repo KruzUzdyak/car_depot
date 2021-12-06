@@ -115,5 +115,28 @@ public class UserDAOImplTest {
         userDAO.deleteUser(actualAdmin);
         userDAO.deleteUser(actualClient);
         userDAO.deleteUser(actualDriver);
+
+        //todo make full test.
+    }
+
+    @Test
+    public void checkUpdateUser() throws DAOException{
+        Admin admin = (Admin) userDAO.findUsersByRole(Role.ADMIN).get(0);
+        admin.setPhone("!UpdatedTestPhone!");
+        admin.setNote("!UpdatedTestNote!");
+        userDAO.updateUser(admin);
+
+        Client client = (Client) userDAO.findUsersByRole(Role.CLIENT).get(0);
+        client.setName("UpdatedClientName");
+        client.setCompany("UpdatedCompany");
+        userDAO.updateUser(client);
+
+        Driver driver = (Driver) userDAO.findUsersByRole(Role.DRIVER).get(0);
+        DriverLicense license = new DriverLicense(DriverLicenseType.A1, new Date(1000L), "TEST_LICENSE");
+        driver.addLicense(license);
+        driver.setName("TEST_DRIVER_NAME");
+        userDAO.updateUser(driver);
+
+        //todo make full test.
     }
 }

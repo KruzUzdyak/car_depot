@@ -48,4 +48,9 @@ public class UserDAOImpl implements UserDAO {
     public void deleteUser(User user) throws DAOException {
         UserDAOProvider.getAbstractUserDAO(user.getRole()).deleteUser(user.getUserId());
     }
+
+    @Override
+    public void updateUser(User user) throws DAOException {
+        UserDAOProvider.getAbstractUserDAO(user.getRole()).updateUser(user);
+    }
 }

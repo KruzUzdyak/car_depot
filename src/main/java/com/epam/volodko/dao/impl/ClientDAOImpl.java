@@ -8,11 +8,9 @@ import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.dao.table_name.Table;
 import com.epam.volodko.entity.user.Client;
 import com.epam.volodko.entity.user.Role;
+import com.epam.volodko.entity.user.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +32,9 @@ public class ClientDAOImpl extends AbstractUserDAO<Client>{
             "INSERT INTO %s (%s, %s, %s) VALUES ((SELECT %s FROM %s WHERE %s = ?), ?, ?);",
             Table.CLIENT_INFO, Column.CLIENT_INFO_USER_ID, Column.CLIENT_INFO_COMPANY, Column.CLIENT_INFO_NOTE,
             Column.USERS_ID, Table.USERS, Column.USERS_LOGIN);
+    private static final String UPDATE_CLIENT_INFO_QUERY = String.format(
+            "UPDATE %s SET %s = ?, %s = ? WHERE %s = ?;",
+            Table.CLIENT_INFO, Column.CLIENT_INFO_COMPANY, Column.CLIENT_INFO_NOTE, Column.CLIENT_INFO_USER_ID);
 
     @Override
     Client findById(int userId) throws DAOException {
@@ -131,6 +132,31 @@ public class ClientDAOImpl extends AbstractUserDAO<Client>{
             throw new DAOException(e);
         } catch (SQLException e) {
             throw new DAOException("SQLException when saving new client.", e);
+        } finally {
+            closeConnection(connection, statement);
+        }
+    }
+
+    @Override
+    void updateUser(Client client) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement(UPDATE_USER_QUERY);
+            prepareUpdateUserStatement(client, statement);
+            statement.executeUpdate();
+            statement = connection.prepareStatement(UPDATE_CLIENT_INFO_QUERY);
+            statement.setString(1, client.getCompany());
+            statement.setString(2, client.getNote());
+            statement.setInt(3, client.getUserId());
+            statement.executeUpdate();
+            connection.commit();
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException("SQLException when updating client.", e);
         } finally {
             closeConnection(connection, statement);
         }

@@ -19,6 +19,9 @@ public abstract class AbstractUserDAO<T extends User> {
     protected static final String DELETE_USER_QUERY = String.format(
             "DELETE FROM %s WHERE %s = ?;",
             Table.USERS, Column.USERS_ID);
+    protected static final String UPDATE_USER_QUERY = String.format(
+            "UPDATE %s SET %s = ?, %s = ?, %s = ? WHERE %s = ?;",
+            Table.USERS, Column.USERS_LOGIN, Column.USERS_NAME, Column.USERS_PHONE, Column.USERS_ID);
 
     abstract T findById(int userId) throws DAOException;
 
@@ -27,6 +30,8 @@ public abstract class AbstractUserDAO<T extends User> {
     abstract List<T> findAll() throws DAOException;
 
     abstract void saveNewUser(T user) throws DAOException;
+
+    abstract void updateUser(T user) throws DAOException;
 
     void deleteUser(int userId) throws DAOException{
         Connection connection = null;
@@ -67,6 +72,13 @@ public abstract class AbstractUserDAO<T extends User> {
         statement.setString(3, user.getName());
         statement.setString(4, user.getPhone());
         statement.setInt(5, user.getRole().getRoleId());
+    }
+
+    void prepareUpdateUserStatement(T user, PreparedStatement statement) throws SQLException {
+        statement.setString(1, user.getLogin());
+        statement.setString(2, user.getName());
+        statement.setString(3, user.getPhone());
+        statement.setInt(4, user.getUserId());
     }
 
 }

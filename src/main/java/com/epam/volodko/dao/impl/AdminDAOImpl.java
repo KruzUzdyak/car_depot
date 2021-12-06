@@ -8,6 +8,7 @@ import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.dao.table_name.Table;
 import com.epam.volodko.entity.user.Admin;
 import com.epam.volodko.entity.user.Role;
+import com.epam.volodko.entity.user.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,6 +35,9 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
             "INSERT INTO %s (%s, %s, %s) VALUES ((SELECT %s FROM %s WHERE %s = ?), ?, ?);",
             Table.ADMIN_INFO, Column.ADMIN_INFO_USER_ID, Column.ADMIN_INDO_WORKS_SINCE, Column.ADMIN_INFO_NOTE,
             Column.USERS_ID, Table.USERS, Column.USERS_LOGIN);
+    private static final String UPDATE_ADMIN_INFO_QUERY = String.format(
+            "UPDATE %s SET %s = ?, %s = ? WHERE %s = ?;",
+            Table.ADMIN_INFO, Column.ADMIN_INDO_WORKS_SINCE, Column.ADMIN_INFO_NOTE, Column.ADMIN_INFO_USER_ID);
 
 
     @Override
@@ -132,6 +136,31 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
             throw new DAOException(e);
         } catch (SQLException e) {
             throw new DAOException("SQLException when saving new admin.", e);
+        } finally {
+            closeConnection(connection, statement);
+        }
+    }
+
+    @Override
+    void updateUser(Admin admin) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement(UPDATE_USER_QUERY);
+            prepareUpdateUserStatement(admin, statement);
+            statement.executeUpdate();
+            statement = connection.prepareStatement(UPDATE_ADMIN_INFO_QUERY);
+            statement.setLong(1, admin.getWorksSince().getTime());
+            statement.setString(2, admin.getNote());
+            statement.setInt(3, admin.getUserId());
+            statement.executeUpdate();
+            connection.commit();
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
+        } catch (SQLException e) {
+            throw new DAOException("SQLException when updating admin.", e);
         } finally {
             closeConnection(connection, statement);
         }

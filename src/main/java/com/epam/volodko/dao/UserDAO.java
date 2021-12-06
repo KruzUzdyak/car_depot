@@ -19,4 +19,8 @@ public interface UserDAO {
     void saveNewUser(User user) throws DAOException;
 
     void deleteUser(User user) throws DAOException;
+
+    void updateUser(User user) throws DAOException;
+
+    //todo add method for updating password.
 }
