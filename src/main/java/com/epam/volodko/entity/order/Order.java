@@ -5,8 +5,6 @@ import com.epam.volodko.entity.user.Admin;
 import com.epam.volodko.entity.user.Client;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -17,7 +15,7 @@ public class Order implements Serializable {
     private String destTo;
     private int distance;
     private Date dateStart;
-    private Date dateFinish;
+    private Date dateEnd;
     private int load;
     private String loadNote;
     private boolean completed;
@@ -69,12 +67,12 @@ public class Order implements Serializable {
         this.dateStart = dateStart;
     }
 
-    public Date getDateFinish() {
-        return dateFinish;
+    public Date getDateEnd() {
+        return dateEnd;
     }
 
-    public void setDateFinish(Date dateFinish) {
-        this.dateFinish = dateFinish;
+    public void setDateEnd(Date dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public int getLoad() {
@@ -145,14 +143,14 @@ public class Order implements Serializable {
         return orderId == order.orderId && distance == order.distance && load == order.load &&
                 completed == order.completed && payment == order.payment &&
                 Objects.equals(destFrom, order.destFrom) && Objects.equals(destTo, order.destTo) &&
-                Objects.equals(dateStart, order.dateStart) && Objects.equals(dateFinish, order.dateFinish) &&
+                Objects.equals(dateStart, order.dateStart) && Objects.equals(dateEnd, order.dateEnd) &&
                 Objects.equals(loadNote, order.loadNote) && Objects.equals(client, order.client) &&
                 Objects.equals(admin, order.admin) && Objects.equals(car, order.car);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, destFrom, destTo, distance, dateStart, dateFinish,
+        return Objects.hash(orderId, destFrom, destTo, distance, dateStart, dateEnd,
                 load, loadNote, completed, payment, client, admin, car);
     }
 
@@ -164,7 +162,7 @@ public class Order implements Serializable {
                 ", destTo='" + destTo + '\'' +
                 ", distance=" + distance +
                 ", dateStart=" + dateStart +
-                ", dateFinish=" + dateFinish +
+                ", dateFinish=" + dateEnd +
                 ", load=" + load +
                 ", loadNote='" + loadNote + '\'' +
                 ", completed=" + completed +

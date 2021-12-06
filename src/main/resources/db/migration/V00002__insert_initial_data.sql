@@ -99,30 +99,30 @@ VALUES (4, '8301KO-5', 400, 30000, 0, 4, 3);
 -- Data for table `car_depot`.`driver_licenses`
 -- -----------------------------------------------------
 INSERT INTO `car_depot`.`driver_licenses` (`user_id`, `license_id`, `obtaining_date`, `license_number`)
-VALUES (2, 5, 1638121395, '7AB250666');
+VALUES (2, 5, 1614190346, '7AB250666');
 INSERT INTO `car_depot`.`driver_licenses` (`user_id`, `license_id`, `obtaining_date`, `license_number`)
-VALUES (3, 5, 1638121395, '6BC654899');
+VALUES (3, 5, 1621190346, '6BC654899');
 INSERT INTO `car_depot`.`driver_licenses` (`user_id`, `license_id`, `obtaining_date`, `license_number`)
-VALUES (3, 8, 1631111395, '6MM645211');
+VALUES (3, 8, 1623190346, '6MM645211');
 -- -----------------------------------------------------
 -- Data for table `car_depot`.`orders`
 -- -----------------------------------------------------
 
-INSERT INTO `car_depot`.`orders` (`order_id`, `dest_from`, `dest_to`, `distance`, `date_start`, `date_finish`,
+INSERT INTO `car_depot`.`orders` (`order_id`, `dest_from`, `dest_to`, `distance`, `date_start`, `date_end`,
 `load`, `load_note`, `completed`, `payment`, `client_id`, `admin_id`, `car_id`)
-VALUES (1, 'Uzda', 'Minsk', 70, 1638121475, 1638221475, 400, 'Packaget milk', 0, 1000, 4, 1, NULL);
-INSERT INTO `car_depot`.`orders` (`order_id`, `dest_from`, `dest_to`, `distance`, `date_start`, `date_finish`,
+VALUES (1, 'Uzda', 'Minsk', 70, 1638359946, 1641359946, 400, 'Packaget milk', 0, 1000, 4, 1, NULL);
+INSERT INTO `car_depot`.`orders` (`order_id`, `dest_from`, `dest_to`, `distance`, `date_start`, `date_end`,
 `load`, `load_note`, `completed`, `payment`, `client_id`, `admin_id`, `car_id`)
- VALUES (2, 'Village', 'Uzda', 10, 1638221475, 1638321475, 3000, 'Milk in tank', 0, 1500, 4, 1, NULL);
+ VALUES (2, 'Village', 'Uzda', 10, 1637359946, 1640359946, 3000, 'Milk in tank', 0, 1500, 4, 1, NULL);
 
 
 -- -----------------------------------------------------
 -- Data for table `car_depot`.`repair_records`
 -- -----------------------------------------------------
 INSERT INTO `car_depot`.`repair_records` (`repair_record_id`, `repair_start`, `repair_end`, `expenses`, `car_id`)
-VALUES (1, 1638121475, 1638621475, 10000, 1);
+VALUES (1, 1638359946, 1639359946, 10000, 1);
 INSERT INTO `car_depot`.`repair_records` (`repair_record_id`, `repair_start`, `repair_end`, `expenses`, `car_id`)
-VALUES (2, 1631621475, 1633621475, 30000, 2);
+VALUES (2, 1637359946, 1639359946, 30000, 2);
 
 -- -----------------------------------------------------
 -- Data for table `car_depot`.`client_info`
@@ -136,20 +136,20 @@ VALUES (6, 'JST Infrared', 'China');
 -- Data for table `car_depot`.`admin_info`
 -- -----------------------------------------------------
 INSERT INTO `car_depot`.`admin_info` (`user_id`, `works_since`, `note`)
-VALUES (1, 1638621475, 'Best worker');
+VALUES (1, 1610279946, 'Best worker');
 INSERT INTO `car_depot`.`admin_info` (`user_id`, `works_since`, `note`)
-VALUES (5, 1638621475, 'New worker');
+VALUES (5, 1615279946, 'New worker');
 
 -- -----------------------------------------------------
 -- Data for table `car_depot`.`refuel_records`
 -- -----------------------------------------------------
 INSERT INTO `car_depot`.`refuel_records` (`refuel_record_id`, `refuel_date`, `fuel_price`, `refuel_amount`, `car_id`)
-VALUES (1, 1633921475, 1.8, 30, 1);
+VALUES (1, 1624190346, 1.8, 30, 1);
 INSERT INTO `car_depot`.`refuel_records` (`refuel_record_id`, `refuel_date`, `fuel_price`, `refuel_amount`, `car_id`)
-VALUES (2, 1633621475, 2.1, 50, 2);
+VALUES (2, 1624290346, 2.1, 50, 2);
 INSERT INTO `car_depot`.`refuel_records` (`refuel_record_id`, `refuel_date`, `fuel_price`, `refuel_amount`, `car_id`)
-VALUES (3, 1633321475, 2.1, 40, 3);
+VALUES (3, 1624390346, 2.1, 40, 3);
 INSERT INTO `car_depot`.`refuel_records` (`refuel_record_id`, `refuel_date`, `fuel_price`, `refuel_amount`, `car_id`)
-VALUES (4, 1635621475, 2, 200, 4);
+VALUES (4, 1624490346, 2, 200, 4);
 
 

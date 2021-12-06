@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`orders`
     `dest_to`     VARCHAR(200) NOT NULL,
     `distance`    INT          NOT NULL,
     `date_start`  BIGINT       NOT NULL,
-    `date_finish` BIGINT       NOT NULL,
+    `date_end` BIGINT       NOT NULL,
     `load`        INT          NOT NULL,
     `load_note`   VARCHAR(200) NOT NULL,
     `completed`   BIT          NOT NULL DEFAULT 0,

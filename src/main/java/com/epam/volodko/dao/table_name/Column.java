@@ -33,7 +33,7 @@ public class Column {
     public static final String ORDERS_DEST_TO = "dest_to";
     public static final String ORDERS_DISTANCE = "distance";
     public static final String ORDERS_DATE_START = "date_start";
-    public static final String ORDERS_DATE_FINISH = "date_finish";
+    public static final String ORDERS_DATE_END = "date_end";
     public static final String ORDERS_LOAD = "load";
     public static final String ORDERS_LOAD_NOTE = "load_note";
     public static final String ORDERS_COMPLETED = "completed";
