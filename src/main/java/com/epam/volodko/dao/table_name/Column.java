@@ -59,7 +59,7 @@ public class Column {
 
     public static final String CAR_TYPES_ID = "type_id";
     public static final String CAR_TYPES_NAME = "car_type";
-    public static final String CAR_TYPES_REQUIRED_LICENSE = "required_license_type";
+    public static final String CAR_TYPES_REQUIRED_LICENSE_ID = "required_license_type";
 
     public static final String REFUEL_RECORDS_ID = "refuel_record_id";
     public static final String REFUEL_RECORDS_REFUEL_DATE = "refuel_date";

@@ -21,15 +21,9 @@ public class CarBuilder {
             car.setMileage(resultSet.getInt(Column.CARS_MILEAGE));
             car.setBroken(resultSet.getBoolean(Column.CARS_BROKEN));
             car.setModel(BuilderFactory.getModelBuilder().build(resultSet));
-            car.setDriver(getDriver(resultSet));
         } catch (SQLException e) {
             throw new DAOException("SQLException when build a car.", e);
         }
         return car;
-    }
-
-    private Driver getDriver(ResultSet resultSet) throws SQLException, DAOException {
-        int driverId = resultSet.getInt(Column.CARS_DRIVER_ID);
-        return (Driver) DAOFactory.getInstance().getUserDAO().findById(driverId);
     }
 }

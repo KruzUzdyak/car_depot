@@ -6,9 +6,12 @@ import java.util.Objects;
 
 public class CarType {
 
-    private final int carTypeId;
-    private final String typeName;
-    private final DriverLicenseType requiredLicense;
+    private int carTypeId;
+    private String typeName;
+    private DriverLicenseType requiredLicense;
+
+    public CarType() {
+    }
 
     public CarType(int carTypeId, String typeName, DriverLicenseType requiredLicense) {
         this.carTypeId = carTypeId;
@@ -26,6 +29,18 @@ public class CarType {
 
     public String getTypeName() {
         return typeName;
+    }
+
+    public void setCarTypeId(int carTypeId) {
+        this.carTypeId = carTypeId;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public void setRequiredLicense(DriverLicenseType requiredLicense) {
+        this.requiredLicense = requiredLicense;
     }
 
     @Override
