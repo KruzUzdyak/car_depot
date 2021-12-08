@@ -15,7 +15,7 @@ public class CarModel implements Serializable {
     public CarModel() {
     }
 
-    public CarModel(int carModelId, String modelName, int capacity, int fuelTank, CarType type, String loadType) {
+    public CarModel(int carModelId, String modelName, int capacity, int fuelTank, String loadType, CarType type) {
         this.carModelId = carModelId;
         this.modelName = modelName;
         this.capacity = capacity;

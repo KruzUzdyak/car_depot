@@ -27,32 +27,11 @@ public abstract class AbstractDAO {
         }
     }
 
-    void closeConnection(Connection connection){
+    void rollback(Connection connection) throws DAOException {
         try {
-            connection.close();
+            connection.rollback();
         } catch (SQLException e) {
-
-        }
-    }
-
-    void closeStatement(Statement statement, ResultSet resultSet){
-        try {
-            resultSet.close();
-        } catch (SQLException e) {
-            //todo logger.log(Level.ERROR, "ResultSet isn't closed.");
-        }
-        try{
-            statement.close();
-        } catch (SQLException e) {
-            //todo logger.log(Level.ERROR, "Statement isn't closed.");
-        }
-    }
-
-    void closeStatement(Statement statement){
-        try{
-            statement.close();
-        } catch (SQLException e) {
-            //todo logger.log(Level.ERROR, "Statement isn't closed.");
+            throw new DAOException("SQLException when try to rollback changes.", e);
         }
     }
 }

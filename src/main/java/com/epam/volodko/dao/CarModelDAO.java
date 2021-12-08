@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface CarModelDAO {
 
-    CarModel getById(int carModelId) throws DAOException;
+    CarModel findById(int carModelId) throws DAOException;
 
-    CarModel getByCarType(CarType carType) throws DAOException;
+    List<CarModel> findById(CarType carType) throws DAOException;
 
-    List<CarModel> getAll() throws DAOException;
+    List<CarModel> findAll() throws DAOException;
 
     int saveNew(CarModel carModel) throws DAOException;
 

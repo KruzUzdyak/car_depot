@@ -20,7 +20,7 @@ public class CarModelBuilder {
             int fuelTank = resultSet.getInt(Column.CAR_MODELS_FUEL_TANK);
             String loadType = resultSet.getString(Column.CAR_MODELS_LOAD_TYPE);
             CarType carType = BuilderFactory.getCarTypeBuilder().build(resultSet);
-            carModel = new CarModel(carModelId, modelName, capacity, fuelTank, carType, loadType);
+            carModel = new CarModel(carModelId, modelName, capacity, fuelTank, loadType, carType);
         } catch (SQLException e){
             throw new DAOException("SQLException when building car model.", e);
         }
