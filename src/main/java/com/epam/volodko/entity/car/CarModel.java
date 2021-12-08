@@ -5,12 +5,15 @@ import java.util.Objects;
 
 public class CarModel implements Serializable {
 
-    private final int carModelId;
-    private final String modelName;
-    private final int capacity;
-    private final int fuelTank;
-    private final CarType type;
-    private final String loadType;
+    private int carModelId;
+    private String modelName;
+    private int capacity;
+    private int fuelTank;
+    private CarType type;
+    private String loadType;
+
+    public CarModel() {
+    }
 
     public CarModel(int carModelId, String modelName, int capacity, int fuelTank, CarType type, String loadType) {
         this.carModelId = carModelId;
@@ -25,24 +28,48 @@ public class CarModel implements Serializable {
         return carModelId;
     }
 
+    public void setCarModelId(int carModelId) {
+        this.carModelId = carModelId;
+    }
+
     public String getModelName() {
         return modelName;
+    }
+
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
     }
 
     public int getCapacity() {
         return capacity;
     }
 
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
     public int getFuelTank() {
         return fuelTank;
     }
 
-    public CarType getCarType() {
+    public void setFuelTank(int fuelTank) {
+        this.fuelTank = fuelTank;
+    }
+
+    public CarType getType() {
         return type;
+    }
+
+    public void setType(CarType type) {
+        this.type = type;
     }
 
     public String getLoadType() {
         return loadType;
+    }
+
+    public void setLoadType(String loadType) {
+        this.loadType = loadType;
     }
 
     @Override

@@ -42,7 +42,7 @@ public class CarTypeDAOTest {
         carType.setRequiredLicense(DriverLicenseType.I);
         rowsAffected = carTypeDAO.update(carType);
         System.out.println("Rows affecte by updating car type - " + rowsAffected);
-        rowsAffected = carTypeDAO.delete(carType);
+        rowsAffected = carTypeDAO.deleteById(carType.getCarTypeId());
         System.out.println("Rows affected by deleting car type - " + rowsAffected);
 
         //todo make full test.

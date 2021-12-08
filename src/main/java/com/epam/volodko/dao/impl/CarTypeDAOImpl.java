@@ -141,11 +141,6 @@ public class CarTypeDAOImpl extends AbstractDAO implements CarTypeDAO {
     }
 
     @Override
-    public int delete(CarType carType) throws DAOException {
-        return deleteById(carType.getCarTypeId());
-    }
-
-    @Override
     public int update(CarType carType) throws DAOException {
         int rowsAffected;
         Connection connection = null;

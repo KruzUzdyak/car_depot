@@ -10,6 +10,7 @@ public class DAOFactory {
     private final CarDAO carDAO = new CarDAOImpl();
     private final OrderDAO orderDAO = new OrderDAOImpl();
     private final CarTypeDAO carTypeDAO = new CarTypeDAOImpl();
+    private final CarModelDAO carModelDAO = new CarModelDAOImpl();
 
     private DAOFactory(){
     }
@@ -32,5 +33,9 @@ public class DAOFactory {
 
     public CarTypeDAO getCarTypeDAO() {
         return carTypeDAO;
+    }
+
+    public CarModelDAO getCarModelDAO() {
+        return carModelDAO;
     }
 }
