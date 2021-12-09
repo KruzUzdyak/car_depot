@@ -1,6 +1,5 @@
 package com.epam.volodko.dao.builder.impl;
 
-import com.epam.volodko.dao.DAOFactory;
 import com.epam.volodko.dao.builder.BuilderFactory;
 import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.dao.table_name.Column;
@@ -21,6 +20,10 @@ public class CarBuilder {
             car.setMileage(resultSet.getInt(Column.CARS_MILEAGE));
             car.setBroken(resultSet.getBoolean(Column.CARS_BROKEN));
             car.setModel(BuilderFactory.getModelBuilder().build(resultSet));
+            if (resultSet.getInt(Column.CARS_DRIVER_ID) != 0) {
+                Driver driver = BuilderFactory.getDriverBuilder().build(resultSet);
+                car.setDriver(driver);
+            }
         } catch (SQLException e) {
             throw new DAOException("SQLException when build a car.", e);
         }

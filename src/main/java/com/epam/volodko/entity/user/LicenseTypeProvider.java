@@ -3,13 +3,13 @@ package com.epam.volodko.entity.user;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DriverLicenseProvider {
+public class LicenseTypeProvider {
 
-    private static DriverLicenseProvider instance;
+    private static LicenseTypeProvider instance;
 
     private final Map<Integer, DriverLicenseType> licenseTypes;
 
-    private DriverLicenseProvider(){
+    private LicenseTypeProvider(){
         licenseTypes = new HashMap<>();
         licenseTypes.put(DriverLicenseType.AM.getId(), DriverLicenseType.AM);
         licenseTypes.put(DriverLicenseType.A.getId(), DriverLicenseType.A);
@@ -26,7 +26,7 @@ public class DriverLicenseProvider {
 
     public static DriverLicenseType getLicenseType(int licenseTypeId){
         if (instance == null){
-            instance = new DriverLicenseProvider();
+            instance = new LicenseTypeProvider();
         }
         return instance.licenseTypes.get(licenseTypeId);
     }

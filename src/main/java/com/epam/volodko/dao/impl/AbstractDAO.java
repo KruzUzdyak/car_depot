@@ -27,6 +27,26 @@ public abstract class AbstractDAO {
         }
     }
 
+    int getGeneratedKey(Statement statement) throws DAOException {
+        ResultSet generatedKeys;
+        int generatedKey;
+        try {
+            generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()){
+                generatedKey = generatedKeys.getInt(1);
+            } else
+                throw new DAOException("Creating failed, no ID obtained.");
+        } catch (SQLException e) {
+            throw new DAOException("SQLException when try to get generated keys.", e);
+        }
+        try {
+            generatedKeys.close();
+        } catch (SQLException e) {
+            throw new DAOException("SQLException when try to close generated keys result set.", e);
+        }
+        return generatedKey;
+    }
+
     void rollback(Connection connection) throws DAOException {
         try {
             connection.rollback();

@@ -10,10 +10,7 @@ import com.epam.volodko.dao.table_name.Table;
 import com.epam.volodko.entity.car.CarModel;
 import com.epam.volodko.entity.car.CarType;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,26 +123,22 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
         int rowsAffected;
         Connection connection = null;
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
         try {
             connection = ConnectionPool.getInstance().takeConnection();
-            connection.setAutoCommit(false);
-            statement = connection.prepareStatement(SAVE_NEW_CAR_MODEL_QUERY);
+            statement = connection.prepareStatement(SAVE_NEW_CAR_MODEL_QUERY,
+                    Statement.RETURN_GENERATED_KEYS);
             prepareCarModelStatement(carModel, statement);
             rowsAffected = statement.executeUpdate();
-            statement = connection.prepareStatement(GET_SAVED_CAR_MODEL_ID_QUERY);
-            statement.setString(1, carModel.getModelName());
-            resultSet = statement.executeQuery();
-            resultSet.next();
-            carModel.setCarModelId(resultSet.getInt(Column.CAR_MODELS_ID));
-            connection.commit();
+            if (rowsAffected == 0) {
+                throw new DAOException("Saving new car model failed, no rows affected.");
+            }
+        carModel.setCarModelId(getGeneratedKey(statement));
         } catch (SQLException e) {
-            rollback(connection);
             throw new DAOException("SQLException when try to save new car model.", e);
         } catch (ConnectionPoolException e) {
             throw new DAOException(e);
         } finally {
-            closeConnection(connection, statement, resultSet);
+            closeConnection(connection, statement);
         }
         return rowsAffected;
     }
