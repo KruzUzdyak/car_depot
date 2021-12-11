@@ -113,9 +113,10 @@ public class ClientDAOImpl extends AbstractUserDAO<Client>{
     }
 
     @Override
-    public void saveNewUser(Client client) throws DAOException {
+    public int saveNewUser(Client client) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
+        int rowsAffected;
         try{
             connection = ConnectionPool.getInstance().takeConnection();
             connection.setAutoCommit(false);
@@ -126,7 +127,7 @@ public class ClientDAOImpl extends AbstractUserDAO<Client>{
             statement.setString(1, client.getLogin());
             statement.setString(2, client.getCompany());
             statement.setString(3, client.getNote());
-            statement.executeUpdate();
+            rowsAffected = statement.executeUpdate();
             int userId = getLastAddedUserId(client, connection, statement);
             client.setUserId(userId);
             connection.commit();
@@ -137,6 +138,7 @@ public class ClientDAOImpl extends AbstractUserDAO<Client>{
         } finally {
             closeConnection(connection, statement);
         }
+        return rowsAffected;
     }
 
     @Override

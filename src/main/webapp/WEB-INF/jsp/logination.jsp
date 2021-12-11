@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Car Depot - Login</title>
+    <title>Car Depot</title>
 </head>
 <body>
 <form action="Controller" method="post">

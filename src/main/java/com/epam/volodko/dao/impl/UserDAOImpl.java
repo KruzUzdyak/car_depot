@@ -40,8 +40,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void saveNewUser(User user) throws DAOException {
-        UserDAOProvider.getAbstractUserDAO(user.getRole()).saveNewUser(user);
+    public int saveNewUser(User user) throws DAOException {
+        return UserDAOProvider.getAbstractUserDAO(user.getRole()).saveNewUser(user);
     }
 
     @Override

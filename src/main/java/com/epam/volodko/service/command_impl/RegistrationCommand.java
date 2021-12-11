@@ -18,18 +18,26 @@ public class RegistrationCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = createUserForRegistration(request);
-        if (checkValidUser(user)){
-            UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
-            try {
-                userDAO.saveNewUser(user);
-            } catch (DAOException e) {
-                e.printStackTrace();
-                //todo info for user about failing registration
-                //todo logger.log
-            }
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/afterRegistration.jsp");
-            dispatcher.forward(request, response);
+        RequestDispatcher dispatcher;
+        if (checkValidUser(user) && saveNewUser(user)){
+                dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/afterRegistration.jsp");
+                dispatcher.forward(request, response);
         }
+        dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/failedRegistration.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private boolean saveNewUser(User user) {
+        UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
+        int rowsAffected = 0;
+        try {
+            rowsAffected = userDAO.saveNewUser(user);
+        } catch (DAOException e) {
+            e.printStackTrace();
+            //todo info for user about failing registration
+            //todo logger.log
+        }
+        return rowsAffected != 0;
     }
 
     private User createUserForRegistration(HttpServletRequest request) {

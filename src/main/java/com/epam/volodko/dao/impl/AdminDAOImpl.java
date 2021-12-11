@@ -118,9 +118,10 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
     }
 
     @Override
-    public void saveNewUser(Admin admin) throws DAOException {
+    public int saveNewUser(Admin admin) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
+        int rowsAffected;
         try{
             connection = ConnectionPool.getInstance().takeConnection();
             connection.setAutoCommit(false);
@@ -131,7 +132,7 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
             statement.setString(1, admin.getLogin());
             statement.setLong(2, admin.getWorksSince().getTime());
             statement.setString(3, admin.getNote());
-            statement.executeUpdate();
+            rowsAffected = statement.executeUpdate();
             int userId = getLastAddedUserId(admin, connection, statement);
             admin.setUserId(userId);
             connection.commit();
@@ -142,7 +143,7 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
         } finally {
             closeConnection(connection, statement);
         }
-
+        return rowsAffected;
     }
 
     @Override

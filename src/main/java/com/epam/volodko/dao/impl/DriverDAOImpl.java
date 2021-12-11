@@ -118,15 +118,16 @@ public class DriverDAOImpl extends AbstractUserDAO<Driver>{
     }
 
     @Override
-    public void saveNewUser(Driver driver) throws DAOException {
+    public int saveNewUser(Driver driver) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
+        int rowsAffected;
         try{
             connection = ConnectionPool.getInstance().takeConnection();
             connection.setAutoCommit(false);
             statement = connection.prepareStatement(SAVE_NEW_USER_QUERY);
             prepareSaveUserStatement(driver, statement);
-            statement.executeUpdate();
+            rowsAffected = statement.executeUpdate();
             licenseDAO.prepareSaveDriverLicensesStatement(driver, connection);
             int userId = getLastAddedUserId(driver, connection, statement);
             driver.setUserId(userId);
@@ -138,7 +139,7 @@ public class DriverDAOImpl extends AbstractUserDAO<Driver>{
         } finally {
             closeConnection(connection, statement);
         }
-
+        return rowsAffected;
     }
 
     @Override

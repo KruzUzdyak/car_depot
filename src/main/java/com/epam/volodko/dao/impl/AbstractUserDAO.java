@@ -35,7 +35,7 @@ public abstract class AbstractUserDAO<T extends User> {
 
     abstract List<T> findAll() throws DAOException;
 
-    abstract void saveNewUser(T user) throws DAOException;
+    abstract int saveNewUser(T user) throws DAOException;
 
     abstract void updateUser(T user) throws DAOException;
 
