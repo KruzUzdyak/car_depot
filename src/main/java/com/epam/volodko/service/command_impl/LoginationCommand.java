@@ -12,6 +12,7 @@ public class LoginationCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/afterLogin.jsp");
         dispatcher.forward(request, response);
     }

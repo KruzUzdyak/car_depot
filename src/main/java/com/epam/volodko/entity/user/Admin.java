@@ -1,8 +1,6 @@
 package com.epam.volodko.entity.user;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -12,6 +10,7 @@ public class Admin extends User implements Serializable {
     private String note;
 
     public Admin() {
+        worksSince = new Date();
     }
 
     public Admin(int id, String login, String password, String name,

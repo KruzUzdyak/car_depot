@@ -26,7 +26,14 @@
     <input type="text" name="user_name" value="">
     <br/><br/>
     Phone
-    <input type="text" name="phone" value="">
+    <input type="tel" name="phone" value="">
+    <br/><br/>
+    <select name="role" size="1" >
+        <option disabled>Choose your role</option>
+        <option value="admin">admin</option>
+        <option value="client">client</option>
+        <option value="driver">driver</option>
+    </select>
     <br/><br/>
     <input type="submit" value="Register">
 </form>
