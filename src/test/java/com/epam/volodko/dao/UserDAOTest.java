@@ -1,15 +1,11 @@
 package com.epam.volodko.dao;
 
-import com.epam.volodko.dao.DAOFactory;
-import com.epam.volodko.dao.UserDAO;
 import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.entity.user.*;
 import org.junit.Test;
 
 import java.util.Date;
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 
 public class UserDAOTest {
 
@@ -95,6 +91,8 @@ public class UserDAOTest {
         System.out.println(admin);
         System.out.println(client);
         System.out.println(driver);
+
+        //todo make full test.
     }
 
     @Test
