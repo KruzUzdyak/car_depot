@@ -1,4 +1,4 @@
-package com.epam.volodko.service;
+package com.epam.volodko.controller;
 
 public class ParameterName {
 

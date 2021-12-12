@@ -1,11 +1,11 @@
-package com.epam.volodko.service.command_impl;
+package com.epam.volodko.controller.command_impl;
 
 import com.epam.volodko.dao.DAOFactory;
 import com.epam.volodko.dao.UserDAO;
 import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.entity.user.*;
-import com.epam.volodko.service.Command;
-import com.epam.volodko.service.ParameterName;
+import com.epam.volodko.controller.Command;
+import com.epam.volodko.controller.ParameterName;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,6 +19,7 @@ public class RegistrationCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = createUserForRegistration(request);
         RequestDispatcher dispatcher;
+        //todo full validation
         if (checkValidUser(user) && saveNewUser(user)){
                 dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/afterRegistration.jsp");
                 dispatcher.forward(request, response);

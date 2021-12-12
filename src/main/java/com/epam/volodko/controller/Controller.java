@@ -1,4 +1,4 @@
-package com.epam.volodko.service;
+package com.epam.volodko.controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

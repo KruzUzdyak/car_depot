@@ -7,7 +7,7 @@
     <servlet>
         <display-name>Controller</display-name>
         <servlet-name>Controller</servlet-name>
-        <servlet-class>com.epam.volodko.service.Controller</servlet-class>
+        <servlet-class>com.epam.volodko.controller.Controller</servlet-class>
     </servlet>
     
     <servlet-mapping>
