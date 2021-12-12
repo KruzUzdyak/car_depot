@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class GoToLoginationCommand implements Command {
+public class GoToMainPageCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.LOGINATION_PAGE);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.MAIN_PAGE);
         dispatcher.forward(request, response);
     }
 }

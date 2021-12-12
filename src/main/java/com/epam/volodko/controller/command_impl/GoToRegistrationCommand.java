@@ -1,6 +1,7 @@
 package com.epam.volodko.controller.command_impl;
 
 import com.epam.volodko.controller.Command;
+import com.epam.volodko.controller.constant.PagePath;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,7 +13,7 @@ public class GoToRegistrationCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/registration.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.REGISTRATION_PAGE);
         dispatcher.forward(request, response);
     }
 }

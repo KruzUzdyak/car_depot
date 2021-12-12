@@ -1,11 +1,11 @@
 package com.epam.volodko.controller.command_impl;
 
-import com.epam.volodko.dao.DAOFactory;
-import com.epam.volodko.dao.UserDAO;
-import com.epam.volodko.dao.exception.DAOException;
-import com.epam.volodko.entity.user.*;
 import com.epam.volodko.controller.Command;
-import com.epam.volodko.controller.ParameterName;
+import com.epam.volodko.controller.constant.CommandName;
+import com.epam.volodko.controller.constant.PagePath;
+import com.epam.volodko.controller.constant.ParameterName;
+import com.epam.volodko.entity.user.Role;
+import com.epam.volodko.entity.user.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,61 +15,47 @@ import java.io.IOException;
 
 public class RegistrationCommand implements Command {
 
+    private static final String REGISTRATION_ERROR_MESSAGE_TEXT = "Registration failed! Try again.";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = createUserForRegistration(request);
-        RequestDispatcher dispatcher;
-        //todo full validation
-        if (checkValidUser(user) && saveNewUser(user)){
-                dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/afterRegistration.jsp");
-                dispatcher.forward(request, response);
+        User user = prepareUserForSaving(request);
+        String repeatPassword = request.getParameter(ParameterName.USER_REPEAT_PASSWORD);
+        // TODO: 12.12.2021 add full validation for user
+        if (validateLoginAndPassword(user, repeatPassword)){
+            try {
+                // TODO: 12.12.2021 save user in DB
+            } catch (Exception e) {
+                //logger.log();
+                forwardOnFailedRegistration(request, response);
+            }
+            response.sendRedirect("Controller?command=" + CommandName.GO_TO_MAIN_PAGE
+                    + "&registration_message=" + "done");
+        } else {
+            forwardOnFailedRegistration(request, response);
         }
-        dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/failedRegistration.jsp");
+    }
+
+    private void forwardOnFailedRegistration(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setAttribute(ParameterName.ERROR_MESSAGE, REGISTRATION_ERROR_MESSAGE_TEXT);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.REGISTRATION_PAGE);
         dispatcher.forward(request, response);
     }
 
-    private boolean saveNewUser(User user) {
-        UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
-        int rowsAffected = 0;
-        try {
-            rowsAffected = userDAO.saveNewUser(user);
-        } catch (DAOException e) {
-            e.printStackTrace();
-            //todo info for user about failing registration
-            //todo logger.log
-        }
-        return rowsAffected != 0;
+    private boolean validateLoginAndPassword(User user, String repeatPassword) {
+        return user.getLogin() != null && !user.getLogin().isEmpty() &&
+                !user.getPassword().equals("") && user.getPassword().equals(repeatPassword);
     }
 
-    private User createUserForRegistration(HttpServletRequest request) {
-        User user = null;
-        Role role = Role.valueOf(request.getParameter(ParameterName.ROLE).toUpperCase());
-        switch (role) {
-            case ADMIN -> {
-                user = new Admin();
-                user.setRole(Role.ADMIN);
-            }
-            case CLIENT -> {
-                user = new Client();
-                user.setRole(Role.CLIENT);
-            }
-            case DRIVER -> {
-                user = new Driver();
-                user.setRole(Role.DRIVER);
-            }
-        }
-        user.setLogin(request.getParameter(ParameterName.LOGIN));
-        //todo add password encrypting
-        String passwordHash = request.getParameter(ParameterName.PASSWORD);
-        user.setPassword(passwordHash);
-        user.setName(request.getParameter(ParameterName.USER_NAME));
-        user.setPhone(request.getParameter(ParameterName.PHONE));
-        return user;
-    }
-
-    private boolean checkValidUser(User user){
-        return user != null && user.getLogin() != null & user.getPassword() != null &&
-                user.getName() != null && user.getRole() != null;
+    private User prepareUserForSaving(HttpServletRequest request){
+        String login = request.getParameter(ParameterName.USER_LOGIN);
+        // TODO: 12.12.2021 add password hashing
+        String password = request.getParameter(ParameterName.USER_PASSWORD);
+        String name = request.getParameter(ParameterName.USER_NAME);
+        String phone = request.getParameter(ParameterName.USER_PHONE);
+        Role role = Role.valueOf(request.getParameter(ParameterName.USER_ROLE).toUpperCase());
+        return new User(0, login, password, name, phone, role);
     }
 
 
