@@ -1,21 +1,53 @@
 package com.epam.volodko.dao.impl;
 
 import com.epam.volodko.dao.UserDAO;
+import com.epam.volodko.dao.builder.BuilderFactory;
+import com.epam.volodko.dao.database.ConnectionPool;
+import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
 import com.epam.volodko.dao.exception.DAOException;
+import com.epam.volodko.dao.table_name.Column;
+import com.epam.volodko.dao.table_name.Table;
 import com.epam.volodko.entity.user.Role;
 import com.epam.volodko.entity.user.User;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOImpl implements UserDAO {
+public class UserDAOImpl extends AbstractDAO implements UserDAO {
+
+    private static final String FIND_USER_BY_ID_QUERY = String.format(
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s=r.%s WHERE %s=?;",
+            Table.USERS, Table.ROLES,
+            Column.USERS_ROLE_ID, Column.ROLES_ID, Column.USERS_ID);
 
     private final RoleDAOImpl roleDAO = new RoleDAOImpl();
 
     @Override
     public User findById(int userId) throws DAOException {
-        Role role = roleDAO.findRoleByUserId(userId);
-        return UserDAOProvider.getAbstractUserDAO(role).findById(userId);
+        User user;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(FIND_USER_BY_ID_QUERY);
+            statement.setInt(1, userId);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                user = BuilderFactory.getUserBuilder().build(resultSet);
+            } else {
+                throw new DAOException("Can't find user by id.");
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement, resultSet);
+        }
+        return user;
     }
 
     @Override
