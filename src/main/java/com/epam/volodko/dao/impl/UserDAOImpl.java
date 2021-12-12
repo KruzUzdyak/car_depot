@@ -20,11 +20,21 @@ import java.util.List;
 public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
     private static final String FIND_USER_BY_ID_QUERY = String.format(
-            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s=r.%s WHERE %s=?;",
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s=r.%s WHERE u.%s=?;",
             Table.USERS, Table.ROLES,
             Column.USERS_ROLE_ID, Column.ROLES_ID, Column.USERS_ID);
-
-    private final RoleDAOImpl roleDAO = new RoleDAOImpl();
+    private static final String FIND_USER_BY_LOGIN_QUERY = String.format(
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s=r.%s WHERE u.%s=?;",
+            Table.USERS, Table.ROLES,
+            Column.USERS_ROLE_ID, Column.ROLES_ID, Column.USERS_LOGIN);
+    private static final String FIND_ALL_USERS_QUERY = String.format(
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s=r.%s;",
+            Table.USERS, Table.ROLES,
+            Column.USERS_ROLE_ID, Column.ROLES_ID);
+    private static final String FIND_USER_BY_ROLE_QUERY = String.format(
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s=r.%s WHERE u.%s=?;",
+            Table.USERS, Table.ROLES,
+            Column.USERS_ROLE_ID, Column.ROLES_ID, Column.USERS_ROLE_ID);
 
     @Override
     public User findById(int userId) throws DAOException {
@@ -52,21 +62,67 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
     @Override
     public User findByLogin(String userLogin) throws DAOException {
-        Role role = roleDAO.findRoleByUserLogin(userLogin);
-        return UserDAOProvider.getAbstractUserDAO(role).findByLogin(userLogin.trim());
-    }
-
-    @Override
-    public List<User> findUsersByRole(Role role) throws DAOException {
-        return UserDAOProvider.getAbstractUserDAO(role).findAll();
+        User user;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(FIND_USER_BY_LOGIN_QUERY);
+            statement.setString(1, userLogin);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                user = BuilderFactory.getUserBuilder().build(resultSet);
+            } else {
+                throw new DAOException("Can't find user by login.");
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement, resultSet);
+        }
+        return user;
     }
 
     @Override
     public List<User> findAll() throws DAOException {
         List<User> users = new ArrayList<>();
-        Role[] roles = Role.values();
-        for (Role role : roles) {
-            users.addAll(UserDAOProvider.getAbstractUserDAO(role).findAll());
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(FIND_ALL_USERS_QUERY);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                users.add(BuilderFactory.getUserBuilder().build(resultSet));
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement, resultSet);
+        }
+        return users;
+    }
+
+    @Override
+    public List<User> findUsersByRole(Role role) throws DAOException {
+        List<User> users = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(FIND_USER_BY_ROLE_QUERY);
+            statement.setInt(1, role.getRoleId());
+            resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                users.add(BuilderFactory.getUserBuilder().build(resultSet));
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement, resultSet);
         }
         return users;
     }
