@@ -22,6 +22,12 @@
     <br/><br/>
     Repeat password
     <input type="password" name="user_repeat_password" value="">
+        <%
+            String passMessage = (String) request.getAttribute(ParameterName.PASS_RESTRICT_MESSAGE);
+            if (passMessage != null){
+                out.print(passMessage);
+            }
+        %>
     <br/><br/>
     Name
     <input type="text" name="user_name" value="">

@@ -4,6 +4,8 @@ import com.epam.volodko.controller.Command;
 import com.epam.volodko.controller.constant.CommandName;
 import com.epam.volodko.controller.constant.PagePath;
 import com.epam.volodko.controller.constant.ParameterName;
+import com.epam.volodko.service.ServiceFactory;
+import com.epam.volodko.service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,14 +16,13 @@ import java.io.IOException;
 public class LoginationCommand implements Command {
 
     private static final String LOGINATION_ERROR_MESSAGE_TEXT = "Login failed. Try again.";
-
+    
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter(ParameterName.USER_LOGIN);
         // TODO: 12.12.2021 password hashing
         String password = request.getParameter(ParameterName.USER_PASSWORD);
 
-        // TODO: 12.12.2021 add validation for login process
         if (validateUserForLogin(login, password)){
             response.sendRedirect("Controller?command=" + CommandName.GO_TO_MAIN_PAGE
                     + "&logination_message=" + "done");
@@ -38,7 +39,8 @@ public class LoginationCommand implements Command {
     }
 
     private boolean validateUserForLogin(String login, String password) {
-        return login != null && !login.equals("") && password != null && !password.equals("");
+        UserService userService = ServiceFactory.getInstance().getUserService();
+        return userService.validateUserPassword(login, password);
     }
 
 

@@ -19,6 +19,9 @@ import java.util.List;
 
 public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
+    private static final String FIND_PASSWORD_BY_LOGIN_QUERY = String.format(
+            "SELECT %s FROM %s WHERE %s=?;",
+            Column.USERS_PASSWORD, Table.USERS, Column.USERS_LOGIN);
     private static final String FIND_USER_BY_ID_QUERY = String.format(
             "SELECT * FROM %s AS u JOIN %s AS r ON u.%s=r.%s WHERE u.%s=?;",
             Table.USERS, Table.ROLES,
@@ -37,12 +40,34 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             Column.USERS_ROLE_ID, Column.ROLES_ID, Column.USERS_ROLE_ID);
 
     @Override
+    public String findUserPasswordByLogin(String userLogin) throws DAOException {
+        String password = null;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(FIND_PASSWORD_BY_LOGIN_QUERY);
+            statement.setString(1, userLogin);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                password = resultSet.getString(Column.USERS_PASSWORD);
+            }
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement, resultSet);
+        }
+        return password;
+    }
+
+    @Override
     public User findById(int userId) throws DAOException {
         User user;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        try{
+        try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(FIND_USER_BY_ID_QUERY);
             statement.setInt(1, userId);
@@ -66,7 +91,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        try{
+        try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(FIND_USER_BY_LOGIN_QUERY);
             statement.setString(1, userLogin);
@@ -90,11 +115,11 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        try{
+        try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(FIND_ALL_USERS_QUERY);
             resultSet = statement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 users.add(BuilderFactory.getUserBuilder().build(resultSet));
             }
         } catch (ConnectionPoolException | SQLException e) {
@@ -111,12 +136,12 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        try{
+        try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(FIND_USER_BY_ROLE_QUERY);
             statement.setInt(1, role.getRoleId());
             resultSet = statement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 users.add(BuilderFactory.getUserBuilder().build(resultSet));
             }
         } catch (ConnectionPoolException | SQLException e) {
@@ -144,7 +169,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
     @Override
     public void updateUserPassword(User user) throws DAOException {
-        if (user.getPassword() == null){
+        if (user.getPassword() == null) {
             return;
         }
         UserDAOProvider.getAbstractUserDAO(user.getRole()).updateUserPassword(user);

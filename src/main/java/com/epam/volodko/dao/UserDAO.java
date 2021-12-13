@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface UserDAO {
 
+    String findUserPasswordByLogin(String userLogin) throws DAOException;
+
     User findById(int userId) throws DAOException;
 
     User findByLogin(String userLogin) throws DAOException;
