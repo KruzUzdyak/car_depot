@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserDAO {
 
-    String findUserPasswordByLogin(String userLogin) throws DAOException;
+    String findPasswordByLogin(String userLogin) throws DAOException;
 
     User findById(int userId) throws DAOException;
 
@@ -16,9 +16,9 @@ public interface UserDAO {
 
     List<User> findAll() throws DAOException;
 
-    List<User> findUsersByRole(Role role) throws DAOException;
+    List<User> findByRole(Role role) throws DAOException;
 
-    int saveNewUser(User user) throws DAOException;
+    int saveNew(User user) throws DAOException;
 
     void deleteUser(User user) throws DAOException;
 

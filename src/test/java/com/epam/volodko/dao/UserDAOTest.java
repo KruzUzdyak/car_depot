@@ -59,15 +59,15 @@ public class UserDAOTest {
 
     @Test
     public void checkFindByRole() throws DAOException {
-        List<User> actualUsers = userDAO.findUsersByRole(Role.ADMIN);
+        List<User> actualUsers = userDAO.findByRole(Role.ADMIN);
         actualUsers.forEach(System.out::println);
         System.out.println();
 
-        actualUsers = userDAO.findUsersByRole(Role.CLIENT);
+        actualUsers = userDAO.findByRole(Role.CLIENT);
         actualUsers.forEach(System.out::println);
         System.out.println();
 
-        actualUsers = userDAO.findUsersByRole(Role.DRIVER);
+        actualUsers = userDAO.findByRole(Role.DRIVER);
         actualUsers.forEach(System.out::println);
 
         //todo make full test.
@@ -75,21 +75,22 @@ public class UserDAOTest {
 
     @Test
     public void checkSaveNewUser() throws DAOException {
-        Admin admin = new Admin(100, "testLogin1", "testPassword1", "testName1",
-                "testPhone1", Role.ADMIN, new Date(), "testNote1");
-        userDAO.saveNewUser(admin);
+        User admin = new User(100, "testLogin1", "testPassword1", "testName1",
+                "testPhone1", Role.ADMIN);
+        userDAO.saveNew(admin);
 
-        Client client = new Client(100, "testLoginClient", "testPasswordClient", "testNameClient",
-                "testPhoneClient", Role.CLIENT, "JST IRAY", "China guys");
-        userDAO.saveNewUser(client);
+        User client = new User(100, "testLoginClient", "testPasswordClient", "testNameClient",
+                "testPhoneClient", Role.CLIENT);
+        userDAO.saveNew(client);
 
-        Driver driver = new Driver(100, "driverLogin", "driverPass", "driverName",
+        User driver = new User(100, "driverLogin", "driverPass", "driverName",
                 "driverPhone", Role.DRIVER);
-        driver.addLicense(new DriverLicense(DriverLicenseType.D, new Date(), "testLicenseNumber"));
-        userDAO.saveNewUser(driver);
+        userDAO.saveNew(driver);
 
         System.out.println(admin);
+        System.out.println();
         System.out.println(client);
+        System.out.println();
         System.out.println(driver);
 
         //todo make full test.
@@ -99,16 +100,16 @@ public class UserDAOTest {
     public void checkDeleteUser() throws DAOException {
         Admin admin = new Admin(100, "testLogin2", "testPassword1", "testName1",
                 "testPhone1", Role.ADMIN, new Date(), "testNote1");
-        userDAO.saveNewUser(admin);
+        userDAO.saveNew(admin);
 
         Client client = new Client(100, "testLoginClient2", "testPasswordClient", "testNameClient",
                 "testPhoneClient", Role.CLIENT, "JST IRAY", "China guys");
-        userDAO.saveNewUser(client);
+        userDAO.saveNew(client);
 
         Driver driver = new Driver(100, "driverLogin2", "driverPass", "driverName",
                 "driverPhone", Role.DRIVER);
         driver.addLicense(new DriverLicense(DriverLicenseType.D, new Date(), "testLicenseNumber"));
-        userDAO.saveNewUser(driver);
+        userDAO.saveNew(driver);
 
         User actualAdmin = userDAO.findByLogin(admin.getLogin());
         User actualClient = userDAO.findByLogin(client.getLogin());
@@ -123,17 +124,17 @@ public class UserDAOTest {
 
     @Test
     public void checkUpdateUser() throws DAOException{
-        Admin admin = (Admin) userDAO.findUsersByRole(Role.ADMIN).get(0);
+        Admin admin = (Admin) userDAO.findByRole(Role.ADMIN).get(0);
         admin.setPhone("!UpdatedTestPhone!");
         admin.setNote("!UpdatedTestNote!");
         userDAO.updateUser(admin);
 
-        Client client = (Client) userDAO.findUsersByRole(Role.CLIENT).get(0);
+        Client client = (Client) userDAO.findByRole(Role.CLIENT).get(0);
         client.setName("UpdatedClientName");
         client.setCompany("UpdatedCompany");
         userDAO.updateUser(client);
 
-        Driver driver = (Driver) userDAO.findUsersByRole(Role.DRIVER).get(0);
+        Driver driver = (Driver) userDAO.findByRole(Role.DRIVER).get(0);
         DriverLicense license = new DriverLicense(DriverLicenseType.A1, new Date(1000L), "TEST_LICENSE");
         driver.addLicense(license);
         driver.setName("TEST_DRIVER_NAME");

@@ -1,4 +1,5 @@
-<%@ page import="com.epam.volodko.controller.constant.ParameterName" %><%--
+<%@ page import="com.epam.volodko.controller.constant.ParameterName" %>
+<%@ page import="com.epam.volodko.controller.constant.Message" %><%--
   Created by IntelliJ IDEA.
   User: Asus
   Date: 11.12.2021
@@ -20,10 +21,7 @@
     Password
     <input type="password" name="user_password" value="">
     <%
-        String passMessage = (String) request.getAttribute(ParameterName.PASS_RESTRICT_MESSAGE);
-        if (passMessage != null){
-            out.print(passMessage);
-        }
+        out.print(Message.PASS_RESTRICT_MESSAGE_TEXT);
     %>
     <br/><br/>
     Repeat password
@@ -35,6 +33,7 @@
     Phone
     <input type="tel" name="user_phone" value="">
     <br/><br/>
+    Role
     <select name="user_role" size="1" >
         <option disabled>Choose your role</option>
         <option value="admin">admin</option>

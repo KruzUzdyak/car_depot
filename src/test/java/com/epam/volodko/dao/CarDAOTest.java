@@ -8,8 +8,6 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 public class CarDAOTest {
 
     CarDAO carDAO = DAOFactory.getInstance().getCarDAO();
@@ -26,7 +24,7 @@ public class CarDAOTest {
 
     @Test
     public void checkFindCarByDriver() throws DAOException {
-        Driver driver = (Driver) userDAO.findUsersByRole(Role.DRIVER).get(0);
+        Driver driver = (Driver) userDAO.findByRole(Role.DRIVER).get(0);
         Car actualCar = carDAO.findCarByDriver(driver);
 
         System.out.println(actualCar);

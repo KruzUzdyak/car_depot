@@ -38,9 +38,13 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             "SELECT * FROM %s AS u JOIN %s AS r ON u.%s=r.%s WHERE u.%s=?;",
             Table.USERS, Table.ROLES,
             Column.USERS_ROLE_ID, Column.ROLES_ID, Column.USERS_ROLE_ID);
+    private static final String SAVE_NEW_USER_QUERY = String.format(
+            "INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?);",
+            Table.USERS, Column.USERS_LOGIN, Column.USERS_PASSWORD, Column.USERS_NAME,
+            Column.USERS_PHONE, Column.USERS_ROLE_ID);
 
     @Override
-    public String findUserPasswordByLogin(String userLogin) throws DAOException {
+    public String findPasswordByLogin(String userLogin) throws DAOException {
         String password = null;
         Connection connection = null;
         PreparedStatement statement = null;
@@ -131,7 +135,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
     }
 
     @Override
-    public List<User> findUsersByRole(Role role) throws DAOException {
+    public List<User> findByRole(Role role) throws DAOException {
         List<User> users = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -153,8 +157,26 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
     }
 
     @Override
-    public int saveNewUser(User user) throws DAOException {
-        return UserDAOProvider.getAbstractUserDAO(user.getRole()).saveNewUser(user);
+    public int saveNew(User user) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        int rowsAffected;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(SAVE_NEW_USER_QUERY);
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getName());
+            statement.setString(4, user.getPhone());
+            statement.setInt(5, user.getRole().getRoleId());
+            rowsAffected = statement.executeUpdate();
+            user.setUserId(getGeneratedKey(statement));
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement);
+        }
+        return rowsAffected;
     }
 
     @Override

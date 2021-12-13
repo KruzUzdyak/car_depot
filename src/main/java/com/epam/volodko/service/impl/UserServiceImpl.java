@@ -13,7 +13,7 @@ public class UserServiceImpl implements UserService {
         boolean saved = false;
         UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
         try {
-            userDAO.saveNewUser(user);
+            userDAO.saveNew(user);
             saved = true;
         } catch (DAOException e) {
             // TODO: 13.12.2021 logging
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
             String passwordFromDB;
             try {
                 UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
-                passwordFromDB = userDAO.findUserPasswordByLogin(login);
+                passwordFromDB = userDAO.findPasswordByLogin(login);
             } catch (DAOException e) {
                 // TODO: 13.12.2021 logging
                 return false;
