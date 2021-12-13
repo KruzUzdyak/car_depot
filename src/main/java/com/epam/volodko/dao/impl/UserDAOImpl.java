@@ -42,9 +42,15 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             "INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?);",
             Table.USERS, Column.USERS_LOGIN, Column.USERS_PASSWORD, Column.USERS_NAME,
             Column.USERS_PHONE, Column.USERS_ROLE_ID);
+    private static final String DELETE_USER_QUERY = String.format(
+            "DELETE FROM %s WHERE %s = ?;",
+            Table.USERS, Column.USERS_ID);
+    private static final String UPDATE_USER_QUERY = String.format(
+            "UPDATE %s SET %s = ?, %s = ? WHERE %s = ?;",
+            Table.USERS, Column.USERS_NAME, Column.USERS_PHONE, Column.USERS_ID);
 
     @Override
-    public String findPasswordByLogin(String userLogin) throws DAOException {
+    public String findPasswordByLogin(String login) throws DAOException {
         String password = null;
         Connection connection = null;
         PreparedStatement statement = null;
@@ -52,7 +58,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(FIND_PASSWORD_BY_LOGIN_QUERY);
-            statement.setString(1, userLogin);
+            statement.setString(1, login);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 password = resultSet.getString(Column.USERS_PASSWORD);
@@ -90,7 +96,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
     }
 
     @Override
-    public User findByLogin(String userLogin) throws DAOException {
+    public User findByLogin(String login) throws DAOException {
         User user;
         Connection connection = null;
         PreparedStatement statement = null;
@@ -98,7 +104,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(FIND_USER_BY_LOGIN_QUERY);
-            statement.setString(1, userLogin);
+            statement.setString(1, login);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 user = BuilderFactory.getUserBuilder().build(resultSet);
@@ -180,20 +186,50 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
     }
 
     @Override
-    public void deleteUser(User user) throws DAOException {
-        UserDAOProvider.getAbstractUserDAO(user.getRole()).deleteUser(user.getUserId());
-    }
-
-    @Override
-    public void updateUser(User user) throws DAOException {
-        UserDAOProvider.getAbstractUserDAO(user.getRole()).updateUser(user);
-    }
-
-    @Override
-    public void updateUserPassword(User user) throws DAOException {
-        if (user.getPassword() == null) {
-            return;
+    public int deleteUser(User user) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        int rowsAffected;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(DELETE_USER_QUERY);
+            statement.setInt(1, user.getId());
+            rowsAffected = statement.executeUpdate();
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement);
         }
-        UserDAOProvider.getAbstractUserDAO(user.getRole()).updateUserPassword(user);
+        return rowsAffected;
+    }
+
+    @Override
+    public int updateNameAndPhone(User user) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;;
+        int rowsAffected;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(UPDATE_USER_QUERY);
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getPhone());
+            statement.setInt(3, user.getId());
+            rowsAffected = statement.executeUpdate();
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement);
+        }
+        return rowsAffected;
+    }
+
+    @Override
+    public int updateLogin(String login) throws DAOException {
+        return 0;
+    }
+
+    @Override
+    public int updateUserPassword(String password) throws DAOException {
+        return 0;
     }
 }

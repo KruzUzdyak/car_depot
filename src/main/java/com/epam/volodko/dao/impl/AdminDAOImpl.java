@@ -8,7 +8,6 @@ import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.dao.table_name.Table;
 import com.epam.volodko.entity.user.Admin;
 import com.epam.volodko.entity.user.Role;
-import com.epam.volodko.entity.user.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -159,7 +158,7 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
             statement = connection.prepareStatement(UPDATE_ADMIN_INFO_QUERY);
             statement.setLong(1, admin.getWorksSince().getTime());
             statement.setString(2, admin.getNote());
-            statement.setInt(3, admin.getUserId());
+            statement.setInt(3, admin.getId());
             statement.executeUpdate();
             connection.commit();
         } catch (ConnectionPoolException e) {

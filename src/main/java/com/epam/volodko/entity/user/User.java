@@ -25,7 +25,7 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public int getUserId() {
+    public int getId() {
         return userId;
     }
 

@@ -1,7 +1,6 @@
 package com.epam.volodko.dao.impl;
 
 import com.epam.volodko.dao.CarDAO;
-import com.epam.volodko.dao.DAOFactory;
 import com.epam.volodko.dao.builder.BuilderFactory;
 import com.epam.volodko.dao.database.ConnectionPool;
 import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
@@ -102,7 +101,7 @@ public class CarDAOImpl extends AbstractDAO implements CarDAO {
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(FIND_CAR_BY_DRIVER_QUERY);
-            statement.setInt(1, driver.getUserId());
+            statement.setInt(1, driver.getId());
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                  car = BuilderFactory.getCarBuilder().build(resultSet);

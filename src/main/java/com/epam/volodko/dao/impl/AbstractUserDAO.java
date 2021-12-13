@@ -71,7 +71,7 @@ public abstract class AbstractUserDAO<T extends User> {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(UPDATE_USER_PASSWORD_QUERY);
             statement.setString(1, user.getPassword());
-            statement.setInt(2, user.getUserId());
+            statement.setInt(2, user.getId());
         } catch (ConnectionPoolException e) {
             throw new DAOException(e);
         } catch (SQLException e) {
@@ -109,7 +109,7 @@ public abstract class AbstractUserDAO<T extends User> {
         statement.setString(1, user.getLogin());
         statement.setString(2, user.getName());
         statement.setString(3, user.getPhone());
-        statement.setInt(4, user.getUserId());
+        statement.setInt(4, user.getId());
     }
 
 }

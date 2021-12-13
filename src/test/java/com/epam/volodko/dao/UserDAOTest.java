@@ -1,11 +1,13 @@
 package com.epam.volodko.dao;
 
 import com.epam.volodko.dao.exception.DAOException;
-import com.epam.volodko.entity.user.*;
+import com.epam.volodko.entity.user.Role;
+import com.epam.volodko.entity.user.User;
 import org.junit.Test;
 
-import java.util.Date;
 import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class UserDAOTest {
 
@@ -75,71 +77,37 @@ public class UserDAOTest {
 
     @Test
     public void checkSaveNewUser() throws DAOException {
-        User admin = new User(100, "testLogin1", "testPassword1", "testName1",
-                "testPhone1", Role.ADMIN);
-        userDAO.saveNew(admin);
+        User admin = new User(-1, "testSaveLogin", "testSavePassword",
+                "testSaveName", "testSavePhone", Role.ADMIN);
+        int rowsAffected = userDAO.saveNew(admin);
+        int expectedAffect = 1;
 
-        User client = new User(100, "testLoginClient", "testPasswordClient", "testNameClient",
-                "testPhoneClient", Role.CLIENT);
-        userDAO.saveNew(client);
+        assertEquals(expectedAffect, rowsAffected);
+        assertTrue(admin.getId() > 0);
 
-        User driver = new User(100, "driverLogin", "driverPass", "driverName",
-                "driverPhone", Role.DRIVER);
-        userDAO.saveNew(driver);
-
-        System.out.println(admin);
-        System.out.println();
-        System.out.println(client);
-        System.out.println();
-        System.out.println(driver);
-
-        //todo make full test.
     }
 
     @Test
     public void checkDeleteUser() throws DAOException {
-        Admin admin = new Admin(100, "testLogin2", "testPassword1", "testName1",
-                "testPhone1", Role.ADMIN, new Date(), "testNote1");
-        userDAO.saveNew(admin);
+        User user = new User(5, "admin2", null, null, null, null);
+        int rowsAffected = userDAO.deleteUser(user);
+        int expectedAffect = 1;
 
-        Client client = new Client(100, "testLoginClient2", "testPasswordClient", "testNameClient",
-                "testPhoneClient", Role.CLIENT, "JST IRAY", "China guys");
-        userDAO.saveNew(client);
-
-        Driver driver = new Driver(100, "driverLogin2", "driverPass", "driverName",
-                "driverPhone", Role.DRIVER);
-        driver.addLicense(new DriverLicense(DriverLicenseType.D, new Date(), "testLicenseNumber"));
-        userDAO.saveNew(driver);
-
-        User actualAdmin = userDAO.findByLogin(admin.getLogin());
-        User actualClient = userDAO.findByLogin(client.getLogin());
-        User actualDriver = userDAO.findByLogin(driver.getLogin());
-
-        userDAO.deleteUser(actualAdmin);
-        userDAO.deleteUser(actualClient);
-        userDAO.deleteUser(actualDriver);
-
-        //todo make full test.
+        assertEquals(expectedAffect, rowsAffected);
     }
 
     @Test
     public void checkUpdateUser() throws DAOException{
-        Admin admin = (Admin) userDAO.findByRole(Role.ADMIN).get(0);
-        admin.setPhone("!UpdatedTestPhone!");
-        admin.setNote("!UpdatedTestNote!");
-        userDAO.updateUser(admin);
+        User user = userDAO.findById(4);
+        user.setName("testUpdateName");
+        user.setPhone("testUpdatePhone");
 
-        Client client = (Client) userDAO.findByRole(Role.CLIENT).get(0);
-        client.setName("UpdatedClientName");
-        client.setCompany("UpdatedCompany");
-        userDAO.updateUser(client);
+        int rowsAffected = userDAO.updateNameAndPhone(user);
+        int expectedAffect = 1;
+        User actualUser = userDAO.findById(4);
 
-        Driver driver = (Driver) userDAO.findByRole(Role.DRIVER).get(0);
-        DriverLicense license = new DriverLicense(DriverLicenseType.A1, new Date(1000L), "TEST_LICENSE");
-        driver.addLicense(license);
-        driver.setName("TEST_DRIVER_NAME");
-        userDAO.updateUser(driver);
-
-        //todo make full test.
+        assertEquals(expectedAffect, rowsAffected);
+        assertEquals(user, actualUser);
     }
+
 }

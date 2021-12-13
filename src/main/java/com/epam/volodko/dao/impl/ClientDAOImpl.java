@@ -8,7 +8,6 @@ import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.dao.table_name.Table;
 import com.epam.volodko.entity.user.Client;
 import com.epam.volodko.entity.user.Role;
-import com.epam.volodko.entity.user.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -154,7 +153,7 @@ public class ClientDAOImpl extends AbstractUserDAO<Client>{
             statement = connection.prepareStatement(UPDATE_CLIENT_INFO_QUERY);
             statement.setString(1, client.getCompany());
             statement.setString(2, client.getNote());
-            statement.setInt(3, client.getUserId());
+            statement.setInt(3, client.getId());
             statement.executeUpdate();
             connection.commit();
         } catch (ConnectionPoolException e) {

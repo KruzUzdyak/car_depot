@@ -44,7 +44,7 @@ public class DriverLicenseDAOImpl{
     void prepareDeleteDriverLicensesStatement(Driver driver, Connection connection) throws DAOException{
         try {
             PreparedStatement statement = connection.prepareStatement(DELETE_DRIVER_LICENSE_BY_ID_QUERY);
-            statement.setInt(1, driver.getUserId());
+            statement.setInt(1, driver.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("SQLException while try to delete driver licenses.", e);

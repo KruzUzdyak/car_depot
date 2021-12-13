@@ -19,7 +19,7 @@ public class DriverBuilder extends UserBuilder {
         buildUser(driver, resultSet);
         DriverLicenseBuilder licenseBuilder = BuilderFactory.getDriverLicenseBuilder();
         driver.addLicense(licenseBuilder.build(resultSet));
-        int currentDriverId = driver.getUserId();
+        int currentDriverId = driver.getId();
         while (resultSet.next()) {
             int nextDriverId = resultSet.getInt(Column.USERS_ID);
             if (currentDriverId == nextDriverId) {
