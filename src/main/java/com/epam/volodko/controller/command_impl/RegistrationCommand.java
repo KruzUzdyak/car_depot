@@ -6,6 +6,8 @@ import com.epam.volodko.controller.constant.PagePath;
 import com.epam.volodko.controller.constant.ParameterName;
 import com.epam.volodko.entity.user.Role;
 import com.epam.volodko.entity.user.User;
+import com.epam.volodko.service.ServiceFactory;
+import com.epam.volodko.service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,19 +20,12 @@ public class RegistrationCommand implements Command {
     private static final String REGISTRATION_ERROR_MESSAGE_TEXT = "Registration failed! Try again.";
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = prepareUserForSaving(request);
-        String repeatPassword = request.getParameter(ParameterName.USER_REPEAT_PASSWORD);
-        // TODO: 12.12.2021 add full validation for user
-        if (validateLoginAndPassword(user, repeatPassword)){
-            try {
-                // TODO: 12.12.2021 save user in DB
-            } catch (Exception e) {
-                //logger.log();
-                forwardOnFailedRegistration(request, response);
-            }
+    public void execute(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        UserService userService = ServiceFactory.getInstance().getUserService();
+        if (validate(request) && userService.saveUser(prepareUserForSave(request))){
             response.sendRedirect("Controller?command=" + CommandName.GO_TO_MAIN_PAGE
-                    + "&registration_message=" + "done");
+                        + "&registration_message=" + "done");
         } else {
             forwardOnFailedRegistration(request, response);
         }
@@ -43,20 +38,21 @@ public class RegistrationCommand implements Command {
         dispatcher.forward(request, response);
     }
 
-    private boolean validateLoginAndPassword(User user, String repeatPassword) {
-        return user.getLogin() != null && !user.getLogin().isEmpty() &&
-                !user.getPassword().equals("") && user.getPassword().equals(repeatPassword);
+    private boolean validate(HttpServletRequest request){
+        String login = request.getParameter(ParameterName.USER_LOGIN);
+        String password = request.getParameter(ParameterName.USER_PASSWORD);
+        String passwordRepeat = request.getParameter(ParameterName.USER_REPEAT_PASSWORD);
+        UserService userService = ServiceFactory.getInstance().getUserService();
+        return userService.validatePasswordRepeat(password, passwordRepeat) &&
+                userService.validateLogin(login);
     }
 
-    private User prepareUserForSaving(HttpServletRequest request){
+    private User prepareUserForSave(HttpServletRequest request){
         String login = request.getParameter(ParameterName.USER_LOGIN);
-        // TODO: 12.12.2021 add password hashing
         String password = request.getParameter(ParameterName.USER_PASSWORD);
         String name = request.getParameter(ParameterName.USER_NAME);
         String phone = request.getParameter(ParameterName.USER_PHONE);
         Role role = Role.valueOf(request.getParameter(ParameterName.USER_ROLE).toUpperCase());
         return new User(0, login, password, name, phone, role);
     }
-
-
 }
