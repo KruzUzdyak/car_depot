@@ -24,9 +24,9 @@ public interface UserDAO {
 
     int updateNameAndPhone(User user) throws DAOException;
 
-    int updateLogin(String login) throws DAOException;
+    int updateLogin(User user) throws DAOException;
 
-    int updateUserPassword(String password) throws DAOException;
+    int updatePassword(User user) throws DAOException;
 
 
 }

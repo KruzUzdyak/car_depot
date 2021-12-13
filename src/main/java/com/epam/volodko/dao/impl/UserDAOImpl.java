@@ -48,6 +48,12 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
     private static final String UPDATE_USER_QUERY = String.format(
             "UPDATE %s SET %s = ?, %s = ? WHERE %s = ?;",
             Table.USERS, Column.USERS_NAME, Column.USERS_PHONE, Column.USERS_ID);
+    private static final String UPDATE_LOGIN_QUERY = String.format(
+            "UPDATE %s SET %s = ? WHERE %s = ?;",
+            Table.USERS, Column.USERS_LOGIN, Column.USERS_ID);
+    private static final String UPDATE_PASSWORD_QUERY = String.format(
+            "UPDATE %s SET %s = ? WHERE %s = ?;",
+            Table.USERS, Column.USERS_PASSWORD, Column.USERS_ID);
 
     @Override
     public String findPasswordByLogin(String login) throws DAOException {
@@ -224,12 +230,40 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
     }
 
     @Override
-    public int updateLogin(String login) throws DAOException {
-        return 0;
+    public int updateLogin(User user) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;;
+        int rowsAffected;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(UPDATE_LOGIN_QUERY);
+            statement.setString(1, user.getLogin());
+            statement.setInt(2, user.getId());
+            rowsAffected = statement.executeUpdate();
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement);
+        }
+        return rowsAffected;
     }
 
     @Override
-    public int updateUserPassword(String password) throws DAOException {
-        return 0;
+    public int updatePassword(User user) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement = null;;
+        int rowsAffected;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(UPDATE_PASSWORD_QUERY);
+            statement.setString(1, user.getPassword());
+            statement.setInt(2, user.getId());
+            rowsAffected = statement.executeUpdate();
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement);
+        }
+        return rowsAffected;
     }
 }

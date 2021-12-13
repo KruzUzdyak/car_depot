@@ -14,7 +14,7 @@ public class UserDAOTest {
     UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 
     @Test
-    public void checkFindById() throws DAOException {
+    public void testFindById() throws DAOException {
         int userId = 1;
         User actualUser = userDAO.findById(userId);
         System.out.println(actualUser);
@@ -33,7 +33,7 @@ public class UserDAOTest {
     }
 
     @Test
-    public void checkFindByLogin() throws DAOException {
+    public void testFindByLogin() throws DAOException {
         String adminLogin = "admin1";
         User actualAdmin = userDAO.findByLogin(adminLogin);
         System.out.println(actualAdmin);
@@ -52,7 +52,7 @@ public class UserDAOTest {
     }
 
     @Test
-    public void checkFindAll() throws DAOException {
+    public void testFindAll() throws DAOException {
         List<User> actualUsers = userDAO.findAll();
         actualUsers.forEach(System.out::println);
 
@@ -60,7 +60,7 @@ public class UserDAOTest {
     }
 
     @Test
-    public void checkFindByRole() throws DAOException {
+    public void testFindByRole() throws DAOException {
         List<User> actualUsers = userDAO.findByRole(Role.ADMIN);
         actualUsers.forEach(System.out::println);
         System.out.println();
@@ -76,7 +76,7 @@ public class UserDAOTest {
     }
 
     @Test
-    public void checkSaveNewUser() throws DAOException {
+    public void testSaveNewUser() throws DAOException {
         User admin = new User(-1, "testSaveLogin", "testSavePassword",
                 "testSaveName", "testSavePhone", Role.ADMIN);
         int rowsAffected = userDAO.saveNew(admin);
@@ -88,7 +88,7 @@ public class UserDAOTest {
     }
 
     @Test
-    public void checkDeleteUser() throws DAOException {
+    public void testDeleteUser() throws DAOException {
         User user = new User(5, "admin2", null, null, null, null);
         int rowsAffected = userDAO.deleteUser(user);
         int expectedAffect = 1;
@@ -97,7 +97,7 @@ public class UserDAOTest {
     }
 
     @Test
-    public void checkUpdateUser() throws DAOException{
+    public void testUpdateUser() throws DAOException{
         User user = userDAO.findById(4);
         user.setName("testUpdateName");
         user.setPhone("testUpdatePhone");
@@ -108,6 +108,35 @@ public class UserDAOTest {
 
         assertEquals(expectedAffect, rowsAffected);
         assertEquals(user, actualUser);
+    }
+
+    @Test
+    public void testUpdateLogin() throws DAOException{
+        User user = userDAO.findById(1);
+        String login = "testUpdateLogin";
+        user.setLogin(login);
+
+        int rowsAffected = userDAO.updateLogin(user);
+        int expectedAffect = 1;
+        User actualUser = userDAO.findByLogin(login);
+
+        assertEquals(expectedAffect, rowsAffected);
+        assertEquals(user, actualUser);
+    }
+
+    @Test
+    public void testUpdatePassword() throws DAOException{
+        int userId = 1;
+        User user = userDAO.findById(userId);
+        String password = "testUpdatePassword";
+        user.setPassword(password);
+
+        int rowsAffected = userDAO.updatePassword(user);
+        int expectedAffect = 1;
+        String actualPassword = userDAO.findPasswordByLogin(user.getLogin());
+
+        assertEquals(expectedAffect, rowsAffected);
+        assertEquals(password, actualPassword);
     }
 
 }
