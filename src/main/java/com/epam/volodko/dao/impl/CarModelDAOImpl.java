@@ -70,7 +70,7 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
     }
 
     @Override
-    public List<CarModel> findById(CarType carType) throws DAOException {
+    public List<CarModel> findByCarType(CarType carType) throws DAOException {
         List<CarModel> carModels = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -132,7 +132,7 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
             if (rowsAffected == 0) {
                 throw new DAOException("Saving new car model failed, no rows affected.");
             }
-        carModel.setCarModelId(getGeneratedKey(statement));
+        carModel.setId(getGeneratedKey(statement));
         } catch (SQLException e) {
             throw new DAOException("SQLException when try to save new car model.", e);
         } catch (ConnectionPoolException e) {
@@ -172,7 +172,7 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(UPDATE_CAR_MODEL_QUERY);
             prepareCarModelStatement(carModel, statement);
-            statement.setInt(6, carModel.getCarModelId());
+            statement.setInt(6, carModel.getId());
             rowsAffected = statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("SQLException when try to update car model.", e);

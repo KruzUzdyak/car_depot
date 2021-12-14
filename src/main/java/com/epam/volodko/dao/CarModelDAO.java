@@ -10,7 +10,7 @@ public interface CarModelDAO {
 
     CarModel findById(int carModelId) throws DAOException;
 
-    List<CarModel> findById(CarType carType) throws DAOException;
+    List<CarModel> findByCarType(CarType carType) throws DAOException;
 
     List<CarModel> findAll() throws DAOException;
 

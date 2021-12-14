@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Car implements Serializable {
 
-    private int carId;
+    private int id;
     private String plateNumber;
     private int fuelLevel;
     private int mileage;
@@ -19,9 +19,9 @@ public class Car implements Serializable {
     public Car(){
     }
 
-    public Car(int carId, String plateNumber, int fuelLevel,
+    public Car(int id, String plateNumber, int fuelLevel,
                int mileage, boolean isBroken, CarModel model, Driver driver) {
-        this.carId = carId;
+        this.id = id;
         this.plateNumber = plateNumber;
         this.fuelLevel = fuelLevel;
         this.mileage = mileage;
@@ -30,8 +30,8 @@ public class Car implements Serializable {
         this.driver = driver;
     }
 
-    public int getCarId() {
-        return carId;
+    public int getId() {
+        return id;
     }
 
     public String getPlateNumber() {
@@ -90,8 +90,8 @@ public class Car implements Serializable {
         this.driver = driver;
     }
 
-    public void setCarId(int carId) {
-        this.carId = carId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setModel(CarModel model) {
@@ -111,20 +111,20 @@ public class Car implements Serializable {
             return false;
         }
         Car car = (Car) o;
-        return carId == car.carId && fuelLevel == car.fuelLevel && mileage == car.mileage &&
+        return id == car.id && fuelLevel == car.fuelLevel && mileage == car.mileage &&
                 isBroken == car.isBroken && Objects.equals(plateNumber, car.plateNumber) &&
                 Objects.equals(model, car.model) && Objects.equals(driver, car.driver);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(carId, plateNumber, fuelLevel, mileage, isBroken, model, driver);
+        return Objects.hash(id, plateNumber, fuelLevel, mileage, isBroken, model, driver);
     }
 
     @Override
     public String toString() {
         return "Car{" +
-                "carId=" + carId +
+                "carId=" + id +
                 ", plateNumber='" + plateNumber + '\'' +
                 ", fuelLevel=" + fuelLevel +
                 ", mileage=" + mileage +

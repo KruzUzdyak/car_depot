@@ -8,16 +8,16 @@ import java.util.List;
 
 public interface CarDAO {
 
-    Car findCarById(int carId) throws DAOException;
+    Car findById(int carId) throws DAOException;
 
-    Car findCarByDriver(Driver driver) throws DAOException;
+    Car findByDriver(Driver driver) throws DAOException;
 
-    List<Car> findAllCars() throws DAOException;
+    List<Car> findAll() throws DAOException;
 
-    int saveNewCar(Car car) throws DAOException;
+    int saveNew(Car car) throws DAOException;
 
-    int deleteCar(Car car) throws DAOException;
+    int delete(Car car) throws DAOException;
 
-    int updateCar(Car car) throws DAOException;
+    int update(Car car) throws DAOException;
 
 }

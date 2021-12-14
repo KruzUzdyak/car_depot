@@ -2,11 +2,14 @@ package com.epam.volodko.dao;
 
 import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.entity.car.Car;
+import com.epam.volodko.entity.car.CarModel;
 import com.epam.volodko.entity.user.Driver;
 import com.epam.volodko.entity.user.Role;
 import org.junit.Test;
 
 import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class CarDAOTest {
 
@@ -14,8 +17,8 @@ public class CarDAOTest {
     UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 
     @Test
-    public void checkFindCarById() throws DAOException {
-        Car actualCar = carDAO.findCarById(4);
+    public void testFindCarById() throws DAOException {
+        Car actualCar = carDAO.findById(1);
 
         System.out.println(actualCar);
 
@@ -23,21 +26,50 @@ public class CarDAOTest {
     }
 
     @Test
-    public void checkFindCarByDriver() throws DAOException {
-        Driver driver = (Driver) userDAO.findByRole(Role.DRIVER).get(0);
-        Car actualCar = carDAO.findCarByDriver(driver);
+    public void testFindCarByDriver() throws DAOException {
+        Driver driver = new Driver(2, null, null, null, null, Role.DRIVER);
+        Car actualCar = carDAO.findByDriver(driver);
 
         System.out.println(actualCar);
         //todo make full test.
     }
 
     @Test
-    public void checkFindAllCars() throws DAOException{
-        List<Car> cars = carDAO.findAllCars();
+    public void testFindAllCars() throws DAOException{
+        List<Car> cars = carDAO.findAll();
         for (Car car : cars){
             System.out.println(car);
             System.out.println();
         }
+    }
+
+    @Test
+    public void testSaveNew() throws DAOException{
+        CarModel model = new CarModel();
+        model.setId(1);
+        Driver driver = new Driver();
+        driver.setId(2);
+        Car car = new Car(0, "TEST_PLATE_NUMBER", 40, 555,
+                false, model, driver);
+
+        int rowsAffected = carDAO.saveNew(car);
+        int expectedAffect = 1;
+
+        assertEquals(expectedAffect, rowsAffected);
+        assertTrue(car.getId() > 0);
+    }
+
+    @Test
+    public void testDelete() throws DAOException{
+        int carId = 1;
+        Car car = carDAO.findById(carId);
+
+        int rowsAffected = carDAO.delete(car);
+        int expectedAffect = 1;
+        Car actualCar = carDAO.findById(carId);
+
+        assertEquals(expectedAffect, rowsAffected);
+        assertNull(actualCar);
     }
 
 }

@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class CarModel implements Serializable {
 
-    private int carModelId;
+    private int id;
     private String modelName;
     private int capacity;
     private int fuelTank;
@@ -15,8 +15,8 @@ public class CarModel implements Serializable {
     public CarModel() {
     }
 
-    public CarModel(int carModelId, String modelName, int capacity, int fuelTank, String loadType, CarType type) {
-        this.carModelId = carModelId;
+    public CarModel(int id, String modelName, int capacity, int fuelTank, String loadType, CarType type) {
+        this.id = id;
         this.modelName = modelName;
         this.capacity = capacity;
         this.fuelTank = fuelTank;
@@ -24,12 +24,12 @@ public class CarModel implements Serializable {
         this.loadType = loadType;
     }
 
-    public int getCarModelId() {
-        return carModelId;
+    public int getId() {
+        return id;
     }
 
-    public void setCarModelId(int carModelId) {
-        this.carModelId = carModelId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getModelName() {
@@ -81,20 +81,20 @@ public class CarModel implements Serializable {
             return false;
         }
         CarModel carModel = (CarModel) o;
-        return carModelId == carModel.carModelId && capacity == carModel.capacity &&
+        return id == carModel.id && capacity == carModel.capacity &&
                 fuelTank == carModel.fuelTank && Objects.equals(modelName, carModel.modelName) &&
                 type == carModel.type && Objects.equals(loadType, carModel.loadType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(carModelId, modelName, capacity, fuelTank, type, loadType);
+        return Objects.hash(id, modelName, capacity, fuelTank, type, loadType);
     }
 
     @Override
     public String toString() {
         return "CarModel{" +
-                "carModelId=" + carModelId +
+                "id=" + id +
                 ", modelName='" + modelName + '\'' +
                 ", capacity=" + capacity +
                 ", fuelTank=" + fuelTank +

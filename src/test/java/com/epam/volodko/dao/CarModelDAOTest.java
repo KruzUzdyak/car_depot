@@ -24,7 +24,7 @@ public class CarModelDAOTest {
     @Test
     public void testFindByCarType() throws DAOException {
         CarType type = new CarType(3, null, null);
-        List<CarModel> models = carModelDAO.findById(type);
+        List<CarModel> models = carModelDAO.findByCarType(type);
         for (CarModel model : models) {
             System.out.println(model);
             System.out.println();
@@ -54,11 +54,11 @@ public class CarModelDAOTest {
         model.setModelName("NewUpdatedName");
         model.setCapacity(1050);
         rowsAffected = carModelDAO.update(model);
-        model = carModelDAO.findById(model.getCarModelId());
+        model = carModelDAO.findById(model.getId());
         System.out.println("Rows affected by updating car model - " + rowsAffected);
         System.out.println(model);
 
-        rowsAffected = carModelDAO.deleteById(model.getCarModelId());
+        rowsAffected = carModelDAO.deleteById(model.getId());
         System.out.println("Rows affected by deleting test car model - " + rowsAffected);
 
     }
