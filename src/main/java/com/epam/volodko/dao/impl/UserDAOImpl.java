@@ -79,7 +79,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
     @Override
     public User findById(int userId) throws DAOException {
-        User user;
+        User user = null;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -90,8 +90,6 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 user = BuilderFactory.getUserBuilder().build(resultSet);
-            } else {
-                throw new DAOException("Can't find user by id.");
             }
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
@@ -103,7 +101,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
     @Override
     public User findByLogin(String login) throws DAOException {
-        User user;
+        User user = null;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -114,8 +112,6 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 user = BuilderFactory.getUserBuilder().build(resultSet);
-            } else {
-                throw new DAOException("Can't find user by login.");
             }
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
@@ -182,7 +178,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
             statement.setString(4, user.getPhone());
             statement.setInt(5, user.getRole().getRoleId());
             rowsAffected = statement.executeUpdate();
-            user.setUserId(getGeneratedKey(statement));
+            user.setId(getGeneratedKey(statement));
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {
@@ -192,7 +188,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
     }
 
     @Override
-    public int deleteUser(User user) throws DAOException {
+    public int delete(User user) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         int rowsAffected;
@@ -210,7 +206,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
     }
 
     @Override
-    public int updateNameAndPhone(User user) throws DAOException {
+    public int update(User user) throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;;
         int rowsAffected;

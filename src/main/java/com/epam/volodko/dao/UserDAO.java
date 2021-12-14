@@ -20,9 +20,9 @@ public interface UserDAO {
 
     int saveNew(User user) throws DAOException;
 
-    int deleteUser(User user) throws DAOException;
+    int delete(User user) throws DAOException;
 
-    int updateNameAndPhone(User user) throws DAOException;
+    int update(User user) throws DAOException;
 
     int updateLogin(User user) throws DAOException;
 

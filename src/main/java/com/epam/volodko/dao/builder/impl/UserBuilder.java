@@ -16,7 +16,7 @@ public class UserBuilder {
     }
 
     void buildUser(User user, ResultSet resultSet) throws SQLException {
-        user.setUserId(resultSet.getInt(Column.USERS_ID));
+        user.setId(resultSet.getInt(Column.USERS_ID));
         user.setLogin(resultSet.getString(Column.USERS_LOGIN));
         user.setName(resultSet.getString(Column.USERS_NAME));
         user.setPhone(resultSet.getString(Column.USERS_PHONE));

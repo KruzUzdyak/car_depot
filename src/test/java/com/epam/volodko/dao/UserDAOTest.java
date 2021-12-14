@@ -90,7 +90,7 @@ public class UserDAOTest {
     @Test
     public void testDeleteUser() throws DAOException {
         User user = new User(5, "admin2", null, null, null, null);
-        int rowsAffected = userDAO.deleteUser(user);
+        int rowsAffected = userDAO.delete(user);
         int expectedAffect = 1;
 
         assertEquals(expectedAffect, rowsAffected);
@@ -102,7 +102,7 @@ public class UserDAOTest {
         user.setName("testUpdateName");
         user.setPhone("testUpdatePhone");
 
-        int rowsAffected = userDAO.updateNameAndPhone(user);
+        int rowsAffected = userDAO.update(user);
         int expectedAffect = 1;
         User actualUser = userDAO.findById(4);
 

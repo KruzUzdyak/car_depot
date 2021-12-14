@@ -13,7 +13,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientDAOImpl extends AbstractUserDAO<Client>{
+public class ClientDAOImpl extends UserDAOImpl{
 
     private static final String FIND_CLIENT_BY_ID_QUERY = String.format(
             "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s ci ON u.%s = ci.%s WHERE u.%s = ?;",
@@ -34,7 +34,7 @@ public class ClientDAOImpl extends AbstractUserDAO<Client>{
     private static final String UPDATE_CLIENT_INFO_QUERY = String.format(
             "UPDATE %s SET %s = ?, %s = ? WHERE %s = ?;",
             Table.CLIENT_INFO, Column.CLIENT_INFO_COMPANY, Column.CLIENT_INFO_NOTE, Column.CLIENT_INFO_USER_ID);
-
+/*
     @Override
     Client findById(int userId) throws DAOException {
         Connection connection = null;
@@ -163,5 +163,5 @@ public class ClientDAOImpl extends AbstractUserDAO<Client>{
         } finally {
             closeConnection(connection, statement);
         }
-    }
+    }*/
 }

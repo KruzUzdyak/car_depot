@@ -8,15 +8,13 @@ import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.dao.table_name.Table;
 import com.epam.volodko.entity.user.Admin;
 import com.epam.volodko.entity.user.Role;
+import com.epam.volodko.entity.user.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminDAOImpl extends AbstractUserDAO<Admin> {
+public class AdminDAOImpl extends UserDAOImpl {
 
     private static final String FIND_ADMIN_BY_ID_QUERY = String.format(
             "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s ai ON u.%s = ai.%s WHERE u.%s = ?;",
@@ -41,25 +39,21 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
 
 
     @Override
-    Admin findById(int userId) throws DAOException {
-        Admin admin;
+    public Admin findById(int id) throws DAOException {
+        Admin admin = null;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(FIND_ADMIN_BY_ID_QUERY);
-            statement.setInt(1, userId);
+            statement.setInt(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()){
                 admin = BuilderFactory.getAdminBuilder().build(resultSet);
-            } else {
-                admin = new Admin();
             }
-        } catch (ConnectionPoolException e) {
+        } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
-        } catch (SQLException e) {
-            throw new DAOException("SQLException when try to find admin by id.", e);
         } finally {
             closeConnection(connection, statement, resultSet);
         }
@@ -67,8 +61,8 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
     }
 
     @Override
-    Admin findByLogin(String userLogin) throws DAOException {
-        Admin admin;
+    public Admin findByLogin(String userLogin) throws DAOException {
+        Admin admin = null;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -79,13 +73,9 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
             resultSet = statement.executeQuery();
             if (resultSet.next()){
                 admin = BuilderFactory.getAdminBuilder().build(resultSet);
-            } else {
-                admin = new Admin();
             }
-        } catch (ConnectionPoolException e) {
+        } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
-        } catch (SQLException e) {
-            throw new DAOException("SQLException when try to find admin by login.", e);
         } finally {
             closeConnection(connection, statement, resultSet);
         }
@@ -93,8 +83,8 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
     }
 
     @Override
-    List<Admin> findAll() throws DAOException {
-        List<Admin> admins = new ArrayList<>();
+    public List<User> findAll() throws DAOException {
+        List<User> admins = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -103,13 +93,11 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
             statement = connection.prepareStatement(FIND_ALL_ADMINS_QUERY);
             statement.setInt(1, Role.ADMIN.getRoleId());
             resultSet = statement.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()){
                 admins.add(BuilderFactory.getAdminBuilder().build(resultSet));
             }
-        } catch (ConnectionPoolException e) {
+        } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
-        } catch (SQLException e) {
-            throw new DAOException("SQLException when try to find all admins.", e);
         } finally {
             closeConnection(connection, statement, resultSet);
         }
@@ -117,7 +105,14 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
     }
 
     @Override
-    public int saveNewUser(Admin admin) throws DAOException {
+    public List<User> findByRole(Role role) throws DAOException {
+        throw new UnsupportedOperationException("Use UserDAO for this operation.");
+    }
+    // TODO: 14.12.2021 refactor userDAO hierarchy
+/* 
+    @Override
+    public int saveNew(User admin) throws DAOException {
+        Admin adminForSave = (Admin) admin;
         Connection connection = null;
         PreparedStatement statement = null;
         int rowsAffected;
@@ -125,15 +120,15 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
             connection = ConnectionPool.getInstance().takeConnection();
             connection.setAutoCommit(false);
             statement = connection.prepareStatement(SAVE_NEW_USER_QUERY);
-            prepareSaveUserStatement(admin, statement);
+            prepareSaveUserStatement(adminForSave, statement);
             statement.executeUpdate();
             statement = connection.prepareStatement(SAVE_NEW_ADMIN_INFO_QUERY);
-            statement.setString(1, admin.getLogin());
-            statement.setLong(2, admin.getWorksSince().getTime());
-            statement.setString(3, admin.getNote());
+            statement.setString(1, adminForSave.getLogin());
+            statement.setLong(2, adminForSave.getWorksSince().getTime());
+            statement.setString(3, adminForSave.getNote());
             rowsAffected = statement.executeUpdate();
-            int userId = getLastAddedUserId(admin, connection, statement);
-            admin.setUserId(userId);
+            int userId = getLastAddedUserId(adminForSave, connection, statement);
+            adminForSave.setUserId(userId);
             connection.commit();
         } catch (ConnectionPoolException e) {
             throw new DAOException(e);
@@ -169,4 +164,6 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> {
             closeConnection(connection, statement);
         }
     }
+*/
+
 }

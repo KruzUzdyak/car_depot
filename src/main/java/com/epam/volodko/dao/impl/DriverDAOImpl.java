@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DriverDAOImpl extends AbstractUserDAO<Driver>{
+public class DriverDAOImpl extends UserDAOImpl{
 
     private static final String FIND_DRIVER_BY_ID_QUERY = String.format(
             "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s AS dl ON u.%s = dl.%s JOIN " +
@@ -39,7 +39,7 @@ public class DriverDAOImpl extends AbstractUserDAO<Driver>{
             Column.DRIVER_LICENSES_LICENSE_ID, Column.LICENSE_ID);
 
     DriverLicenseDAOImpl licenseDAO = new DriverLicenseDAOImpl();
-
+/*
     @Override
     Driver findById(int userId) throws DAOException {
         Driver driver;
@@ -162,5 +162,5 @@ public class DriverDAOImpl extends AbstractUserDAO<Driver>{
             closeConnection(connection, statement);
         }
 
-    }
+    }*/
 }

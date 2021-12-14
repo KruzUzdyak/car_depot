@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class User implements Serializable {
 
-    private int userId;
+    private int id;
     private String login;
     private String password;
     private String name;
@@ -17,7 +17,7 @@ public class User implements Serializable {
 
     public User(int id, String login, String password,
                 String name, String phone, Role role) {
-        this.userId = id;
+        this.id = id;
         this.login = login;
         this.password = password;
         this.name = name;
@@ -26,7 +26,7 @@ public class User implements Serializable {
     }
 
     public int getId() {
-        return userId;
+        return id;
     }
 
     public String getLogin() {
@@ -69,8 +69,8 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -82,20 +82,20 @@ public class User implements Serializable {
             return false;
         }
         User user = (User) o;
-        return userId == user.userId && Objects.equals(login, user.login) &&
+        return id == user.id && Objects.equals(login, user.login) &&
                 Objects.equals(password, user.password) && Objects.equals(name, user.name) &&
                 Objects.equals(phone, user.phone) && role == user.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, login, password, name, phone, role);
+        return Objects.hash(id, login, password, name, phone, role);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "userId=" + userId +
+                "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
