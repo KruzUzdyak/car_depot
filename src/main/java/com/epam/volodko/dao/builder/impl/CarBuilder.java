@@ -22,15 +22,19 @@ public class CarBuilder {
             car.setMileage(resultSet.getInt(Column.CARS_MILEAGE));
             car.setBroken(resultSet.getBoolean(Column.CARS_BROKEN));
             car.setModel(BuilderFactory.getModelBuilder().build(resultSet));
-            int driverId;
-            if ((driverId = resultSet.getInt(Column.CARS_DRIVER_ID)) != 0) {
-                UserDAO driverDAO = DAOFactory.getInstance().getDriverDAO();
-                Driver driver = (Driver) driverDAO.findById(driverId);
-                car.setDriver(driver);
-            }
+            setDriver(resultSet, car);
         } catch (SQLException e) {
             throw new DAOException("SQLException when build a car.", e);
         }
         return car;
+    }
+
+    private void setDriver(ResultSet resultSet, Car car) throws SQLException, DAOException {
+        int driverId;
+        if ((driverId = resultSet.getInt(Column.CARS_DRIVER_ID)) != 0) {
+            UserDAO driverDAO = DAOFactory.getInstance().getDriverDAO();
+            Driver driver = (Driver) driverDAO.findById(driverId);
+            car.setDriver(driver);
+        }
     }
 }
