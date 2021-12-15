@@ -72,7 +72,6 @@ public class CarDAOImpl extends AbstractDAO implements CarDAO {
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 car = BuilderFactory.getCarBuilder().build(resultSet);
-                System.out.println("res.next");
             }
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
