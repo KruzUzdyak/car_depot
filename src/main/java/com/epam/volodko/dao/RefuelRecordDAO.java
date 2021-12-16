@@ -13,7 +13,7 @@ public interface RefuelRecordDAO {
 
     int saveNew(RefuelRecord record) throws DAOException;
 
-    int delete(RefuelRecord record) throws DAOException;
+    int deleteById(int id) throws DAOException;
 
     int update(RefuelRecord record) throws DAOException;
 }

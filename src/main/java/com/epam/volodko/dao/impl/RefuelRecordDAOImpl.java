@@ -97,14 +97,14 @@ public class RefuelRecordDAOImpl extends AbstractDAO implements RefuelRecordDAO 
     }
 
     @Override
-    public int delete(RefuelRecord record) throws DAOException {
+    public int deleteById(int id) throws DAOException {
         int rowsAffected;
         Connection connection = null;
         PreparedStatement statement = null;
         try{
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(DELETE_REFUEL_RECORD_QUERY);
-            statement.setInt(1, record.getId());
+            statement.setInt(1, id);
             rowsAffected = statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);

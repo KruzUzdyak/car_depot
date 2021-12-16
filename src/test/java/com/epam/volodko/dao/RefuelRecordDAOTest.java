@@ -48,9 +48,8 @@ public class RefuelRecordDAOTest {
 
     @Test
     public void testDelete() throws DAOException{
-        RefuelRecord record = new RefuelRecord();
-        record.setId(2);
-        int rowsAffected = recordDAO.delete(record);
+        int refuelRecordId = 2;
+        int rowsAffected = recordDAO.deleteById(refuelRecordId);
         int expectedAffect = 1;
 
         assertEquals(expectedAffect, rowsAffected);
