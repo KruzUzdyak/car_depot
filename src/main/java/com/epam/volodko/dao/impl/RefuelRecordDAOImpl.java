@@ -21,6 +21,17 @@ public class RefuelRecordDAOImpl extends AbstractDAO implements RefuelRecordDAO 
     private static final String FIND_ALL_REFUEL_RECORD_QUERY = String.format(
             "SELECT * FROM %s;",
             Table.REFUEL_RECORDS);
+    private static final String SAVE_NEW_REFUEL_RECORD_QUERY = String.format(
+            "INSERT INTO %s (%s, %s, %s, %s) VALUES (?, ?, ?, ?);",
+            Table.REFUEL_RECORDS, Column.REFUEL_RECORDS_REFUEL_DATE, Column.REFUEL_RECORDS_FUEL_PRICE,
+            Column.REFUEL_RECORDS_REFUEL_AMOUNT, Column.REFUEL_RECORDS_CAR_ID);
+    private static final String DELETE_REFUEL_RECORD_QUERY = String.format(
+            "DELETE FROM %s WHERE %s = ?;",
+            Table.REFUEL_RECORDS, Column.REFUEL_RECORDS_ID);
+    private static final String UPDATE_REFUEL_RECORD_QUERY = String.format(
+            "UPDATE %s SET %s=?, %s=?, %s=?, %s=? WHERE %s=?;",
+            Table.REFUEL_RECORDS, Column.REFUEL_RECORDS_REFUEL_DATE, Column.REFUEL_RECORDS_FUEL_PRICE,
+            Column.REFUEL_RECORDS_REFUEL_AMOUNT, Column.REFUEL_RECORDS_CAR_ID, Column.REFUEL_RECORDS_ID);
 
     @Override
     public RefuelRecord findById(int id) throws DAOException {
@@ -68,16 +79,65 @@ public class RefuelRecordDAOImpl extends AbstractDAO implements RefuelRecordDAO 
 
     @Override
     public int saveNew(RefuelRecord record) throws DAOException {
-        return 0;
+        int rowsAffected;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(SAVE_NEW_REFUEL_RECORD_QUERY);
+            prepareForSaveRefuelRecordStatement(record, statement);
+            rowsAffected = statement.executeUpdate();
+            record.setId(getGeneratedKey(statement));
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement);
+        }
+        return rowsAffected;
     }
 
     @Override
     public int delete(RefuelRecord record) throws DAOException {
-        return 0;
+        int rowsAffected;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(DELETE_REFUEL_RECORD_QUERY);
+            statement.setInt(1, record.getId());
+            rowsAffected = statement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement);
+        }
+        return rowsAffected;
     }
 
     @Override
     public int update(RefuelRecord record) throws DAOException {
-        return 0;
+        int rowsAffected;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(UPDATE_REFUEL_RECORD_QUERY);
+            prepareForSaveRefuelRecordStatement(record, statement);
+            statement.setInt(5, record.getId());
+            rowsAffected = statement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement);
+        }
+        return rowsAffected;
+    }
+
+    private void prepareForSaveRefuelRecordStatement(RefuelRecord record, PreparedStatement statement)
+            throws SQLException {
+        statement.setLong(1, record.getRefuelDate().getTime());
+        statement.setInt(2, record.getFuelPrice());
+        statement.setInt(3, record.getRefuelAmount());
+        statement.setInt(4, record.getCar().getId());
     }
 }
