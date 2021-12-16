@@ -24,6 +24,17 @@ public class RepairRecordDAOImpl extends AbstractDAO implements RepairRecordDAO 
     private static final String FIND_ALL_REPAIR_RECORD_QUERY = String.format(
             "SELECT * FROM %s;",
             Table.REPAIR_RECORDS);
+    private static final String SAVE_NEW_REPAIR_RECORD_QUERY = String.format(
+            "INSERT INTO %s (%s, %s, %s, %s) VALUES (?, ?, ?, ?);",
+            Table.REPAIR_RECORDS, Column.REPAIR_RECORDS_REPAIR_START, Column.REPAIR_RECORDS_REPAIR_END,
+            Column.REPAIR_RECORDS_EXPENSES, Column.REPAIR_RECORDS_CAR_ID);
+    private static final String DELETE_REPAIR_RECORD_BY_ID_QUERY = String.format(
+            "DELETE FROM %s WHERE %s = ?;",
+            Table.REPAIR_RECORDS, Column.REPAIR_RECORDS_ID);
+    private static final String UPDATE_REPAIR_RECORD_QUERY = String.format(
+            "UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?;",
+            Table.REPAIR_RECORDS, Column.REPAIR_RECORDS_REPAIR_START, Column.REPAIR_RECORDS_REPAIR_END,
+            Column.REPAIR_RECORDS_EXPENSES, Column.REPAIR_RECORDS_CAR_ID, Column.REPAIR_RECORDS_ID);
 
     @Override
     public RepairRecord findById(int id) throws DAOException {
@@ -71,16 +82,64 @@ public class RepairRecordDAOImpl extends AbstractDAO implements RepairRecordDAO 
 
     @Override
     public int saveNew(RepairRecord record) throws DAOException {
-        return 0;
+        int rowsAffected = 0;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(SAVE_NEW_REPAIR_RECORD_QUERY);
+            prepareForSaveRepairRecordStatement(record, statement);
+            rowsAffected = statement.executeUpdate();
+            record.setId(getGeneratedKey(statement));
+        } catch (SQLException | ConnectionPoolException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(connection, statement);
+        }
+        return rowsAffected;
     }
 
     @Override
     public int deleteById(int id) throws DAOException {
-        return 0;
+        int rowsAffected = 0;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(DELETE_REPAIR_RECORD_BY_ID_QUERY);
+            statement.setInt(1, id);
+            rowsAffected = statement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(connection, statement);
+        }
+        return rowsAffected;
     }
 
     @Override
     public int update(RepairRecord record) throws DAOException {
-        return 0;
+        int rowsAffected = 0;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(UPDATE_REPAIR_RECORD_QUERY);
+            prepareForSaveRepairRecordStatement(record, statement);
+            statement.setInt(5, record.getId());
+            rowsAffected = statement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(connection, statement);
+        }
+        return rowsAffected;
+    }
+
+    private void prepareForSaveRepairRecordStatement(RepairRecord record, PreparedStatement statement) throws SQLException {
+        statement.setLong(1, record.getRepairStart().getTime());
+        statement.setLong(2, record.getRepairEnd().getTime());
+        statement.setInt(3, record.getExpenses());
+        statement.setInt(4, record.getCar().getId());
     }
 }
