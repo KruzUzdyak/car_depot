@@ -16,7 +16,7 @@ public interface CarDAO {
 
     int saveNew(Car car) throws DAOException;
 
-    int delete(Car car) throws DAOException;
+    int deleteById(int id) throws DAOException;
 
     int update(Car car) throws DAOException;
 

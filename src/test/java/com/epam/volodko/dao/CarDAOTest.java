@@ -62,9 +62,8 @@ public class CarDAOTest {
     @Test
     public void testDelete() throws DAOException{
         int carId = 1;
-        Car car = carDAO.findById(carId);
 
-        int rowsAffected = carDAO.delete(car);
+        int rowsAffected = carDAO.deleteById(carId);
         int expectedAffect = 1;
         Car actualCar = carDAO.findById(carId);
 

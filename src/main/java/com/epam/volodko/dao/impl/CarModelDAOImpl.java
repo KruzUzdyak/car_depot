@@ -84,10 +84,8 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
                 CarModel carModel = BuilderFactory.getModelBuilder().build(resultSet);
                 carModels.add(carModel);
             }
-        } catch (SQLException e) {
-            throw new DAOException("SQLException when try to find car models by car type.", e);
-        } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+        } catch (ConnectionPoolException | SQLException e) {
+            e.printStackTrace();
         } finally {
             closeConnection(connection, statement, resultSet);
         }
@@ -108,10 +106,8 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
                 CarModel carModel = BuilderFactory.getModelBuilder().build(resultSet);
                 carModels.add(carModel);
             }
-        } catch (SQLException e) {
-            throw new DAOException("SQLException when try to find all car models.", e);
-        } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+        } catch (ConnectionPoolException | SQLException e) {
+            e.printStackTrace();
         } finally {
             closeConnection(connection, statement, resultSet);
         }
@@ -120,7 +116,7 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
 
     @Override
     public int saveNew(CarModel carModel) throws DAOException {
-        int rowsAffected;
+        int rowsAffected = 0;
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -133,10 +129,8 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
                 throw new DAOException("Saving new car model failed, no rows affected.");
             }
         carModel.setId(getGeneratedKey(statement));
-        } catch (SQLException e) {
-            throw new DAOException("SQLException when try to save new car model.", e);
-        } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+        } catch (ConnectionPoolException | SQLException e) {
+            e.printStackTrace();
         } finally {
             closeConnection(connection, statement);
         }
@@ -145,7 +139,7 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
 
     @Override
     public int deleteById(int carModelId) throws DAOException {
-        int rowsAffected;
+        int rowsAffected = 0;
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -153,10 +147,8 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
             statement = connection.prepareStatement(DELETE_CAR_MODEL_BY_ID_QUERY);
             statement.setInt(1,carModelId);
             rowsAffected = statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException("SQLException when try to delete car model by id.", e);
-        } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+        } catch (ConnectionPoolException | SQLException e) {
+            e.printStackTrace();
         } finally {
             closeConnection(connection, statement);
         }

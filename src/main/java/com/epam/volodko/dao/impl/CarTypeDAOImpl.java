@@ -20,8 +20,6 @@ import java.util.List;
 
 public class CarTypeDAOImpl extends AbstractDAO implements CarTypeDAO {
 
-    private final static Logger log = LogManager.getLogger(CarTypeDAOImpl.class.getName());
-
     private static final String FIND_CAR_TYPE_BY_ID_QUERY = String.format(
             "SELECT * FROM %s AS ct JOIN %s AS lt ON ct.%s = lt.%s WHERE ct.%s = ?;",
             Table.CAR_TYPES, Table.LICENSE_TYPES,
@@ -62,7 +60,6 @@ public class CarTypeDAOImpl extends AbstractDAO implements CarTypeDAO {
                 carType = new CarType();
             }
         } catch (SQLException | ConnectionPoolException e) {
-            log.error(e);
             throw new DAOException(e);
         } finally {
             closeConnection(connection, statement, resultSet);
@@ -84,9 +81,7 @@ public class CarTypeDAOImpl extends AbstractDAO implements CarTypeDAO {
                 CarType carType = BuilderFactory.getCarTypeBuilder().build(resultSet);
                 carTypes.add(carType);
             }
-        } catch (SQLException e) {
-            throw new DAOException("SQLException when try to find all car types.", e);
-        } catch (ConnectionPoolException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
         } finally {
             closeConnection(connection, statement, resultSet);
@@ -115,9 +110,7 @@ public class CarTypeDAOImpl extends AbstractDAO implements CarTypeDAO {
             if (resultSet.next()) {
                 carType.setCarTypeId(resultSet.getInt(Column.CAR_TYPES_ID));
             }
-        } catch (SQLException e) {
-            throw new DAOException("SQLException when try to save new car type.", e);
-        } catch (ConnectionPoolException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
         } finally {
             closeConnection(connection, statement, resultSet);
@@ -135,9 +128,7 @@ public class CarTypeDAOImpl extends AbstractDAO implements CarTypeDAO {
             statement = connection.prepareStatement(DELETE_CAR_TYPE_BY_ID_QUERY);
             statement.setInt(1, carTypeId);
             rowsAffected = statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException("SQLException when try to delete car type.", e);
-        } catch (ConnectionPoolException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
         } finally {
             closeConnection(connection, statement);
@@ -157,9 +148,7 @@ public class CarTypeDAOImpl extends AbstractDAO implements CarTypeDAO {
             statement.setInt(2, carType.getRequiredLicense().getId());
             statement.setInt(3, carType.getCarTypeId());
             rowsAffected = statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException("SQLException when try to update car type.", e);
-        } catch (ConnectionPoolException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
         } finally {
             closeConnection(connection, statement);

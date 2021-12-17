@@ -146,14 +146,14 @@ public class CarDAOImpl extends AbstractDAO implements CarDAO {
     }
 
     @Override
-    public int delete(Car car) throws DAOException {
+    public int deleteById(int id) throws DAOException {
         int rowsAffected = 0;
         Connection connection = null;
         PreparedStatement statement = null;
         try{
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(DELETE_CAR_QUERY);
-            statement.setInt(1, car.getId());
+            statement.setInt(1, id);
             rowsAffected = statement.executeUpdate();
         } catch (ConnectionPoolException | SQLException e) {
             e.printStackTrace();

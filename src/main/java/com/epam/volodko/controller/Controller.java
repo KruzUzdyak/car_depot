@@ -1,6 +1,8 @@
 package com.epam.volodko.controller;
 
 import com.epam.volodko.controller.constant.CommandName;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +12,19 @@ import java.io.IOException;
 
 public class Controller extends HttpServlet {
 
+    private static final Logger log = LogManager.getLogger(Controller.class);
+
     private final CommandProvider provider = new CommandProvider();
+
+    @Override
+    public void init(){
+        log.warn(String.format("Receive request from client. Starting new Thread - %s.", Thread.currentThread()));
+    }
+
+    @Override
+    public void destroy() {
+        log.warn(String.format("Request from client completed. Thread destroy process started - %s.", Thread.currentThread()));
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

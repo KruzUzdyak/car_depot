@@ -6,6 +6,8 @@ import com.epam.volodko.controller.constant.PagePath;
 import com.epam.volodko.controller.constant.ParameterName;
 import com.epam.volodko.service.ServiceFactory;
 import com.epam.volodko.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class LoginationCommand implements Command {
+
+    private static final Logger log = LogManager.getLogger(LoginationCommand.class);
 
     private static final String LOGINATION_ERROR_MESSAGE_TEXT = "Login failed. Try again.";
     
@@ -27,6 +31,7 @@ public class LoginationCommand implements Command {
             response.sendRedirect("Controller?command=" + CommandName.GO_TO_MAIN_PAGE
                     + "&logination_message=" + "done");
         } else {
+            log.warn(String.format("Logination failed by user login - %s.", login));
             forwardOnFailedLogination(request, response);
         }
     }
