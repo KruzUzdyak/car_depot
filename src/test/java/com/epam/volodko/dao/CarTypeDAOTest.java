@@ -20,6 +20,7 @@ public class CarTypeDAOTest {
 
         System.out.println(carType);
         //todo make full test.
+
     }
 
     @Test

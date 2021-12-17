@@ -8,6 +8,8 @@ import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.dao.table_name.Table;
 import com.epam.volodko.entity.car.CarType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,26 +20,30 @@ import java.util.List;
 
 public class CarTypeDAOImpl extends AbstractDAO implements CarTypeDAO {
 
+    private final static Logger log = LogManager.getLogger(CarTypeDAOImpl.class.getName());
+
     private static final String FIND_CAR_TYPE_BY_ID_QUERY = String.format(
             "SELECT * FROM %s AS ct JOIN %s AS lt ON ct.%s = lt.%s WHERE ct.%s = ?;",
-            Table.CAR_TYPES, Table.LICENSE_TYPES, Column.CAR_TYPES_REQUIRED_LICENSE_ID,
-            Column.LICENSE_ID, Column.CAR_TYPES_ID);
+            Table.CAR_TYPES, Table.LICENSE_TYPES,
+            Column.CAR_TYPES_REQUIRED_LICENSE_ID, Column.LICENSE_ID, Column.CAR_TYPES_ID);
     private static final String FIND_ALL_CAR_TYPES_QUERY = String.format(
             "SELECT * FROM %s AS ct JOIN %s AS lt ON ct.%s = lt.%s;",
-            Table.CAR_TYPES, Table.LICENSE_TYPES, Column.CAR_TYPES_REQUIRED_LICENSE_ID,
-            Column.LICENSE_ID);
+            Table.CAR_TYPES, Table.LICENSE_TYPES,
+            Column.CAR_TYPES_REQUIRED_LICENSE_ID, Column.LICENSE_ID);
     private static final String SAVE_NEW_CAR_TYPE_QUERY = String.format(
             "INSERT INTO %s (%s, %s) VALUES (?, ?);",
             Table.CAR_TYPES, Column.CAR_TYPES_NAME, Column.CAR_TYPES_REQUIRED_LICENSE_ID);
     private static final String GET_SAVED_CAR_TYPE_ID_QUERY = String.format(
             "SELECT %s FROM %s WHERE %s = ? AND %s = ?;",
-            Column.CAR_TYPES_ID, Table.CAR_TYPES, Column.CAR_TYPES_NAME, Column.CAR_TYPES_REQUIRED_LICENSE_ID);
+            Column.CAR_TYPES_ID, Table.CAR_TYPES,
+            Column.CAR_TYPES_NAME, Column.CAR_TYPES_REQUIRED_LICENSE_ID);
     private static final String DELETE_CAR_TYPE_BY_ID_QUERY = String.format(
             "DELETE FROM %s WHERE %s = ?;",
             Table.CAR_TYPES, Column.CAR_TYPES_ID);
     private static final String UPDATE_CAR_TYPE_QUERY = String.format(
             "UPDATE %s SET %s = ?, %s = ? WHERE %s = ?",
-            Table.CAR_TYPES, Column.CAR_TYPES_NAME, Column.CAR_TYPES_REQUIRED_LICENSE_ID, Column.CAR_TYPES_ID);
+            Table.CAR_TYPES,
+            Column.CAR_TYPES_NAME, Column.CAR_TYPES_REQUIRED_LICENSE_ID, Column.CAR_TYPES_ID);
 
     @Override
     public CarType findById(int carTypeId) throws DAOException {
@@ -55,9 +61,8 @@ public class CarTypeDAOImpl extends AbstractDAO implements CarTypeDAO {
             } else {
                 carType = new CarType();
             }
-        } catch (SQLException e) {
-            throw new DAOException("SQLException when try to find car type by id.", e);
-        } catch (ConnectionPoolException e) {
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
             throw new DAOException(e);
         } finally {
             closeConnection(connection, statement, resultSet);
