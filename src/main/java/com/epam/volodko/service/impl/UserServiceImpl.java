@@ -5,8 +5,14 @@ import com.epam.volodko.dao.UserDAO;
 import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.entity.user.User;
 import com.epam.volodko.service.UserService;
+import com.epam.volodko.service.exception.ServiceException;
+import com.epam.volodko.service.validator.UserValidator;
+
+import javax.servlet.ServletException;
 
 public class UserServiceImpl implements UserService {
+
+    private final UserValidator validator = new UserValidator();
 
     @Override
     public boolean saveUser(User user) {
@@ -27,21 +33,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean validateUserPassword(String login, String password) {
-        boolean isValidLogin = login != null && !login.isEmpty();
-        boolean isValidPassword = password != null && !password.isEmpty();
-        if (isValidLogin && isValidPassword){
-            String passwordFromDB;
-            try {
-                UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
-                passwordFromDB = userDAO.findPasswordByLogin(login);
-            } catch (DAOException e) {
-                // TODO: 13.12.2021 logging
-                return false;
-            }
-            return password.equals(passwordFromDB);
+    public boolean validateLogination(String login, String password) throws ServiceException {
+        if (!validator.validateLoginAndPassword(login, password)) {
+            return false;
         }
-        return false;
+        String passwordFromDB;
+        try {
+            UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
+            passwordFromDB = userDAO.findPasswordByLogin(login);
+        } catch (DAOException e) {
+            // TODO: 13.12.2021 logging
+            throw new ServiceException(e);
+        }
+        return password.equals(passwordFromDB);
     }
 
     @Override

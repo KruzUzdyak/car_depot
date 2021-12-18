@@ -19,14 +19,17 @@ public class RegistrationCommand implements Command {
 
     private static final String REGISTRATION_MESSAGE_TEXT = "Now you are registered. Congrats!";
     private static final String REGISTRATION_ERROR_MESSAGE_TEXT = "Registration failed! Try again.";
+    private static final String REDIRECT_COMMAND = String.format("%s?%s=%s&%s=%s",
+            CommandName.CONTROLLER, CommandName.COMMAND, CommandName.GO_TO_MAIN_PAGE,
+            ParameterName.REGISTRATION_MESSAGE, REGISTRATION_MESSAGE_TEXT);
+
+    private final UserService userService = ServiceFactory.getInstance().getUserService();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        UserService userService = ServiceFactory.getInstance().getUserService();
         if (validate(request) && userService.saveUser(prepareUserForSave(request))){
-            response.sendRedirect("Controller?command=" + CommandName.GO_TO_MAIN_PAGE
-                        + "&" + ParameterName.REGISTRATION_MESSAGE + "=" + REGISTRATION_MESSAGE_TEXT);
+            response.sendRedirect(REDIRECT_COMMAND);
         } else {
             forwardOnFailedRegistration(request, response);
         }
@@ -43,7 +46,6 @@ public class RegistrationCommand implements Command {
         String login = request.getParameter(ParameterName.USER_LOGIN);
         String password = request.getParameter(ParameterName.USER_PASSWORD);
         String passwordRepeat = request.getParameter(ParameterName.USER_REPEAT_PASSWORD);
-        UserService userService = ServiceFactory.getInstance().getUserService();
         return userService.validatePasswordRepeat(password, passwordRepeat) &&
                 userService.validateLogin(login);
     }
@@ -56,4 +58,5 @@ public class RegistrationCommand implements Command {
         Role role = Role.valueOf(request.getParameter(ParameterName.USER_ROLE).toUpperCase());
         return new User(0, login, password, name, phone, role);
     }
+
 }

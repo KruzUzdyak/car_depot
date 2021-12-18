@@ -1,6 +1,7 @@
 package com.epam.volodko.service;
 
 import com.epam.volodko.entity.user.User;
+import com.epam.volodko.service.exception.ServiceException;
 
 public interface UserService {
 
@@ -8,7 +9,7 @@ public interface UserService {
 
     boolean validateLogin(String login);
 
-    boolean validateUserPassword(String login, String password);
+    boolean validateLogination(String login, String password) throws ServiceException;
 
     boolean validatePasswordRepeat(String password, String passwordRepeat);
 
