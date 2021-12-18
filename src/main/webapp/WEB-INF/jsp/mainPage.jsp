@@ -1,10 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Asus
-  Date: 12.12.2021
-  Time: 16:18
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.epam.volodko.controller.constant.ParameterName" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -12,23 +7,16 @@
 </head>
 <body>
 
+<c:set var="message" value="${param.get(ParameterName.LOGINATION_MESSAGE)}"/>
+<c:if test="${empty message}">
+    <c:set var="message" value="${param.get(ParameterName.REGISTRATION_MESSAGE)}"/>
+</c:if>
+
 <h2 style="color: limegreen">
-    <%
-        String registerMessage = request.getParameter("registration_message");
-        if (registerMessage != null && registerMessage.equals("done")){
-            out.println("Registration done. Congrats!");
-        }
-    %>
+    <c:out value="${message}"/>
 </h2>
 
-<h2 style="color: forestgreen">
-    <%
-        String loginMessage = request.getParameter("logination_message");
-        if (loginMessage != null && loginMessage.equals("done")){
-            out.println("Now you are logged in.");
-        }
-    %>
-</h2>
+
 
 <br/>
 <form action="Controller" method="get">

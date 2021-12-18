@@ -19,6 +19,7 @@ public class LoginationCommand implements Command {
 
     private static final Logger log = LogManager.getLogger(LoginationCommand.class);
 
+    private static final String LOGINATION_MESSAGE_TEXT = "Now you are logged in.";
     private static final String LOGINATION_ERROR_MESSAGE_TEXT = "Login failed. Try again.";
     
     @Override
@@ -29,7 +30,7 @@ public class LoginationCommand implements Command {
 
         if (validateUserForLogin(login, password)){
             response.sendRedirect("Controller?command=" + CommandName.GO_TO_MAIN_PAGE
-                    + "&logination_message=" + "done");
+                    + "&" + ParameterName.LOGINATION_MESSAGE + "=" + LOGINATION_MESSAGE_TEXT);
         } else {
             log.warn(String.format("Logination failed by user login - %s.", login));
             forwardOnFailedLogination(request, response);

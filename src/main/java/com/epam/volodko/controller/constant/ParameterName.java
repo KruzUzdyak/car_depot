@@ -3,6 +3,8 @@ package com.epam.volodko.controller.constant;
 public class ParameterName {
 
     public static final String ERROR_MESSAGE = "error_message";
+    public static final String LOGINATION_MESSAGE = "logination_message";
+    public static final String REGISTRATION_MESSAGE = "registration_message";
     public static final String PASS_RESTRICT_MESSAGE = "password_restriction_message";
 
     public static final String USER_LOGIN = "user_login";

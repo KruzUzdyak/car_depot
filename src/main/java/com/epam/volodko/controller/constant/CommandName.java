@@ -2,6 +2,7 @@ package com.epam.volodko.controller.constant;
 
 public class CommandName {
 
+    public static final String CONTROLLER = "Controller";
     public static final String COMMAND = "command";
 
     public static final String GO_TO_INITIAL_PAGE = "go_to_initial_page";

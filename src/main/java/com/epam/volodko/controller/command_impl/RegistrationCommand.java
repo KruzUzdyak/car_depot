@@ -17,6 +17,7 @@ import java.io.IOException;
 
 public class RegistrationCommand implements Command {
 
+    private static final String REGISTRATION_MESSAGE_TEXT = "Now you are registered. Congrats!";
     private static final String REGISTRATION_ERROR_MESSAGE_TEXT = "Registration failed! Try again.";
 
     @Override
@@ -25,7 +26,7 @@ public class RegistrationCommand implements Command {
         UserService userService = ServiceFactory.getInstance().getUserService();
         if (validate(request) && userService.saveUser(prepareUserForSave(request))){
             response.sendRedirect("Controller?command=" + CommandName.GO_TO_MAIN_PAGE
-                        + "&registration_message=" + "done");
+                        + "&" + ParameterName.REGISTRATION_MESSAGE + "=" + REGISTRATION_MESSAGE_TEXT);
         } else {
             forwardOnFailedRegistration(request, response);
         }

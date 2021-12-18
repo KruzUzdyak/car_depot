@@ -1,10 +1,5 @@
-<%@ page import="com.epam.volodko.controller.constant.ParameterName" %><%--
-  Created by IntelliJ IDEA.
-  User: Asus
-  Date: 11.12.2021
-  Time: 15:03
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.epam.volodko.controller.constant.ParameterName" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -23,14 +18,12 @@
     <input type="submit" value="Login">
 </form>
 
-<h3 style="color:crimson">
-    <%
-        String errorMessage = (String) request.getAttribute(ParameterName.ERROR_MESSAGE);
-        if (errorMessage != null){
-            out.println(errorMessage);
-        }
-    %>
-</h3>
+<c:set var="errorMessage" scope="page" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
+<c:if test="${not empty errorMessage}">
+    <h3 style="color:crimson">
+        <c:out value="${errorMessage}"/>
+    </h3>
+</c:if>
 
 <br/>
 <form action="Controller" method="get">
