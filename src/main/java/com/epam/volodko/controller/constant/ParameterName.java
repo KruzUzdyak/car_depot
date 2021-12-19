@@ -7,6 +7,8 @@ public class ParameterName {
     public static final String REGISTRATION_MESSAGE = "registration_message";
     public static final String PASS_RESTRICT_MESSAGE = "password_restriction_message";
 
+    public static final String LOCALE = "locale";
+
     public static final String USER_LOGIN = "user_login";
     public static final String USER_PASSWORD = "user_password";
     public static final String USER_REPEAT_PASSWORD = "user_repeat_password";

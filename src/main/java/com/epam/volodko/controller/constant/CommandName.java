@@ -12,4 +12,6 @@ public class CommandName {
     public static final String GO_TO_LOGINATION = "go_to_logination";
     public static final String GO_TO_MAIN_PAGE = "go_to_main_page";
 
+    public static final String LOCALIZATION = "localization";
+
 }
