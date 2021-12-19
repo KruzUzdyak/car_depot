@@ -36,7 +36,8 @@ public class Controller extends HttpServlet {
         process(req, resp);
     }
 
-    private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void process(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String commandName = request.getParameter(CommandName.COMMAND);
         Command command = provider.getCommand(commandName);
         command.execute(request, response);

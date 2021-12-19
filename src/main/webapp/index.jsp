@@ -6,7 +6,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="ISO-8859-1">
 
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.locale" var="loc"/>
@@ -17,6 +16,7 @@
     <fmt:message bundle="${loc}" key="index.button.login" var="button_login"/>
     <fmt:message bundle="${loc}" key="index.button.Registration" var="button_registration"/>
 
+    <meta charset="ISO-8859-1">
     <title>${title}</title>
 </head>
 <body>

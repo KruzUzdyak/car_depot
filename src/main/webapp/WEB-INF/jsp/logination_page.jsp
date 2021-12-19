@@ -1,9 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="com.epam.volodko.controller.constant.CommandName" %>
 <%@ page import="com.epam.volodko.controller.constant.ParameterName" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Car Depot</title>
+    <fmt:setLocale value="${sessionScope.locale}"/>
+    <fmt:setBundle basename="localization.locale" var="loc"/>
+    <fmt:message bundle="${loc}"  key="default.title" var="title"/>
+
+    <meta charset="ISO-8859-1">
+    <title>${title}</title>
 </head>
 <body>
 
