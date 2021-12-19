@@ -2,7 +2,7 @@ package com.epam.volodko.service.validator;
 
 public abstract class AbstractValidator {
 
-    boolean notEmpty(String parameter){
-        return parameter != null && !parameter.isEmpty();
+    boolean notEmptyString(String string){
+        return string != null && !string.isEmpty();
     }
 }

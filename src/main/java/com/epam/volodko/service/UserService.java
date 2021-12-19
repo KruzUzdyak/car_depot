@@ -5,13 +5,11 @@ import com.epam.volodko.service.exception.ServiceException;
 
 public interface UserService {
 
-    boolean saveUser(User user);
+    boolean processRegistration(User user) throws ServiceException;
 
-    boolean validateLogin(String login);
+    boolean processPasswordValidation(String password, String passwordRepeat) throws ServiceException;
 
-    boolean validateLogination(String login, String password) throws ServiceException;
-
-    boolean validatePasswordRepeat(String password, String passwordRepeat);
+    User processLogination(String login, String password) throws ServiceException;
 
 
 }

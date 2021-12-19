@@ -8,72 +8,64 @@ import com.epam.volodko.service.UserService;
 import com.epam.volodko.service.exception.ServiceException;
 import com.epam.volodko.service.validator.UserValidator;
 
-import javax.servlet.ServletException;
-
 public class UserServiceImpl implements UserService {
 
     private final UserValidator validator = new UserValidator();
+    private final UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 
     @Override
-    public boolean saveUser(User user) {
-        boolean saved = false;
-        UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
-        try {
-            userDAO.saveNew(user);
-            saved = true;
-        } catch (DAOException e) {
-            // TODO: 13.12.2021 logging
-        }
-        return saved;
-    }
-
-    @Override
-    public boolean validateLogin(String login) {
-        return login != null && !login.isEmpty();
-    }
-
-    @Override
-    public boolean validateLogination(String login, String password) throws ServiceException {
-        if (!validator.validateLoginAndPassword(login, password)) {
+    public boolean processRegistration(User user) throws ServiceException {
+        if (!validator.validateRegistration(user)){
             return false;
         }
-        String passwordFromDB;
-        try {
-            UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
-            passwordFromDB = userDAO.findPasswordByLogin(login);
-        } catch (DAOException e) {
-            // TODO: 13.12.2021 logging
-            throw new ServiceException(e);
-        }
-        return password.equals(passwordFromDB);
+        return saveUserInDB(user);
     }
 
     @Override
-    public boolean validatePasswordRepeat(String password, String passwordRepeat) {
-        return password != null && !password.isEmpty() &&
-        validatePasswordRestrictions(password) && password.equals(passwordRepeat);
+    public boolean processPasswordValidation(String password, String passwordRepeat){
+        return validator.validatePasswordRepeat(password, passwordRepeat);
     }
 
-    private boolean validatePasswordRestrictions(String password){
-        return password.length() >= 5 && hasLetters(password.toCharArray())
-                && hasDigits(password.toCharArray());
-    }
-
-    private boolean hasLetters(char[] password){
-        for (char c : password){
-            if (Character.isLetter(c)){
-                return true;
-            }
+    private boolean saveUserInDB(User user) throws ServiceException {
+        boolean isSaved;
+        try {
+            isSaved = userDAO.saveNew(user) == 1;
+        } catch (DAOException e) {
+            throw new ServiceException(e);
         }
-        return false;
+        return isSaved;
     }
 
-    private boolean hasDigits(char[] password) {
-        for (char c : password) {
-            if (Character.isDigit(c)){
-                return true;
-            }
+    @Override
+    public User processLogination(String login, String password) throws ServiceException {
+        if (!validator.validateLoginAndPassword(login, password)) {
+            return null;
         }
-        return false;
+        String passwordFromDB = getPasswordFromDB(login);
+        if (password.equals(passwordFromDB)){
+            return getUserFromDB(login);
+        }
+        return null;
     }
+
+    private User getUserFromDB(String login) throws ServiceException {
+        User user;
+        try{
+            user = userDAO.findByLogin(login);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return user;
+    }
+
+    private String getPasswordFromDB(String login) throws ServiceException {
+        String passwordFromDB;
+        try {
+            passwordFromDB = userDAO.findPasswordByLogin(login);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return passwordFromDB;
+    }
+
 }

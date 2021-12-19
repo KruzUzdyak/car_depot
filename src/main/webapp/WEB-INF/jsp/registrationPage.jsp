@@ -24,7 +24,7 @@
     <input type="text" name="user_name" value="">
     <br/><br/>
     Phone
-    <input type="tel" name="user_phone" value="">
+    <input type="tel" name="user_phone" value="+XXX XX XXXXXXX">
     <br/><br/>
     Role
     <select name="user_role" size="1" >

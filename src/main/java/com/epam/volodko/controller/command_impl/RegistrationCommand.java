@@ -8,6 +8,9 @@ import com.epam.volodko.entity.user.Role;
 import com.epam.volodko.entity.user.User;
 import com.epam.volodko.service.ServiceFactory;
 import com.epam.volodko.service.UserService;
+import com.epam.volodko.service.exception.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,43 +21,54 @@ import java.io.IOException;
 public class RegistrationCommand implements Command {
 
     private static final String REGISTRATION_MESSAGE_TEXT = "Now you are registered. Congrats!";
-    private static final String REGISTRATION_ERROR_MESSAGE_TEXT = "Registration failed! Try again.";
+    private static final String PASSWORD_RESTRICT_MESS_TEXT = "Your password don't match the restrictions.";
+    private static final String REGISTRATION_FAILED_MESS_TEXT = "Registration failed! Try again.";
+    private static final String REGISTRATION_EXCEPTION_MESS_TEXT = "Registration can't be done. We working on this issue.";
     private static final String REDIRECT_COMMAND = String.format("%s?%s=%s&%s=%s",
             CommandName.CONTROLLER, CommandName.COMMAND, CommandName.GO_TO_MAIN_PAGE,
             ParameterName.REGISTRATION_MESSAGE, REGISTRATION_MESSAGE_TEXT);
 
+    private final Logger log = LogManager.getLogger(RegistrationCommand.class);
     private final UserService userService = ServiceFactory.getInstance().getUserService();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (validate(request) && userService.saveUser(prepareUserForSave(request))){
-            response.sendRedirect(REDIRECT_COMMAND);
-        } else {
-            forwardOnFailedRegistration(request, response);
+        try {
+            if (validatePassword(request)){
+                User user = prepareUserForSave(request);
+                if (userService.processRegistration(user)) {
+                    response.sendRedirect(REDIRECT_COMMAND);
+                } else {
+                    forwardOnFailedRegistration(request, response, REGISTRATION_FAILED_MESS_TEXT);
+                }
+            } else {
+                forwardOnFailedRegistration(request, response, PASSWORD_RESTRICT_MESS_TEXT);
+            }
+        } catch (ServiceException e) {
+            log.error("Catching:", e);
+            forwardOnFailedRegistration(request, response, REGISTRATION_EXCEPTION_MESS_TEXT);
         }
     }
 
-    private void forwardOnFailedRegistration(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        request.setAttribute(ParameterName.ERROR_MESSAGE, REGISTRATION_ERROR_MESSAGE_TEXT);
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.REGISTRATION_PAGE);
-        dispatcher.forward(request, response);
-    }
-
-    private boolean validate(HttpServletRequest request){
-        String login = request.getParameter(ParameterName.USER_LOGIN);
+    private boolean validatePassword(HttpServletRequest request) throws ServiceException {
         String password = request.getParameter(ParameterName.USER_PASSWORD);
         String passwordRepeat = request.getParameter(ParameterName.USER_REPEAT_PASSWORD);
-        return userService.validatePasswordRepeat(password, passwordRepeat) &&
-                userService.validateLogin(login);
+        return userService.processPasswordValidation(password, passwordRepeat);
+    }
+
+    private void forwardOnFailedRegistration(HttpServletRequest request, HttpServletResponse response, String message)
+            throws ServletException, IOException {
+        request.setAttribute(ParameterName.ERROR_MESSAGE, message);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.REGISTRATION_PAGE);
+        dispatcher.forward(request, response);
     }
 
     private User prepareUserForSave(HttpServletRequest request){
         String login = request.getParameter(ParameterName.USER_LOGIN);
         String password = request.getParameter(ParameterName.USER_PASSWORD);
-        String name = request.getParameter(ParameterName.USER_NAME);
-        String phone = request.getParameter(ParameterName.USER_PHONE);
+        String name = request.getParameter(ParameterName.USER_NAME).trim();
+        String phone = request.getParameter(ParameterName.USER_PHONE).trim();
         Role role = Role.valueOf(request.getParameter(ParameterName.USER_ROLE).toUpperCase());
         return new User(0, login, password, name, phone, role);
     }
