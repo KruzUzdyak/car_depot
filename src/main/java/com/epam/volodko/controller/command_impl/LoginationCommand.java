@@ -25,7 +25,7 @@ public class LoginationCommand implements Command {
     private static final String LOGINATION_MESSAGE_TEXT = "Now you are logged in.";
     private static final String LOGINATION_FAILED_MESSAGE_TEXT = "Wrong login or password.";
     private static final String LOGINATION_EXCEPTION_MESSAGE_TEXT = "Login can't be done. We working on this issue.";
-    private static final String REDIRECT_COMMAND = String.format("%s?%s=%s&%s=%s",
+    private static final String LOGINATION_REDIRECT_COMMAND = String.format("%s?%s=%s&%s=%s",
             CommandName.CONTROLLER, CommandName.COMMAND, CommandName.GO_TO_MAIN_PAGE,
             ParameterName.LOGINATION_MESSAGE, LOGINATION_MESSAGE_TEXT);
 
@@ -42,9 +42,9 @@ public class LoginationCommand implements Command {
             user = userService.processLogination(login, password);
             if (user != null){
                 HttpSession session = request.getSession();
-                session.setAttribute("userId", user.getId());
-                session.setAttribute("userRole", user.getRole());
-                response.sendRedirect(REDIRECT_COMMAND);
+                session.setAttribute(ParameterName.USER_LOGIN, user.getId());
+                session.setAttribute(ParameterName.USER_ROLE, user.getRole());
+                response.sendRedirect(LOGINATION_REDIRECT_COMMAND);
             } else {
                 log.warn(String.format("Logination failed with user login - %s.", login));
                 forwardOnFailedLogination(request, response, LOGINATION_FAILED_MESSAGE_TEXT);

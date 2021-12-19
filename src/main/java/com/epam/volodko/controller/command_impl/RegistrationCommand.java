@@ -16,6 +16,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class RegistrationCommand implements Command {
@@ -24,7 +25,7 @@ public class RegistrationCommand implements Command {
     private static final String PASSWORD_RESTRICT_MESS_TEXT = "Your password don't match the restrictions.";
     private static final String REGISTRATION_FAILED_MESS_TEXT = "Registration failed! Try again.";
     private static final String REGISTRATION_EXCEPTION_MESS_TEXT = "Registration can't be done. We working on this issue.";
-    private static final String REDIRECT_COMMAND = String.format("%s?%s=%s&%s=%s",
+    private static final String REGISTRATION_REDIRECT_COMMAND = String.format("%s?%s=%s&%s=%s",
             CommandName.CONTROLLER, CommandName.COMMAND, CommandName.GO_TO_MAIN_PAGE,
             ParameterName.REGISTRATION_MESSAGE, REGISTRATION_MESSAGE_TEXT);
 
@@ -36,18 +37,26 @@ public class RegistrationCommand implements Command {
             throws ServletException, IOException {
         try {
             if (validatePassword(request)){
-                User user = prepareUserForSave(request);
-                if (userService.processRegistration(user)) {
-                    response.sendRedirect(REDIRECT_COMMAND);
-                } else {
-                    forwardOnFailedRegistration(request, response, REGISTRATION_FAILED_MESS_TEXT);
-                }
+                registration(request, response);
             } else {
                 forwardOnFailedRegistration(request, response, PASSWORD_RESTRICT_MESS_TEXT);
             }
         } catch (ServiceException e) {
             log.error("Catching:", e);
             forwardOnFailedRegistration(request, response, REGISTRATION_EXCEPTION_MESS_TEXT);
+        }
+    }
+
+    private void registration(HttpServletRequest request, HttpServletResponse response)
+            throws ServiceException, IOException, ServletException {
+        User user = prepareUserForSave(request);
+        if (userService.processRegistration(user)) {
+            HttpSession session = request.getSession();
+            session.setAttribute(ParameterName.USER_LOGIN, user.getId());
+            session.setAttribute(ParameterName.USER_ROLE, user.getRole());
+            response.sendRedirect(REGISTRATION_REDIRECT_COMMAND);
+        } else {
+            forwardOnFailedRegistration(request, response, REGISTRATION_FAILED_MESS_TEXT);
         }
     }
 
