@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class RegistrationCommand implements Command {
+public class RegistrationCommand extends RequestSaver implements Command {
 
     private static final String REGISTRATION_MESSAGE_TEXT = "Now you are registered. Congrats!";
     private static final String PASSWORD_RESTRICT_MESS_TEXT = "Your password don't match the restrictions.";
@@ -35,6 +35,7 @@ public class RegistrationCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        saveRequest(request);
         try {
             if (validatePassword(request)){
                 registration(request, response);

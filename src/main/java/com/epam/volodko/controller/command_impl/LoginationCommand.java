@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class LoginationCommand implements Command {
+public class LoginationCommand extends RequestSaver implements Command {
 
     private static final Logger log = LogManager.getLogger(LoginationCommand.class);
 
@@ -34,6 +34,7 @@ public class LoginationCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        saveRequest(request);
         String login = request.getParameter(ParameterName.USER_LOGIN);
         // TODO: 12.12.2021 password hashing
         String password = request.getParameter(ParameterName.USER_PASSWORD);

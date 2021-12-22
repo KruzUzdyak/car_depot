@@ -35,7 +35,7 @@
 <br/>
 <form action="Controller" method="get">
     <input type="hidden" name="command" value="go_to_initial_page">
-    <input type="submit" value="Go to main page">
+    <input type="submit" value="Go to initial page">
 </form>
 </body>
 </html>
