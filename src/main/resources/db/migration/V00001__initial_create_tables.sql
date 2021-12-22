@@ -126,7 +126,6 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`cars`
             ON UPDATE NO ACTION
 );
 
-
 -- -----------------------------------------------------
 -- Table `car_depot`.`driver_licenses`
 -- -----------------------------------------------------
@@ -139,6 +138,7 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`driver_licenses`
     `obtaining_date` BIGINT       NOT NULL,
     `license_number` VARCHAR(45)  NOT NULL,
     INDEX `license_type_idx` (`license_id` ASC) VISIBLE,
+    PRIMARY KEY (`license_id`, `user_id`),
     CONSTRAINT `users_id_driver_licenses`
         FOREIGN KEY (`user_id`)
             REFERENCES `car_depot`.`users` (`user_id`)
@@ -150,7 +150,6 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`driver_licenses`
             ON DELETE CASCADE
             ON UPDATE NO ACTION
 );
-
 
 -- -----------------------------------------------------
 -- Table `car_depot`.`orders`
@@ -193,7 +192,6 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`orders`
             ON UPDATE NO ACTION
 );
 
-
 -- -----------------------------------------------------
 -- Table `car_depot`.`repair_records`
 -- -----------------------------------------------------
@@ -213,7 +211,6 @@ CREATE TABLE IF NOT EXISTS `car_depot`.`repair_records`
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 );
-
 
 -- -----------------------------------------------------
 -- Table `car_depot`.`client_info`
