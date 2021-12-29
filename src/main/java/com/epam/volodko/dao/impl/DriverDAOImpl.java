@@ -1,5 +1,6 @@
 package com.epam.volodko.dao.impl;
 
+import com.epam.volodko.dao.UserDAO;
 import com.epam.volodko.dao.builder.BuilderFactory;
 import com.epam.volodko.dao.database.ConnectionPool;
 import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
@@ -17,7 +18,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DriverDAOImpl extends UserDAOImpl{
+public class DriverDAOImpl extends AbstractUserDAO {
 
     private static final String FIND_DRIVER_BY_ID_QUERY = String.format(
             "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s AS dl ON u.%s = dl.%s JOIN " +

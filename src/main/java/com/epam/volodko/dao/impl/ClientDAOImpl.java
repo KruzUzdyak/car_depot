@@ -1,5 +1,6 @@
 package com.epam.volodko.dao.impl;
 
+import com.epam.volodko.dao.UserDAO;
 import com.epam.volodko.dao.builder.BuilderFactory;
 import com.epam.volodko.dao.database.ConnectionPool;
 import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
@@ -13,7 +14,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientDAOImpl extends UserDAOImpl{
+public class ClientDAOImpl extends AbstractUserDAO {
 
     private static final String FIND_CLIENT_BY_ID_QUERY = String.format(
             "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s ci ON u.%s = ci.%s WHERE u.%s = ?;",

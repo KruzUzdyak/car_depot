@@ -9,6 +9,7 @@ public class Client extends User implements Serializable {
     private String note;
 
     public Client(){
+        setRole(Role.CLIENT);
     }
 
     public Client(int userId, String login, String password, String name,

@@ -17,7 +17,7 @@ public class AdminBuilder extends UserBuilder{
 
     void buildAdmin(Admin admin, ResultSet resultSet) throws SQLException {
         buildUser(admin, resultSet);
-        Date workSince = new Date(resultSet.getLong(Column.ADMIN_INDO_WORKS_SINCE));
+        Date workSince = new Date(resultSet.getLong(Column.ADMIN_INFO_WORKS_SINCE));
         admin.setWorksSince(workSince);
         admin.setNote(resultSet.getString(Column.ADMIN_INFO_NOTE));
     }

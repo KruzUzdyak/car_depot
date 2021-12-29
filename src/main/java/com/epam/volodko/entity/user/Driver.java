@@ -11,6 +11,7 @@ public class Driver extends User implements Serializable {
     private List<DriverLicense> licenses = new ArrayList<>();
 
     public Driver(){
+        setRole(Role.DRIVER);
     }
 
     public Driver(int userId, String login, String password,

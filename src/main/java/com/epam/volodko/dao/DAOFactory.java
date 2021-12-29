@@ -1,15 +1,19 @@
 package com.epam.volodko.dao;
 
 import com.epam.volodko.dao.impl.*;
+import com.epam.volodko.entity.user.Admin;
+import com.epam.volodko.entity.user.Client;
+import com.epam.volodko.entity.user.Driver;
+import com.epam.volodko.entity.user.User;
 
 public class DAOFactory {
 
     private final static DAOFactory instance = new DAOFactory();
 
-    private final UserDAO userDAO = new UserDAOImpl();
-    private final UserDAO adminDAO = new AdminDAOImpl();
-    private final UserDAO clientDAO = new ClientDAOImpl();
-    private final UserDAO driverDAO = new DriverDAOImpl();
+    private final UserDAO<User> userDAO = new UserDAOImpl();
+    private final UserDAO<Admin> adminDAO = new AdminDAOImpl();
+//    private final UserDAO<Client> clientDAO = new ClientDAOImpl();
+//    private final UserDAO<Driver> driverDAO = new DriverDAOImpl();
     private final CarDAO carDAO = new CarDAOImpl();
     private final OrderDAO orderDAO = new OrderDAOImpl();
     private final CarTypeDAO carTypeDAO = new CarTypeDAOImpl();
@@ -24,20 +28,20 @@ public class DAOFactory {
         return instance;
     }
 
-    public UserDAO getUserDAO() {
+    public UserDAO<User> getUserDAO() {
         return userDAO;
     }
 
-    public UserDAO getAdminDAO() {
+    public UserDAO<Admin> getAdminDAO() {
         return adminDAO;
     }
 
-    public UserDAO getClientDAO() {
-        return clientDAO;
+    public UserDAO<Client> getClientDAO() {
+        return null;
     }
 
-    public UserDAO getDriverDAO() {
-        return driverDAO;
+    public UserDAO<Driver> getDriverDAO() {
+        return null;
     }
 
     public CarDAO getCarDAO() {

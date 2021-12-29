@@ -10,6 +10,7 @@ public class Admin extends User implements Serializable {
     private String note;
 
     public Admin() {
+        setRole(Role.ADMIN);
         worksSince = new Date();
     }
 
