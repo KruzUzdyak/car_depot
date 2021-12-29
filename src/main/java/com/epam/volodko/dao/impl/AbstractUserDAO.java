@@ -5,6 +5,7 @@ import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
 import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.dao.table_name.Table;
+import com.epam.volodko.entity.user.Admin;
 import com.epam.volodko.entity.user.User;
 
 import java.sql.Connection;
@@ -114,30 +115,21 @@ public abstract class AbstractUserDAO<T extends User> extends AbstractDAO{
     }
 
     public int updateLogin(int userId, String newLogin) throws DAOException {
-        Connection connection = null;
-        PreparedStatement statement = null;;
-        int rowsAffected;
-        try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareStatement(UPDATE_LOGIN_QUERY);
-            statement.setString(1, newLogin);
-            statement.setInt(2, userId);
-            rowsAffected = statement.executeUpdate();
-        } catch (ConnectionPoolException | SQLException e) {
-            throw new DAOException(e);
-        } finally {
-            closeConnection(connection, statement);
-        }
-        return rowsAffected;
+        return processUpdatingUserFieldById(userId, newLogin, UPDATE_LOGIN_QUERY);
     }
 
     public int updatePassword(int userId, String newPassword) throws DAOException {
+        return processUpdatingUserFieldById(userId, newPassword, UPDATE_PASSWORD_QUERY);
+    }
+
+    private int processUpdatingUserFieldById(int userId, String newPassword, String updatePasswordQuery)
+            throws DAOException {
         Connection connection = null;
-        PreparedStatement statement = null;;
+        PreparedStatement statement = null;
         int rowsAffected;
         try {
             connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareStatement(UPDATE_PASSWORD_QUERY);
+            statement = connection.prepareStatement(updatePasswordQuery);
             statement.setString(1, newPassword);
             statement.setInt(2, userId);
             rowsAffected = statement.executeUpdate();

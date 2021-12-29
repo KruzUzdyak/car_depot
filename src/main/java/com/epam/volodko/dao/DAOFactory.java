@@ -12,7 +12,7 @@ public class DAOFactory {
 
     private final UserDAO<User> userDAO = new UserDAOImpl();
     private final UserDAO<Admin> adminDAO = new AdminDAOImpl();
-//    private final UserDAO<Client> clientDAO = new ClientDAOImpl();
+    private final UserDAO<Client> clientDAO = new ClientDAOImpl();
 //    private final UserDAO<Driver> driverDAO = new DriverDAOImpl();
     private final CarDAO carDAO = new CarDAOImpl();
     private final OrderDAO orderDAO = new OrderDAOImpl();
@@ -37,7 +37,7 @@ public class DAOFactory {
     }
 
     public UserDAO<Client> getClientDAO() {
-        return null;
+        return clientDAO;
     }
 
     public UserDAO<Driver> getDriverDAO() {

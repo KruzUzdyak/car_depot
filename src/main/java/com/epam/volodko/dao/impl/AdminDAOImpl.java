@@ -126,7 +126,7 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> implements UserDAO<Admi
             statement.setInt(1,  admin.getId());
             statement.setLong(2,  admin.getWorksSince().getTime());
             statement.setString(3, admin.getNote());
-            statement.executeUpdate();
+            rowsAffected = statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
         } finally {
