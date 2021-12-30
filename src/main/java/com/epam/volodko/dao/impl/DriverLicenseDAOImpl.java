@@ -1,55 +1,64 @@
 package com.epam.volodko.dao.impl;
 
+import com.epam.volodko.dao.DriverLicenseDAO;
+import com.epam.volodko.dao.database.ConnectionPool;
+import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
 import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.dao.table_name.Table;
-import com.epam.volodko.entity.user.Driver;
 import com.epam.volodko.entity.user.DriverLicense;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DriverLicenseDAOImpl{
+public class DriverLicenseDAOImpl extends AbstractDAO implements DriverLicenseDAO {
 
-    private static final String SAVE_NEW_DRIVER_LICENSE_QUERY = String.format(
-            "INSERT INTO %s (%s, %s, %s, %s) VALUES ((SELECT %s FROM %s WHERE %s = ?), ?, ?, ?);",
+    private static final String SAVE_DRIVER_LICENSE_QUERY = String.format(
+            "INSERT INTO %s (%s, %s, %s, %s) VALUES (?, ?, ?, ?);",
             Table.DRIVER_LICENSES, Column.DRIVER_LICENSES_USER_ID, Column.DRIVER_LICENSES_LICENSE_ID,
-            Column.DRIVER_LICENSES_OBTAINING_DATE, Column.DRIVER_LICENSES_LICENSE_NUMBER, Column.USERS_ID,
-            Table.USERS, Column.USERS_LOGIN);
+            Column.DRIVER_LICENSES_OBTAINING_DATE, Column.DRIVER_LICENSES_LICENSE_NUMBER);
     private static final String DELETE_DRIVER_LICENSE_BY_ID_QUERY = String.format(
-            "DELETE FROM %s WHERE %s = ?;",
-            Table.DRIVER_LICENSES, Column.DRIVER_LICENSES_USER_ID);
+            "DELETE FROM %s WHERE %s = ? AND %s = ?;",
+            Table.DRIVER_LICENSES, Column.DRIVER_LICENSES_USER_ID, Column.DRIVER_LICENSES_LICENSE_ID);
 
-    void prepareSaveDriverLicensesStatement(Driver driver, Connection connection) throws DAOException {
-        try {
-            for (DriverLicense license : driver.getLicenses()) {
-                PreparedStatement statement = connection.prepareStatement(SAVE_NEW_DRIVER_LICENSE_QUERY);
-                statement.setString(1, driver.getLogin());
-                statement.setInt(2, license.getLicenseType().getId());
-                statement.setLong(3, license.getObtainingDate().getTime());
-                statement.setString(4, license.getLicenseNumber());
-                statement.executeUpdate();
-            }
-        } catch (SQLException e){
-            throw new DAOException("SQLException when preparing for Save driver licenses in statement.", e);
+    @Override
+    public int saveNew(int driverId, DriverLicense license) throws DAOException {
+        int rowsAffected;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(SAVE_DRIVER_LICENSE_QUERY);
+            statement.setInt(1, driverId);
+            statement.setInt(2, license.getLicenseType().getId());
+            statement.setLong(3, license.getObtainingDate().getTime());
+            statement.setString(4, license.getLicenseNumber());
+            rowsAffected = statement.executeUpdate();
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement);
         }
+        return rowsAffected;
     }
 
-    void prepareUpdateDriverLicensesStatement(Driver driver, Connection connection) throws DAOException{
-        prepareDeleteDriverLicensesStatement(driver, connection);
-        prepareSaveDriverLicensesStatement(driver, connection);
-    }
-
-    void prepareDeleteDriverLicensesStatement(Driver driver, Connection connection) throws DAOException{
-        try {
-            PreparedStatement statement = connection.prepareStatement(DELETE_DRIVER_LICENSE_BY_ID_QUERY);
-            statement.setInt(1, driver.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException("SQLException while try to delete driver licenses.", e);
+    @Override
+    public int deleteById(int driverId, int licenseTypeId) throws DAOException {
+        int rowsAffected;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(DELETE_DRIVER_LICENSE_BY_ID_QUERY);
+            statement.setInt(1, driverId);
+            statement.setInt(2, licenseTypeId);
+            rowsAffected = statement.executeUpdate();
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement);
         }
-
+        return rowsAffected;
     }
-
 }

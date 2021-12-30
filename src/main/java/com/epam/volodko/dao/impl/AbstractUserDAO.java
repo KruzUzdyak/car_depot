@@ -5,7 +5,6 @@ import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
 import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.dao.table_name.Table;
-import com.epam.volodko.entity.user.Admin;
 import com.epam.volodko.entity.user.User;
 
 import java.sql.Connection;
@@ -139,5 +138,13 @@ public abstract class AbstractUserDAO<T extends User> extends AbstractDAO{
             closeConnection(connection, statement);
         }
         return rowsAffected;
+    }
+
+    public int saveInfo(T user) throws DAOException {
+        throw new UnsupportedOperationException("Use AdminDAO or ClientDAO for this operation.");
+    }
+
+    public int updateInfo(T user) throws DAOException {
+        throw new UnsupportedOperationException("Use AdminDAO or ClientDAO for this operation.");
     }
 }
