@@ -4,12 +4,44 @@ import com.epam.volodko.dao.database.ConnectionPool;
 import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
 import com.epam.volodko.dao.exception.DAOException;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public abstract class AbstractDAO {
+
+    int deleteById(int id, String query) throws DAOException {
+        int rowsAffected;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            rowsAffected = statement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement);
+        }
+        return rowsAffected;
+    }
+
+    int processQuery(int firstId, int secondId, String query) throws DAOException {
+        int rowsAffected;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, firstId);
+            statement.setInt(2, secondId);
+            rowsAffected = statement.executeUpdate();
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement);
+        }
+        return rowsAffected;
+    }
 
     void closeConnection(Connection connection, Statement statement, ResultSet resultSet) throws DAOException {
         try {

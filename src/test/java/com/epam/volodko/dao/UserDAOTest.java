@@ -73,7 +73,7 @@ public class UserDAOTest {
 
     @Test
     public void testDeleteUser() throws DAOException {
-        int userId = 5;
+        int userId = 13;
         int rowsAffected = userDAO.deleteById(userId);
         int expectedAffect = 1;
 

@@ -45,20 +45,6 @@ public class DriverLicenseDAOImpl extends AbstractDAO implements DriverLicenseDA
 
     @Override
     public int deleteById(int driverId, int licenseTypeId) throws DAOException {
-        int rowsAffected;
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try{
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareStatement(DELETE_DRIVER_LICENSE_BY_ID_QUERY);
-            statement.setInt(1, driverId);
-            statement.setInt(2, licenseTypeId);
-            rowsAffected = statement.executeUpdate();
-        } catch (ConnectionPoolException | SQLException e) {
-            throw new DAOException(e);
-        } finally {
-            closeConnection(connection, statement);
-        }
-        return rowsAffected;
+        return processQuery(driverId, licenseTypeId, DELETE_DRIVER_LICENSE_BY_ID_QUERY);
     }
 }

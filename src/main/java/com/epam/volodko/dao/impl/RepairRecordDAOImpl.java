@@ -101,20 +101,7 @@ public class RepairRecordDAOImpl extends AbstractDAO implements RepairRecordDAO 
 
     @Override
     public int deleteById(int id) throws DAOException {
-        int rowsAffected = 0;
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try{
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareStatement(DELETE_REPAIR_RECORD_BY_ID_QUERY);
-            statement.setInt(1, id);
-            rowsAffected = statement.executeUpdate();
-        } catch (SQLException | ConnectionPoolException e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(connection, statement);
-        }
-        return rowsAffected;
+        return deleteById(id, DELETE_REPAIR_RECORD_BY_ID_QUERY);
     }
 
     @Override

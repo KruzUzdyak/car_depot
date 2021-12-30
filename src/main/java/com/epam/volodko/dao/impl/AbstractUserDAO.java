@@ -78,20 +78,7 @@ public abstract class AbstractUserDAO<T extends User> extends AbstractDAO{
     }
 
     public int deleteById(int id) throws DAOException {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        int rowsAffected;
-        try{
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareStatement(DELETE_USER_QUERY);
-            statement.setInt(1, id);
-            rowsAffected = statement.executeUpdate();
-        } catch (ConnectionPoolException | SQLException e) {
-            throw new DAOException(e);
-        } finally {
-            closeConnection(connection, statement);
-        }
-        return rowsAffected;
+        return deleteById(id, DELETE_USER_QUERY);
     }
 
     public int update(T user) throws DAOException {
