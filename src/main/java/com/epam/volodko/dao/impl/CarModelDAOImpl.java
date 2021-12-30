@@ -139,20 +139,7 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
 
     @Override
     public int deleteById(int carModelId) throws DAOException {
-        int rowsAffected = 0;
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareStatement(DELETE_CAR_MODEL_BY_ID_QUERY);
-            statement.setInt(1,carModelId);
-            rowsAffected = statement.executeUpdate();
-        } catch (ConnectionPoolException | SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(connection, statement);
-        }
-        return rowsAffected;
+        return deleteById(carModelId, DELETE_CAR_MODEL_BY_ID_QUERY);
     }
 
     @Override

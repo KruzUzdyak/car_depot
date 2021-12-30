@@ -16,6 +16,7 @@ public class BuilderFactory {
     private static final CarTypeBuilder carTypeBuilder = new CarTypeBuilder();
     private static final RefuelRecordBuilder refuelRecordBuilder = new RefuelRecordBuilder();
     private static final RepairRecordBuilder repairRecordBuilder = new RepairRecordBuilder();
+    private static final OrderBuilder orderBuilder = new OrderBuilder();
 
     public static UserBuilder getUserBuilder() {
         return userBuilder;
@@ -63,5 +64,9 @@ public class BuilderFactory {
 
     public static RepairRecordBuilder getRepairRecordBuilder() {
         return repairRecordBuilder;
+    }
+
+    public static OrderBuilder getOrderBuilder() {
+        return orderBuilder;
     }
 }

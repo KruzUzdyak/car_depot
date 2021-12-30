@@ -134,7 +134,7 @@ public class CarDAOImpl extends AbstractDAO implements CarDAO {
         try{
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(SAVE_NEW_CAR_QUERY);
-            prepareUpdateCarStatement(car, statement);
+            prepareInsertCarStatement(car, statement);
             rowsAffected = statement.executeUpdate();
             car.setId(getGeneratedKey(statement));
         } catch (ConnectionPoolException | SQLException e) {
@@ -147,20 +147,7 @@ public class CarDAOImpl extends AbstractDAO implements CarDAO {
 
     @Override
     public int deleteById(int id) throws DAOException {
-        int rowsAffected = 0;
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try{
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareStatement(DELETE_CAR_QUERY);
-            statement.setInt(1, id);
-            rowsAffected = statement.executeUpdate();
-        } catch (ConnectionPoolException | SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(connection, statement);
-        }
-        return rowsAffected;
+        return deleteById(id, DELETE_CAR_QUERY);
     }
 
     @Override
@@ -171,7 +158,7 @@ public class CarDAOImpl extends AbstractDAO implements CarDAO {
         try{
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(UPDATE_CAR_QUERY);
-            prepareUpdateCarStatement(car, statement);
+            prepareInsertCarStatement(car, statement);
             statement.setInt(7, car.getId());
             rowsAffected = statement.executeUpdate();
         } catch (ConnectionPoolException | SQLException e) {
@@ -182,7 +169,7 @@ public class CarDAOImpl extends AbstractDAO implements CarDAO {
         return rowsAffected;
     }
 
-    private void prepareUpdateCarStatement(Car car, PreparedStatement statement) throws SQLException {
+    private void prepareInsertCarStatement(Car car, PreparedStatement statement) throws SQLException {
         statement.setString(1, car.getPlateNumber());
         statement.setInt(2, car.getFuelLevel());
         statement.setInt(3, car.getMileage());

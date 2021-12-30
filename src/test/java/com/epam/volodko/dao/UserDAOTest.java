@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 public class UserDAOTest {
 
-    UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
+    UserDAO<User> userDAO = DAOFactory.getInstance().getUserDAO();
 
     @Test
     public void testFindById() throws DAOException {
@@ -60,22 +60,6 @@ public class UserDAOTest {
     }
 
     @Test
-    public void testFindByRole() throws DAOException {
-        List<User> actualUsers = userDAO.findByRole(Role.ADMIN);
-        actualUsers.forEach(System.out::println);
-        System.out.println();
-
-        actualUsers = userDAO.findByRole(Role.CLIENT);
-        actualUsers.forEach(System.out::println);
-        System.out.println();
-
-        actualUsers = userDAO.findByRole(Role.DRIVER);
-        actualUsers.forEach(System.out::println);
-
-        //todo make full test.
-    }
-
-    @Test
     public void testSaveNewUser() throws DAOException {
         User admin = new User(-1, "testSaveLogin", "testSavePassword",
                 "testSaveName", "testSavePhone", Role.ADMIN);
@@ -89,8 +73,8 @@ public class UserDAOTest {
 
     @Test
     public void testDeleteUser() throws DAOException {
-        User user = new User(5, "admin2", null, null, null, null);
-        int rowsAffected = userDAO.delete(user);
+        int userId = 13;
+        int rowsAffected = userDAO.deleteById(userId);
         int expectedAffect = 1;
 
         assertEquals(expectedAffect, rowsAffected);
@@ -112,11 +96,11 @@ public class UserDAOTest {
 
     @Test
     public void testUpdateLogin() throws DAOException{
-        User user = userDAO.findById(1);
+        int userId = 1;
+        User user = userDAO.findById(userId);
         String login = "testUpdateLogin";
-        user.setLogin(login);
 
-        int rowsAffected = userDAO.updateLogin(user);
+        int rowsAffected = userDAO.updateLogin(1, login);
         int expectedAffect = 1;
         User actualUser = userDAO.findByLogin(login);
 
@@ -127,11 +111,10 @@ public class UserDAOTest {
     @Test
     public void testUpdatePassword() throws DAOException{
         int userId = 1;
-        User user = userDAO.findById(userId);
         String password = "testUpdatePassword";
-        user.setPassword(password);
+        User user = userDAO.findById(userId);
 
-        int rowsAffected = userDAO.updatePassword(user);
+        int rowsAffected = userDAO.updatePassword(userId, password);
         int expectedAffect = 1;
         String actualPassword = userDAO.findPasswordByLogin(user.getLogin());
 

@@ -27,6 +27,25 @@ public class Order implements Serializable {
     public Order() {
     }
 
+    public Order(int orderId, String destFrom, String destTo,
+                 int distance, Date dateStart, Date dateEnd, int load,
+                 String loadNote, boolean completed, int payment,
+                 Client client, Admin admin, Car car) {
+        this.orderId = orderId;
+        this.destFrom = destFrom;
+        this.destTo = destTo;
+        this.distance = distance;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+        this.load = load;
+        this.loadNote = loadNote;
+        this.completed = completed;
+        this.payment = payment;
+        this.client = client;
+        this.admin = admin;
+        this.car = car;
+    }
+
     public int getOrderId() {
         return orderId;
     }

@@ -1,32 +1,34 @@
 package com.epam.volodko.dao;
 
 import com.epam.volodko.dao.exception.DAOException;
+import com.epam.volodko.entity.user.DriverLicense;
 import com.epam.volodko.entity.user.Role;
 import com.epam.volodko.entity.user.User;
 
 import java.util.List;
 
-public interface UserDAO {
+public interface UserDAO<T extends User> {
 
     String findPasswordByLogin(String login) throws DAOException;
 
-    User findById(int userId) throws DAOException;
+    T findById(int userId) throws DAOException;
 
-    User findByLogin(String login) throws DAOException;
+    T findByLogin(String login) throws DAOException;
 
-    List<User> findAll() throws DAOException;
+    List<T> findAll() throws DAOException;
 
-    List<User> findByRole(Role role) throws DAOException;
+    int saveNew(T user) throws DAOException;
 
-    int saveNew(User user) throws DAOException;
+    int deleteById(int id) throws DAOException;
 
-    int delete(User user) throws DAOException;
+    int update(T user) throws DAOException;
 
-    int update(User user) throws DAOException;
+    int updateLogin(int userId, String newLogin) throws DAOException;
 
-    int updateLogin(User user) throws DAOException;
+    int updatePassword(int userId, String newPassword) throws DAOException;
 
-    int updatePassword(User user) throws DAOException;
+    int saveInfo(T user) throws DAOException;
 
+    int updateInfo(T user) throws DAOException;
 
 }
