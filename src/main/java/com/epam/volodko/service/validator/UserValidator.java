@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 public class UserValidator extends AbstractValidator{
 
     private static final String PHONE_PATTERN = "\\+?\\d{1,15}";
+    private static final String PASSWORD_PATTERN = "(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z]{5,}";
 
     public boolean validateLoginAndPassword(String login, String password){
         return notEmptyString(login) && notEmptyString(password);
@@ -33,27 +34,10 @@ public class UserValidator extends AbstractValidator{
                 password.equals(passwordRepeat);
     }
 
-    private boolean validatePasswordRestrictions(String password){
-        return password.length() >= 5 && hasLetters(password.toCharArray())
-                && hasDigits(password.toCharArray());
+    public boolean validatePasswordRestrictions(String password){
+        Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
     }
 
-    // TODO: 19.12.2021 REGEXP validation for password.
-    private boolean hasLetters(char[] password){
-        for (char c : password){
-            if (Character.isLetter(c)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean hasDigits(char[] password) {
-        for (char c : password) {
-            if (Character.isDigit(c)){
-                return true;
-            }
-        }
-        return false;
-    }
 }
