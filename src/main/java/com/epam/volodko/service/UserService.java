@@ -11,5 +11,5 @@ public interface UserService {
 
     User processLogination(String login, String password) throws ServiceException;
 
-
+    String encodePassword(String password);
 }

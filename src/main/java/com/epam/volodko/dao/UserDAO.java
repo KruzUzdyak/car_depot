@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserDAO<T extends User> {
 
-    String findPasswordByLogin(String login) throws DAOException;
+    String findPasswordHashByLogin(String login) throws DAOException;
 
     T findById(int userId) throws DAOException;
 

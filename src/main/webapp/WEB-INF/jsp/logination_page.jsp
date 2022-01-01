@@ -16,10 +16,10 @@
 
 <form action="Controller" method="post">
     <input type="hidden" name="command" value="logination">
-    Login
+    Login<br/>
     <input type="text" name="user_login" value="">
     <br/><br/>
-    Password
+    Password<br/>
     <input type="password" name="user_password" value="">
     <br/><br/>
     <input type="submit" value="Login">

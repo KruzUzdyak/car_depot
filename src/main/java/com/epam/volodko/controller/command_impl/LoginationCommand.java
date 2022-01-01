@@ -36,7 +36,6 @@ public class LoginationCommand extends RequestSaver implements Command {
             throws ServletException, IOException {
         saveRequest(request);
         String login = request.getParameter(ParameterName.USER_LOGIN);
-        // TODO: 12.12.2021 password hashing
         String password = request.getParameter(ParameterName.USER_PASSWORD);
         User user;
         try {

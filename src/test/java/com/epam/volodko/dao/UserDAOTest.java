@@ -116,7 +116,7 @@ public class UserDAOTest {
 
         int rowsAffected = userDAO.updatePassword(userId, password);
         int expectedAffect = 1;
-        String actualPassword = userDAO.findPasswordByLogin(user.getLogin());
+        String actualPassword = userDAO.findPasswordHashByLogin(user.getLogin());
 
         assertEquals(expectedAffect, rowsAffected);
         assertEquals(password, actualPassword);

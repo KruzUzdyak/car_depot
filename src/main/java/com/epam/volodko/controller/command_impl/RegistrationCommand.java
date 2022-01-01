@@ -76,11 +76,11 @@ public class RegistrationCommand extends RequestSaver implements Command {
 
     private User prepareUserForSave(HttpServletRequest request){
         String login = request.getParameter(ParameterName.USER_LOGIN);
-        String password = request.getParameter(ParameterName.USER_PASSWORD);
+        String passwordHash = userService.encodePassword(request.getParameter(ParameterName.USER_PASSWORD));
         String name = request.getParameter(ParameterName.USER_NAME).trim();
         String phone = request.getParameter(ParameterName.USER_PHONE).trim();
         Role role = Role.valueOf(request.getParameter(ParameterName.USER_ROLE).toUpperCase());
-        return new User(0, login, password, name, phone, role);
+        return new User(0, login, passwordHash, name, phone, role);
     }
 
 }

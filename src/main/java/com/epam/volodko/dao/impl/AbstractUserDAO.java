@@ -34,8 +34,8 @@ public abstract class AbstractUserDAO<T extends User> extends AbstractDAO{
             "UPDATE %s SET %s = ?, %s = ? WHERE %s = ?;",
             Table.USERS, Column.USERS_NAME, Column.USERS_PHONE, Column.USERS_ID);
 
-    public String findPasswordByLogin(String login) throws DAOException {
-        String password = null;
+    public String findPasswordHashByLogin(String login) throws DAOException {
+        String passwordHash = null;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -45,17 +45,18 @@ public abstract class AbstractUserDAO<T extends User> extends AbstractDAO{
             statement.setString(1, login);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                password = resultSet.getString(Column.USERS_PASSWORD);
+                passwordHash = resultSet.getString(Column.USERS_PASSWORD);
             }
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {
             closeConnection(connection, statement, resultSet);
         }
-        return password;
+        return passwordHash;
     }
 
     public int saveNew(T user) throws DAOException {
+        System.out.println("save new in DAO");
         Connection connection = null;
         PreparedStatement statement = null;
         int rowsAffected;
