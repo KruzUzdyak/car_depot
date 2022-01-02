@@ -29,52 +29,39 @@
 <body>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
-        <div class="navbar-header">
-            <a href="#" class="navbar-brand">
-                <c:out value="${title}"/>
-            </a>
-        </div>
-    </div>
-</nav>
-
-<div class="container-fluid">
-    <div class="row">
-         <div class="col-3">
-             <div class="row">
-                <div class="col-4">
-                    <c:out value="${set_language_note}"/>
-                </div>
-                <div class="col-1">
-                    <form action="Controller" method="post">
-                        <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
-                        <input type="hidden" name="${ParameterName.LOCALE}" value="ru">
-                        <input type="submit" value="${button_locale_ru}">
-                    </form>
-                </div>
-                <div class="col-1">
-                    <form action="Controller" method="post">
-                        <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
-                        <input type="hidden" name="${ParameterName.LOCALE}" value="en">
-                        <input type="submit" value="${button_locale_en}">
-                    </form>
-                </div>
+        <div class="navbar-header row">
+            <div class="col-4">
+                <c:out value="${set_language_note}"/>
             </div>
-        </div>
-
-        <div class="col-3">
-            <div class="align-content-md-center">
-                <form action="Controller" method="get">
-                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_LOGINATION}">
-                    <input type="submit" value="${button_login}">
-                </form><br/>
-                <form action="Controller" method="get">
-                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_REGISTRATION}">
-                    <input type="submit" value="${button_registration}">
+            <div class="col-2">
+                <form action="Controller" method="post">
+                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
+                    <input type="hidden" name="${ParameterName.LOCALE}" value="ru">
+                    <input type="submit" value="${button_locale_ru}">
+                </form>
+            </div>
+            <div class="col-2">
+                <form action="Controller" method="post">
+                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
+                    <input type="hidden" name="${ParameterName.LOCALE}" value="en">
+                    <input type="submit" value="${button_locale_en}">
                 </form>
             </div>
         </div>
     </div>
-</div>
+</nav>
 
+<div class="container">
+    <div class="text-center">
+        <form action="Controller" method="get">
+            <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_LOGINATION}">
+            <input type="submit" class="btn btn-success" value="${button_login}">
+        </form><br/>
+        <form action="Controller" method="get">
+            <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_REGISTRATION}">
+            <input type="submit" class="btn btn-info" value="${button_registration}">
+        </form>
+    </div>
+</div>
 </body>
 </html>

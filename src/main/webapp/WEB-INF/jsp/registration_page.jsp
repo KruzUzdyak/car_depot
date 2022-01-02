@@ -18,11 +18,16 @@
     <fmt:setBundle basename="localization.locale" var="loc"/>
     <fmt:message bundle="${loc}"  key="default.title" var="title"/>
     <fmt:message bundle="${loc}"  key="registration.login.note" var="login_note"/>
+    <fmt:message bundle="${loc}"  key="registration.login.placeholder" var="login_placeholder"/>
     <fmt:message bundle="${loc}"  key="registration.password.note" var="pass_note"/>
+    <fmt:message bundle="${loc}"  key="registration.password.placeholder" var="pass_placeholder"/>
     <fmt:message bundle="${loc}"  key="registration.pass_restrict.note" var="pass_restrict_note"/>
     <fmt:message bundle="${loc}"  key="registration.repeat_password.note" var="repeat_pass_note"/>
+    <fmt:message bundle="${loc}"  key="registration.repeat_password.placeholder" var="repeat_pass_placeholder"/>
     <fmt:message bundle="${loc}"  key="registration.name.note" var="name_note"/>
+    <fmt:message bundle="${loc}"  key="registration.name.placeholder" var="name_placeholder"/>
     <fmt:message bundle="${loc}"  key="registration.phone.note" var="phone_note"/>
+    <fmt:message bundle="${loc}"  key="registration.phone.placeholder" var="phone_placeholder"/>
     <fmt:message bundle="${loc}"  key="registration.register.button" var="register_button"/>
     <fmt:message bundle="${loc}"  key="registration.to_initial_page.button" var="to_initial_page_button"/>
     <fmt:message bundle="${loc}"  key="registration.pass_restrict.message" var="pass_restrict_mess"/>
@@ -32,56 +37,63 @@
     <title>${title}</title>
 </head>
 <body>
+<br/><br/>
 
-<form action="Controller" method="post">
-    <input type="hidden" name="command" value="registration">
-    ${login_note}<br/>
-    <input type="text" name="user_login" value="">
-    <br/><br/>
-    ${pass_note}<br/>
-    <input type="password" name="user_password" value=""><br/>
-    <p class="help-footnote"> <c:out value="${pass_restrict_note}"/> </p>
-    <br/><br/>
-    ${repeat_pass_note}<br/>
-    <input type="password" name="user_repeat_password" value="">
-    <br/><br/>
-    ${name_note}<br/>
-    <input type="text" name="user_name" value="">
-    <br/><br/>
-    ${phone_note}<br/>
-    <input type="tel" name="user_phone" value="">
-    <br/><br/>
-    Role<br/>
-    <select name="user_role" size="1" >
-        <option disabled>Choose your role</option>
-        <option value="admin">admin</option>
-        <option value="client">client</option>
-        <option value="driver">driver</option>
-    </select>
-    <br/><br/>
-    <input type="submit" value="${register_button}">
-</form>
+<div class="container">
+    <div class="text-center">
+        <form action="Controller" method="post">
+            <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.REGISTRATION}">
+            <p>${login_note}
+            <input type="text" name="${ParameterName.USER_LOGIN}" placeholder="${login_placeholder}">
+            </p>
+            <p>${pass_note}
+            <input type="password" name="${ParameterName.USER_PASSWORD}" placeholder="${pass_placeholder}">
+            </p>
+            <p class="help-footnote"> <c:out value="${pass_restrict_note}"/> </p>
+            <br/><br/>
+            <p>${repeat_pass_note}
+            <input type="password" name="${ParameterName.USER_REPEAT_PASSWORD}" placeholder="${repeat_pass_placeholder}">
+            </p>
+            <p>${name_note}
+            <input type="text" name="${ParameterName.USER_NAME}" placeholder="${name_placeholder}">
+            </p>
+            <p>${phone_note}
+            <input type="tel" name="${ParameterName.USER_PHONE}" placeholder="${phone_placeholder}">
+            </p>
+
+            Role<br/>
+            <select name="user_role" size="1" >
+                <option disabled>Choose your role</option>
+                <option value="admin">admin</option>
+                <option value="client">client</option>
+                <option value="driver">driver</option>
+            </select>
+            <br/><br/>
+
+            <input type="submit" class="btn btn-success" value="${register_button}">
+        </form>
+
+        <p class="text-danger">
+            <c:set var="errorMessage" scope="page" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
+            <c:if test="${not empty errorMessage}">
+                <c:if test="${errorMessage eq Message.PASSWORD_RESTRICTION_WARN}">
+                    <c:out value="${pass_restrict_mess}"/>
+                </c:if>
+                <c:if test="${errorMessage eq Message.REGISTRATION_FAILED}">
+                    <c:out value="${registration_failed_mess}"/>
+                </c:if>
+                <c:if test="${errorMessage eq Message.REGISTRATION_EXCEPTION}">
+                    <c:out value="${registration_exception_mess}"/>
+                </c:if>
+            </c:if>
+        </p>
 
 
-<c:set var="errorMessage" scope="page" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
-<c:if test="${not empty errorMessage}">
-    <h3 style="color:crimson">
-        <c:if test="${errorMessage eq Message.PASSWORD_RESTRICTION_WARN}">
-            <c:out value="${pass_restrict_mess}"/>
-        </c:if>
-        <c:if test="${errorMessage eq Message.REGISTRATION_FAILED}">
-            <c:out value="${registration_failed_mess}"/>
-        </c:if>
-        <c:if test="${errorMessage eq Message.REGISTRATION_EXCEPTION}">
-             <c:out value="${registration_exception_mess}"/>
-        </c:if>
-    </h3><br/>
-</c:if>
-
-<form action="Controller" method="get">
-    <input type="hidden" name="command" value="go_to_initial_page">
-    <input type="submit" value="${to_initial_page_button}">
-</form>
-
+        <form action="Controller" method="get">
+            <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_INITIAL_PAGE}">
+            <input type="submit" class="btn btn-info" value="${to_initial_page_button}">
+        </form>
+    </div>
+</div>
 </body>
 </html>

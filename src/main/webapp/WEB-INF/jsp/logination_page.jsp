@@ -18,7 +18,9 @@
     <fmt:setBundle basename="localization.locale" var="loc"/>
     <fmt:message bundle="${loc}" key="default.title" var="title"/>
     <fmt:message bundle="${loc}" key="loginanion.login.note" var="login_note"/>
+    <fmt:message bundle="${loc}" key="logination.login.placeholder" var="login_placeholder"/>
     <fmt:message bundle="${loc}" key="logination.password.note" var="password_note"/>
+    <fmt:message bundle="${loc}" key="logination.password.placeholder" var="password_placeholder"/>
     <fmt:message bundle="${loc}" key="logination.sign_in.button" var="sign_in_button"/>
     <fmt:message bundle="${loc}" key="logination.to_initial_page.button" var="to_initial_page_button"/>
     <fmt:message bundle="${loc}" key="logination.failed.message" var="logination_failed_mess"/>
@@ -26,36 +28,42 @@
 
     <title>${title}</title>
 </head>
+
 <body>
+<div class="container">
+    <div class="text-center">
+        <br/><br/><br/><br/>
+        <form action="Controller" method="post">
+            <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOGINATION}">
+            <p>${login_note}
+            <input type="text" name="${ParameterName.USER_LOGIN}" placeholder="${login_placeholder}">
+            </p>
+            <p>${password_note}
+            <input type="password" name="${ParameterName.USER_PASSWORD}" placeholder="${password_placeholder}">
+            </p>
+            <input type="submit" class="btn btn-success" value="${sign_in_button}">
+        </form>
 
-<form action="Controller" method="post">
-    <input type="hidden" name="command" value="logination">
-    ${login_note}<br/>
-    <input type="text" name="user_login" placeholder="${login_note}">
-    <br/><br/>
-    ${password_note}<br/>
-    <input type="password" name="user_password" placeholder="${password_note}">
-    <br/><br/>
-    <input type="submit" value="${sign_in_button}">
-</form>
+        <div>
+            <c:set var="errorMessage" scope="page" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
+            <c:if test="${not empty errorMessage}">
+                <p class="text-danger">
+                    <c:if test="${errorMessage eq Message.LOGINATION_FAILED}">
+                        <c:out value="${logination_failed_mess}"/>
+                    </c:if>
+                    <c:if test="${errorMessage eq Message.LOGINATION_EXCEPTION}">
+                        <c:out value="${logination_failed_mess}"/>
+                    </c:if>
+                </p>
+            </c:if>
+        </div>
 
+        <form action="Controller" method="get">
+            <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_INITIAL_PAGE}">
+            <input type="submit" class="btn btn-info" value="${to_initial_page_button}">
+        </form>
+    </div>
+</div>
 
-<c:set var="errorMessage" scope="page" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
-<c:if test="${not empty errorMessage}">
-    <h3 style="color:crimson">
-        <c:if test="${errorMessage eq Message.LOGINATION_FAILED}">
-            <c:out value="${logination_failed_mess}"/>
-        </c:if>
-        <c:if test="${errorMessage eq Message.LOGINATION_EXCEPTION}">
-            <c:out value="${logination_failed_mess}"/>
-        </c:if>
-    </h3>
-</c:if>
-
-<br/>
-<form action="Controller" method="get">
-    <input type="hidden" name="command" value="go_to_initial_page">
-    <input type="submit" value="${to_initial_page_button}">
-</form>
 </body>
 </html>
