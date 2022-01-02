@@ -56,7 +56,6 @@ public abstract class AbstractUserDAO<T extends User> extends AbstractDAO{
     }
 
     public int saveNew(T user) throws DAOException {
-        System.out.println("save new in DAO");
         Connection connection = null;
         PreparedStatement statement = null;
         int rowsAffected;

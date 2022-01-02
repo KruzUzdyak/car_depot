@@ -2,6 +2,12 @@ package com.epam.volodko.controller.constant;
 
 public class Message {
 
-    public static final String PASS_RESTRICT_MESSAGE_TEXT =
-            "*Password length should be 5 symbols min and include characters and numbers.";
+    public static final String REGISTRATION_SUCCESSFUL = "registration_successful";
+    public static final String PASSWORD_RESTRICTION_WARN = "password_restriction_warn";
+    public static final String REGISTRATION_FAILED = "registration_failed";
+    public static final String REGISTRATION_EXCEPTION = "registration_exception";
+
+    public static final String LOGINATION_SUCCESSFUL = "logination_successful";
+    public static final String LOGINATION_FAILED = "logination_failed";
+    public static final String LOGINATION_EXCEPTION = "logination_exception";
 }

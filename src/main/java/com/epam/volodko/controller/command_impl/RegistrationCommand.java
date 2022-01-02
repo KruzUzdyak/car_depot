@@ -2,6 +2,7 @@ package com.epam.volodko.controller.command_impl;
 
 import com.epam.volodko.controller.Command;
 import com.epam.volodko.controller.constant.CommandName;
+import com.epam.volodko.controller.constant.Message;
 import com.epam.volodko.controller.constant.PagePath;
 import com.epam.volodko.controller.constant.ParameterName;
 import com.epam.volodko.entity.user.Role;
@@ -21,13 +22,9 @@ import java.io.IOException;
 
 public class RegistrationCommand extends RequestSaver implements Command {
 
-    private static final String REGISTRATION_MESSAGE_TEXT = "Now you are registered. Congrats!";
-    private static final String PASSWORD_RESTRICT_MESS_TEXT = "Your password don't match the restrictions.";
-    private static final String REGISTRATION_FAILED_MESS_TEXT = "Registration failed! Try again.";
-    private static final String REGISTRATION_EXCEPTION_MESS_TEXT = "Registration can't be done. We working on this issue.";
     private static final String REGISTRATION_REDIRECT_COMMAND = String.format("%s?%s=%s&%s=%s",
             CommandName.CONTROLLER, CommandName.COMMAND, CommandName.GO_TO_MAIN_PAGE,
-            ParameterName.REGISTRATION_MESSAGE, REGISTRATION_MESSAGE_TEXT);
+            ParameterName.GREETING_MESSAGE, Message.REGISTRATION_SUCCESSFUL);
 
     private final Logger log = LogManager.getLogger(RegistrationCommand.class);
     private final UserService userService = ServiceFactory.getInstance().getUserService();
@@ -40,11 +37,12 @@ public class RegistrationCommand extends RequestSaver implements Command {
             if (validatePassword(request)){
                 registration(request, response);
             } else {
-                forwardOnFailedRegistration(request, response, PASSWORD_RESTRICT_MESS_TEXT);
+                log.info("Registration failed - password not valid.");
+                forwardOnFailedRegistration(request, response, Message.PASSWORD_RESTRICTION_WARN);
             }
         } catch (ServiceException e) {
             log.error("Catching:", e);
-            forwardOnFailedRegistration(request, response, REGISTRATION_EXCEPTION_MESS_TEXT);
+            forwardOnFailedRegistration(request, response, Message.REGISTRATION_EXCEPTION);
         }
     }
 
@@ -57,7 +55,8 @@ public class RegistrationCommand extends RequestSaver implements Command {
             session.setAttribute(ParameterName.USER_ROLE, user.getRole());
             response.sendRedirect(REGISTRATION_REDIRECT_COMMAND);
         } else {
-            forwardOnFailedRegistration(request, response, REGISTRATION_FAILED_MESS_TEXT);
+            log.info("Registration failed - wrong user data.");
+            forwardOnFailedRegistration(request, response, Message.REGISTRATION_FAILED);
         }
     }
 

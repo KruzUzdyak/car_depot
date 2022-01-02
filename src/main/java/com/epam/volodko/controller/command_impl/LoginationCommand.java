@@ -2,6 +2,7 @@ package com.epam.volodko.controller.command_impl;
 
 import com.epam.volodko.controller.Command;
 import com.epam.volodko.controller.constant.CommandName;
+import com.epam.volodko.controller.constant.Message;
 import com.epam.volodko.controller.constant.PagePath;
 import com.epam.volodko.controller.constant.ParameterName;
 import com.epam.volodko.entity.user.User;
@@ -20,15 +21,12 @@ import java.io.IOException;
 
 public class LoginationCommand extends RequestSaver implements Command {
 
-    private static final Logger log = LogManager.getLogger(LoginationCommand.class);
 
-    private static final String LOGINATION_MESSAGE_TEXT = "Now you are logged in.";
-    private static final String LOGINATION_FAILED_MESSAGE_TEXT = "Wrong login or password.";
-    private static final String LOGINATION_EXCEPTION_MESSAGE_TEXT = "Login can't be done. We working on this issue.";
     private static final String LOGINATION_REDIRECT_COMMAND = String.format("%s?%s=%s&%s=%s",
             CommandName.CONTROLLER, CommandName.COMMAND, CommandName.GO_TO_MAIN_PAGE,
-            ParameterName.LOGINATION_MESSAGE, LOGINATION_MESSAGE_TEXT);
+            ParameterName.GREETING_MESSAGE, Message.LOGINATION_SUCCESSFUL);
 
+    private static final Logger log = LogManager.getLogger(LoginationCommand.class);
     private final UserService userService = ServiceFactory.getInstance().getUserService();
     
     @Override
@@ -47,11 +45,11 @@ public class LoginationCommand extends RequestSaver implements Command {
                 response.sendRedirect(LOGINATION_REDIRECT_COMMAND);
             } else {
                 log.warn(String.format("Logination failed with user login - %s.", login));
-                forwardOnFailedLogination(request, response, LOGINATION_FAILED_MESSAGE_TEXT);
+                forwardOnFailedLogination(request, response, Message.LOGINATION_FAILED);
             }
         } catch (ServiceException e) {
             log.error("Catching:", e);
-            forwardOnFailedLogination(request, response, LOGINATION_EXCEPTION_MESSAGE_TEXT);
+            forwardOnFailedLogination(request, response, Message.LOGINATION_EXCEPTION);
         }
     }
 
