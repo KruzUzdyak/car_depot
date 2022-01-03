@@ -30,21 +30,35 @@
 </head>
 
 <body>
-<div class="container">
-    <div class="text-center">
-        <br/><br/><br/><br/>
+<br/><br/><br/><br/>
+<div class="container-fluid row">
+    <div class="col-3"></div>
+    <div class="col-6">
         <form action="Controller" method="post">
             <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOGINATION}">
-            <p>${login_note}
-            <input type="text" name="${ParameterName.USER_LOGIN}" placeholder="${login_placeholder}">
-            </p>
-            <p>${password_note}
-            <input type="password" name="${ParameterName.USER_PASSWORD}" placeholder="${password_placeholder}">
-            </p>
-            <input type="submit" class="btn btn-success" value="${sign_in_button}">
+            <div class="row">
+                <div class="col-5 text-end">
+                    <p>${login_note}</p>
+                </div>
+                <div class="col-7">
+                    <input type="text" name="${ParameterName.USER_LOGIN}" placeholder="${login_placeholder}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5 text-end">
+                    <p>${password_note}</p>
+                </div>
+                <div class="col-7">
+                    <input type="password" name="${ParameterName.USER_PASSWORD}" placeholder="${password_placeholder}">
+                </div>
+            </div>
+            <div class="text-center">
+                <br/>
+                <input type="submit" class="btn btn-success" value="${sign_in_button}">
+            </div>
         </form>
 
-        <div>
+        <div class="text-center">
             <c:set var="errorMessage" scope="page" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
             <c:if test="${not empty errorMessage}">
                 <p class="text-danger">
@@ -56,12 +70,18 @@
                     </c:if>
                 </p>
             </c:if>
+            <c:if test="${empty errorMessage}">
+                <p></p>
+            </c:if>
         </div>
 
-        <form action="Controller" method="get">
-            <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_INITIAL_PAGE}">
-            <input type="submit" class="btn btn-info" value="${to_initial_page_button}">
-        </form>
+        <div class="text-center">
+            <br/><br/><br/>
+            <form action="Controller" method="get">
+                <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_INITIAL_PAGE}">
+                <input type="submit" class="btn btn-info" value="${to_initial_page_button}">
+            </form>
+        </div>
     </div>
 </div>
 
