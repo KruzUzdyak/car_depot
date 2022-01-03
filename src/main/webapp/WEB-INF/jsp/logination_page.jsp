@@ -32,7 +32,9 @@
 <body>
 <br/><br/><br/><br/>
 <div class="container-fluid row">
-    <div class="col-3"></div>
+    <div class="col-3">
+
+    </div>
     <div class="col-6">
         <form action="Controller" method="post">
             <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOGINATION}">
@@ -71,7 +73,7 @@
                 </p>
             </c:if>
             <c:if test="${empty errorMessage}">
-                <p></p>
+                <br/>
             </c:if>
         </div>
 

@@ -37,62 +37,99 @@
     <title>${title}</title>
 </head>
 <body>
-<br/><br/>
+<br/><br/><br/><br/>
 
-<div class="container">
-    <div class="text-center">
+<div class="container-fluid row">
+    <div class="col-3">
+
+    </div>
+    <div class="col-6">
         <form action="Controller" method="post">
             <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.REGISTRATION}">
-            <p>${login_note}
-            <input type="text" name="${ParameterName.USER_LOGIN}" placeholder="${login_placeholder}">
-            </p>
-            <p>${pass_note}
-            <input type="password" name="${ParameterName.USER_PASSWORD}" placeholder="${pass_placeholder}">
-            </p>
-            <p class="help-footnote"> <c:out value="${pass_restrict_note}"/> </p>
-            <br/><br/>
-            <p>${repeat_pass_note}
-            <input type="password" name="${ParameterName.USER_REPEAT_PASSWORD}" placeholder="${repeat_pass_placeholder}">
-            </p>
-            <p>${name_note}
-            <input type="text" name="${ParameterName.USER_NAME}" placeholder="${name_placeholder}">
-            </p>
-            <p>${phone_note}
-            <input type="tel" name="${ParameterName.USER_PHONE}" placeholder="${phone_placeholder}">
-            </p>
+            <div class="row">
+                <div class="col-5 text-end">
+                    <p>${login_note}</p>
+                </div>
+                <div class="col-5">
+                    <input type="text" name="${ParameterName.USER_LOGIN}" placeholder="${login_placeholder}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5 text-end">
+                    <p>${pass_note}</p>
+                </div>
+                <div class="col-5">
+                    <input type="password" name="${ParameterName.USER_PASSWORD}" placeholder="${pass_placeholder}">
+                    <p class="help-footnote small"> ${pass_restrict_note} </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5 text-end">
+                    <p>${repeat_pass_note}</p>
+                </div>
+                <div class="col-5">
+                    <input type="password" name="${ParameterName.USER_REPEAT_PASSWORD}" placeholder="${repeat_pass_placeholder}">
+                </div>
 
-            Role<br/>
-            <select name="user_role" size="1" >
-                <option disabled>Choose your role</option>
-                <option value="admin">admin</option>
-                <option value="client">client</option>
-                <option value="driver">driver</option>
-            </select>
-            <br/><br/>
+            </div>
+            <div class="row">
+                <div class="col-5 text-end">
+                    <p>${name_note}</p>
+                </div>
+                <div class="col-5">
+                    <input type="text" name="${ParameterName.USER_NAME}" placeholder="${name_placeholder}">
+                </div>
 
-            <input type="submit" class="btn btn-success" value="${register_button}">
+            </div>
+            <div class="row">
+                <div class="col-5 text-end">
+                    <p>${phone_note}</p>
+                </div>
+                <div class="col-5">
+                    <input type="tel" name="${ParameterName.USER_PHONE}" placeholder="${phone_placeholder}">
+                </div>
+            </div>
+            <div class="text-center">
+                Role<br/>
+                <select name="user_role" size="1" >
+                    <option disabled>Choose your role</option>
+                    <option value="admin">admin</option>
+                    <option value="client">client</option>
+                    <option value="driver">driver</option>
+                </select>
+                <br/><br/>
+
+                <input type="submit" class="btn btn-success" value="${register_button}">
+            </div>
         </form>
 
-        <p class="text-danger">
+        <div class="text-center">
             <c:set var="errorMessage" scope="page" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
             <c:if test="${not empty errorMessage}">
-                <c:if test="${errorMessage eq Message.PASSWORD_RESTRICTION_WARN}">
-                    <c:out value="${pass_restrict_mess}"/>
-                </c:if>
-                <c:if test="${errorMessage eq Message.REGISTRATION_FAILED}">
-                    <c:out value="${registration_failed_mess}"/>
-                </c:if>
-                <c:if test="${errorMessage eq Message.REGISTRATION_EXCEPTION}">
-                    <c:out value="${registration_exception_mess}"/>
-                </c:if>
+                <p class="text-danger">
+                    <c:if test="${errorMessage eq Message.PASSWORD_RESTRICTION_WARN}">
+                        <c:out value="${pass_restrict_mess}"/>
+                    </c:if>
+                    <c:if test="${errorMessage eq Message.REGISTRATION_FAILED}">
+                        <c:out value="${registration_failed_mess}"/>
+                    </c:if>
+                    <c:if test="${errorMessage eq Message.REGISTRATION_EXCEPTION}">
+                        <c:out value="${registration_exception_mess}"/>
+                    </c:if>
+                <p/>
             </c:if>
-        </p>
+            <c:if test="${empty errorMessage}">
+                <br/>
+            </c:if>
+        </div>
 
-
-        <form action="Controller" method="get">
-            <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_INITIAL_PAGE}">
-            <input type="submit" class="btn btn-info" value="${to_initial_page_button}">
-        </form>
+        <div class="text-center">
+            <br/><br/><br/>
+            <form action="Controller" method="get">
+                <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_INITIAL_PAGE}">
+                <input type="submit" class="btn btn-info" value="${to_initial_page_button}">
+            </form>
+        </div>
     </div>
 </div>
 </body>
