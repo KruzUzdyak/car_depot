@@ -27,20 +27,35 @@
     <title>${title}</title>
 </head>
 <body>
-
-<c:out value="${set_language_note}"/>
-<form action="Controller" method="post">
-    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
-    <input type="hidden" name="${ParameterName.LOCALE}" value="ru">
-    <input type="submit" value="${button_locale_ru}">
-</form>
-<form action="Controller" method="post">
-    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
-    <input type="hidden" name="${ParameterName.LOCALE}" value="en">
-    <input type="submit" value="${button_locale_en}">
-</form>
-
-<br/>
+<nav class="navbar navbar-default">
+    <div class="container-fluid bg-light">
+        <div class="navbar-header row">
+            <div class="col-4">
+                <c:out value="${set_language_note}"/>
+            </div>
+            <div class="col-2">
+                <form action="Controller" method="post">
+                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
+                    <input type="hidden" name="${ParameterName.LOCALE}" value="ru">
+                    <input type="submit" value="${button_locale_ru}">
+                </form>
+            </div>
+            <div class="col-2">
+                <form action="Controller" method="post">
+                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
+                    <input type="hidden" name="${ParameterName.LOCALE}" value="en">
+                    <input type="submit" value="${button_locale_en}">
+                </form>
+            </div>
+        </div>
+        <div class="text-end">
+            <form action="Controller" method="get">
+                <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_INITIAL_PAGE}">
+                <input type="submit" class="btn btn-outline-danger" value="${sign_out_button}">
+            </form>
+        </div>
+    </div>
+</nav>
 
 <c:set var="greeting_message" value="${param.get(ParameterName.GREETING_MESSAGE)}"/>
 <c:if test="${not empty greeting_message}">
@@ -57,10 +72,7 @@
 
 
 <br/>
-<form action="Controller" method="get">
-    <input type="hidden" name="command" value="go_to_initial_page">
-    <input type="submit" value="${sign_out_button}">
-</form>
+
 
 </body>
 </html>

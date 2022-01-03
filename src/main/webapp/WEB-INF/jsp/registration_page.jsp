@@ -127,7 +127,7 @@
             <br/><br/><br/>
             <form action="Controller" method="get">
                 <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_INITIAL_PAGE}">
-                <input type="submit" class="btn btn-info" value="${to_initial_page_button}">
+                <input type="submit" class="btn btn-outline-info" value="${to_initial_page_button}">
             </form>
         </div>
     </div>

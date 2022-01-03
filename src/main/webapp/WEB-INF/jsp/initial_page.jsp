@@ -28,7 +28,7 @@
 
 <body>
 <nav class="navbar navbar-default">
-    <div class="container-fluid">
+    <div class="container-fluid bg-light">
         <div class="navbar-header row">
             <div class="col-4">
                 <c:out value="${set_language_note}"/>
