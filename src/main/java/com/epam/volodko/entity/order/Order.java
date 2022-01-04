@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class Order implements Serializable {
 
-    private int orderId;
+    private int id;
     private String destFrom;
     private String destTo;
     private int distance;
@@ -27,11 +27,11 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(int orderId, String destFrom, String destTo,
+    public Order(int id, String destFrom, String destTo,
                  int distance, Date dateStart, Date dateEnd, int load,
                  String loadNote, boolean completed, int payment,
                  Client client, Admin admin, Car car) {
-        this.orderId = orderId;
+        this.id = id;
         this.destFrom = destFrom;
         this.destTo = destTo;
         this.distance = distance;
@@ -46,12 +46,12 @@ public class Order implements Serializable {
         this.car = car;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public int getId() {
+        return id;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDestFrom() {
@@ -159,7 +159,7 @@ public class Order implements Serializable {
             return false;
         }
         Order order = (Order) o;
-        return orderId == order.orderId && distance == order.distance && load == order.load &&
+        return id == order.id && distance == order.distance && load == order.load &&
                 completed == order.completed && payment == order.payment &&
                 Objects.equals(destFrom, order.destFrom) && Objects.equals(destTo, order.destTo) &&
                 Objects.equals(dateStart, order.dateStart) && Objects.equals(dateEnd, order.dateEnd) &&
@@ -169,14 +169,14 @@ public class Order implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, destFrom, destTo, distance, dateStart, dateEnd,
+        return Objects.hash(id, destFrom, destTo, distance, dateStart, dateEnd,
                 load, loadNote, completed, payment, client, admin, car);
     }
 
     @Override
     public String toString() {
         return "Order{" +
-                "orderId=" + orderId +
+                "orderId=" + id +
                 ", destFrom='" + destFrom + '\'' +
                 ", destTo='" + destTo + '\'' +
                 ", distance=" + distance +

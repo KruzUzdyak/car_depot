@@ -16,7 +16,7 @@
 
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.locale" var="loc"/>
-    <fmt:message bundle="${loc}" key="default.title" var="title"/>
+    <fmt:message bundle="${loc}" key="default.title" var="default_title"/>
     <fmt:message bundle="${loc}" key="loginanion.login.note" var="login_note"/>
     <fmt:message bundle="${loc}" key="logination.login.placeholder" var="login_placeholder"/>
     <fmt:message bundle="${loc}" key="logination.password.note" var="password_note"/>
@@ -26,7 +26,7 @@
     <fmt:message bundle="${loc}" key="logination.failed.message" var="logination_failed_mess"/>
     <fmt:message bundle="${loc}" key="logination.exception.message" var="logination_exception_mess"/>
 
-    <title>${title}</title>
+    <title>${default_title}</title>
 </head>
 
 <body>
@@ -40,18 +40,19 @@
             <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOGINATION}">
             <div class="row">
                 <div class="col-5 text-end">
-                    <p>${login_note}</p>
+                    <label for="login">${login_note}</label>
                 </div>
                 <div class="col-7">
-                    <input type="text" name="${ParameterName.USER_LOGIN}" placeholder="${login_placeholder}">
+                    <input type="text" id="login" required name="${ParameterName.USER_LOGIN}" placeholder="${login_placeholder}">
                 </div>
             </div>
+            <br/>
             <div class="row">
                 <div class="col-5 text-end">
-                    <p>${password_note}</p>
+                    <label for="password">${password_note}</label>
                 </div>
                 <div class="col-7">
-                    <input type="password" name="${ParameterName.USER_PASSWORD}" placeholder="${password_placeholder}">
+                    <input type="password" id="password" required name="${ParameterName.USER_PASSWORD}" placeholder="${password_placeholder}">
                 </div>
             </div>
             <div class="text-center">

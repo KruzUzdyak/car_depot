@@ -16,7 +16,7 @@
 
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.locale" var="loc"/>
-    <fmt:message bundle="${loc}"  key="default.title" var="title"/>
+    <fmt:message bundle="${loc}"  key="default.title" var="default_title"/>
     <fmt:message bundle="${loc}"  key="registration.login.note" var="login_note"/>
     <fmt:message bundle="${loc}"  key="registration.login.placeholder" var="login_placeholder"/>
     <fmt:message bundle="${loc}"  key="registration.password.note" var="pass_note"/>
@@ -34,65 +34,66 @@
     <fmt:message bundle="${loc}"  key="registration.failed.message" var="registration_failed_mess"/>
     <fmt:message bundle="${loc}"  key="registration.exception.message" var="registration_exception_mess"/>
 
-    <title>${title}</title>
+    <title>${default_title}</title>
 </head>
 <body>
 <br/><br/><br/><br/>
-
 <div class="container-fluid row">
     <div class="col-3">
 
     </div>
     <div class="col-6">
-        <form action="Controller" method="post">
+        <form action="Controller" method="post" autocomplete="off">
             <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.REGISTRATION}">
             <div class="row">
                 <div class="col-5 text-end">
-                    <p>${login_note}</p>
+                    <label for="login">${login_note}</label>
                 </div>
                 <div class="col-5">
-                    <input type="text" name="${ParameterName.USER_LOGIN}" placeholder="${login_placeholder}">
+                    <input type="text" id="login" required autocomplete="on" name="${ParameterName.USER_LOGIN}" placeholder="${login_placeholder}">
                 </div>
             </div>
+            <br/>
             <div class="row">
                 <div class="col-5 text-end">
-                    <p>${pass_note}</p>
+                    <label for="pass">${pass_note}</label>
                 </div>
                 <div class="col-5">
-                    <input type="password" name="${ParameterName.USER_PASSWORD}" placeholder="${pass_placeholder}">
+                    <input type="password" id="pass" required name="${ParameterName.USER_PASSWORD}" placeholder="${pass_placeholder}">
                     <p class="help-footnote small"> ${pass_restrict_note} </p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-5 text-end">
-                    <p>${repeat_pass_note}</p>
+                    <label for="pass_repeat">${repeat_pass_note}</label>
                 </div>
                 <div class="col-5">
-                    <input type="password" name="${ParameterName.USER_REPEAT_PASSWORD}" placeholder="${repeat_pass_placeholder}">
+                    <input type="password" id="pass_repeat"  required name="${ParameterName.USER_REPEAT_PASSWORD}" placeholder="${repeat_pass_placeholder}">
                 </div>
-
             </div>
+            <br/>
             <div class="row">
                 <div class="col-5 text-end">
-                    <p>${name_note}</p>
+                    <label for="name">${name_note}</label>
                 </div>
                 <div class="col-5">
-                    <input type="text" name="${ParameterName.USER_NAME}" placeholder="${name_placeholder}">
+                    <input type="text" id="name" autocomplete="on" name="${ParameterName.USER_NAME}" placeholder="${name_placeholder}">
                 </div>
-
             </div>
+            <br/>
             <div class="row">
                 <div class="col-5 text-end">
-                    <p>${phone_note}</p>
+                    <label for="phone">${phone_note}</label>
                 </div>
                 <div class="col-5">
-                    <input type="tel" name="${ParameterName.USER_PHONE}" placeholder="${phone_placeholder}">
+                    <input type="text" id="phone" autocomplete="on" name="${ParameterName.USER_PHONE}" placeholder="${phone_placeholder}">
                 </div>
             </div>
+            <br/>
             <div class="text-center">
                 Role<br/>
-                <select name="user_role" size="1" >
-                    <option disabled>Choose your role</option>
+                <select name="user_role" size="1">
+                    <option disabled selected>Choose your role</option>
                     <option value="admin">admin</option>
                     <option value="client">client</option>
                     <option value="driver">driver</option>

@@ -18,6 +18,7 @@ public final class CommandProvider {
         commands.put(CommandName.REGISTRATION, new RegistrationCommand());
         commands.put(CommandName.GO_TO_MAIN_PAGE, new GoToMainPageCommand());
         commands.put(CommandName.LOCALIZATION, new LocalizationCommand());
+        commands.put(CommandName.GO_TO_ALL_ORDERS_PAGE, new GoToAllOrdersPageCommand());
     }
 
     public Command getCommand(String commandName){

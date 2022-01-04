@@ -3,7 +3,6 @@
 <%@ page import="com.epam.volodko.controller.constant.CommandName" %>
 <%@ page import="com.epam.volodko.controller.constant.ParameterName" %>
 <%@ page import="com.epam.volodko.controller.constant.Message" %>
-<%@ page import="com.epam.volodko.entity.user.Role" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -80,124 +79,81 @@
     </div>
 </nav>
 
-<div class="text-center">
-    <c:set var="greeting_message" value="${param.get(ParameterName.GREETING_MESSAGE)}"/>
-    <c:if test="${not empty greeting_message}">
-        <h3 style="color: limegreen">
-            <c:if test="${greeting_message eq Message.REGISTRATION_SUCCESSFUL}">
-                <c:out value="${registration_successful_mess}"/>
-            </c:if>
-            <c:if test="${greeting_message eq Message.LOGINATION_SUCCESSFUL}">
-                <c:out value="${logination_successful_mess}"/>
-            </c:if>
-        </h3>
-    </c:if>
-    <c:if test="${empty greeting_message}">
-        <br/>
-    </c:if>
-</div>
-
 <div class="container-fluid row">
-    <div class="col-3">
+    <div class="col-1">
 
     </div>
-    <div class="col-6">
+    <div class="col-10">
         <c:set var="errorMessage" scope="page" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
-        <c:set var="carsList" scope="page" value="${requestScope.get(ParameterName.CARS_LIST)}"/>
+        <c:set var="ordersList" scope="page" value="${requestScope.get(ParameterName.ORDERS_LIST)}"/>
         <table class="table table-bordered table-striped text-center">
             <tr>
-                <th colspan="5">${table_name}</th>
+                <th colspan="13">CAR_TABLE</th>
             </tr>
             <tr>
-                <th>${th_car_model}</th>
-                <th>${th_driver_name}</th>
-                <th>${th_load_type}</th>
-                <th>${th_capacity}</th>
-                <th>${th_availability}</th>
+                <th>order id</th>
+                <th>destination from</th>
+                <th>destination to</th>
+                <th>distance</th>
+                <th>date start</th>
+                <th>date end</th>
+                <th>load amount</th>
+                <th>load note</th>
+                <th>status</th>
+                <th>payment</th>
+                <th>client name</th>
+                <th>admin name</th>
+                <th>car's plate number</th>
             </tr>
             <c:if test="${not empty errorMessage}">
                 <tr class="bg-warning">
-                    <td>${td_car_loading_failed}</td>
-                    <td>${td_car_loading_failed}</td>
-                    <td>${td_car_loading_failed}</td>
-                    <td>${td_car_loading_failed}</td>
-                    <td>${td_car_loading_failed}</td>
+                    <td>ORDER_LOAD_FAILED</td>
+                    <td>ORDER_LOAD_FAILED</td>
+                    <td>ORDER_LOAD_FAILED</td>
+                    <td>ORDER_LOAD_FAILED</td>
+                    <td>ORDER_LOAD_FAILED</td>
                 </tr>
             </c:if>
             <c:if test="${empty errorMessage}">
-                <c:forEach var="car" items="${carsList}">
-                    <tr>
-                        <td><p>${car.model.modelName}</p></td>
-                        <td><p>${car.driver.name}</p></td>
-                        <td><p>${car.model.loadType}</p></td>
-                        <td><p>${car.model.capacity}</p></td>
-                        <td><c:if test="${not car.broken}">
-                                <p class="text-primary">${td_available}</p>
-                            </c:if>
-                            <c:if test="${car.broken}">
-                                <p class="text-muted">${td_not_available}</p>
-                            </c:if>
-                        </td>
-                    </tr>
+                <c:forEach var="order" items="${ordersList}">
+                    <c:if test="${order.completed}">
+                        <tr class="table-secondary">
+                            <td><p>${order.id}</p></td>
+                            <td><p>${order.destFrom}</p></td>
+                            <td><p>${order.destTo}</p></td>
+                            <td><p>${order.distance}</p></td>
+                            <td><p>${order.dateStart}</p></td>
+                            <td><p>${order.dateEnd}</p></td>
+                            <td><p>${order.load}</p></td>
+                            <td><p>${order.loadNote}</p></td>
+                            <td>COMPLETED</td>
+                            <td><p>${order.payment}</p></td>
+                            <td><p>${order.client.name}</p></td>
+                            <td><p>${order.admin.name}</p></td>
+                            <td><p>${order.car.plateNumber}</p></td>
+                        </tr>
+                    </c:if>
+                    <c:if test="${not order.completed}">
+                        <tr class="table-info">
+                            <td><p>${order.id}</p></td>
+                            <td><p>${order.destFrom}</p></td>
+                            <td><p>${order.destTo}</p></td>
+                            <td><p>${order.distance}</p></td>
+                            <td><p>${order.dateStart}</p></td>
+                            <td><p>${order.dateEnd}</p></td>
+                            <td><p>${order.load}</p></td>
+                            <td><p>${order.loadNote}</p></td>
+                            <td>NOT COMPLETED</td>
+                            <td><p>${order.payment}</p></td>
+                            <td><p>${order.client.name}</p></td>
+                            <td><p>${order.admin.name}</p></td>
+                            <td><p>${order.car.plateNumber}</p></td>
+                        </tr>
+                    </c:if>
                 </c:forEach>
             </c:if>
         </table>
     </div>
 </div>
-
-<c:set var="userRole" scope="page" value="${sessionScope.get(ParameterName.USER_ROLE)}"/>
-<div class="container-fluid row">
-    <c:if test="${userRole eq Role.CLIENT}">
-        <div class="col-5">
-
-        </div>
-        <div class="col-2 text-center">
-            <form action="Controller" method="get">
-                <input type="hidden" name="stub" value="stub">
-                <input type="submit" class="btn btn-success" value="CREATE_ORDER">
-            </form>
-        </div>
-    </c:if>
-
-    <c:if test="${userRole eq Role.ADMIN}">
-        <div class="col-3">
-
-        </div>
-        <div class="col-2 text-center">
-            <form action="Controller" method="get">
-                <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_ALL_ORDERS_PAGE}">
-                <input type="submit" class="btn btn-info" value="ALL_ORDERS">
-            </form>
-        </div>
-        <div class="col-2 text-center">
-            <form action="Controller" method="get">
-                <input type="hidden" name="stub" value="stub">
-                <input type="submit" class="btn btn-info" value="REGISTER_NEW_ADMIN">
-            </form>
-        </div>
-        <div class="col-2 text-center">
-            <form action="Controller" method="get">
-                <input type="hidden" name="stub" value="stub">
-                <input type="submit" class="btn btn-info" value="REGISTER_NEW_DRIVER">
-            </form>
-        </div>
-    </c:if>
-
-    <c:if test="${userRole eq Role.DRIVER}">
-        <div class="col-5">
-
-        </div>
-        <div class="col-2 text-center">
-            <form action="Controller" method="get">
-                <input type="hidden" name="stub" value="stub">
-                <input type="submit" class="btn btn-info" value="ALL_ORDERS">
-            </form>
-        </div>
-    </c:if>
-</div>
-
-
-
-
 </body>
 </html>

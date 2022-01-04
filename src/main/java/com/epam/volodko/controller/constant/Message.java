@@ -12,4 +12,6 @@ public class Message {
     public static final String LOGINATION_EXCEPTION = "logination_exception";
 
     public static final String CARS_LOADING_FAILED = "cars_loading_failed";
+
+    public static final Object ORDER_LOADING_FAILED = "orders_loading_failed";
 }

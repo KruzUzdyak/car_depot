@@ -16,14 +16,14 @@
 
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.locale" var="loc"/>
-    <fmt:message bundle="${loc}"  key="default.title" var="title"/>
-    <fmt:message bundle="${loc}" key="locale.button.ru" var="button_locale_ru"/>
-    <fmt:message bundle="${loc}" key="locale.button.en" var="button_locale_en"/>
-    <fmt:message bundle="${loc}" key="locale.note" var="set_language_note"/>
+    <fmt:message bundle="${loc}"  key="default.title" var="default_title"/>
+    <fmt:message bundle="${loc}" key="locale.button.ru" var="locale_button_ru"/>
+    <fmt:message bundle="${loc}" key="locale.button.en" var="locale_button_en"/>
+    <fmt:message bundle="${loc}" key="locale.note" var="locale_note"/>
     <fmt:message bundle="${loc}" key="initial.button.login" var="button_login"/>
     <fmt:message bundle="${loc}" key="initial.button.Registration" var="button_registration"/>
 
-    <title>${title}</title>
+    <title>${default_title}</title>
 </head>
 
 <body>
@@ -31,20 +31,20 @@
     <div class="container-fluid bg-light">
         <div class="navbar-header row">
             <div class="col-4">
-                <c:out value="${set_language_note}"/>
+                <p>${locale_note}</p>
             </div>
             <div class="col-2">
                 <form action="Controller" method="post">
                     <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
                     <input type="hidden" name="${ParameterName.LOCALE}" value="ru">
-                    <input type="submit" value="${button_locale_ru}">
+                    <input type="submit" value="${locale_button_ru}">
                 </form>
             </div>
             <div class="col-2">
                 <form action="Controller" method="post">
                     <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
                     <input type="hidden" name="${ParameterName.LOCALE}" value="en">
-                    <input type="submit" value="${button_locale_en}">
+                    <input type="submit" value="${locale_button_en}">
                 </form>
             </div>
         </div>

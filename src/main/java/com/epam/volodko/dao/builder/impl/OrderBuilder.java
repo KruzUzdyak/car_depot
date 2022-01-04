@@ -18,7 +18,7 @@ public class OrderBuilder {
 
     public Order build(ResultSet resultSet) throws SQLException, DAOException {
         Order order = new Order();
-        order.setOrderId(resultSet.getInt(Column.ORDERS_ORDER_ID));
+        order.setId(resultSet.getInt(Column.ORDERS_ORDER_ID));
         order.setDestFrom(resultSet.getString(Column.ORDERS_DEST_FROM));
         order.setDestTo(resultSet.getString(Column.ORDERS_DEST_TO));
         order.setDistance(resultSet.getInt(Column.ORDERS_DISTANCE));

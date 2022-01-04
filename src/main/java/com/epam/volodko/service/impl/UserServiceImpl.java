@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean verifyPassword(String password, String storedPasswordHash){
-        return BCrypt.checkpw(password, storedPasswordHash);
+        return storedPasswordHash != null && BCrypt.checkpw(password, storedPasswordHash);
     }
 
     private User getUserFromDB(String login) throws ServiceException {

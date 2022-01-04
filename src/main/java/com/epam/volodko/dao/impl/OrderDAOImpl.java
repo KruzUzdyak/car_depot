@@ -121,7 +121,7 @@ public class OrderDAOImpl extends AbstractDAO implements OrderDAO {
             statement = connection.prepareStatement(SAVE_NEW_ORDER_QUERY);
             prepareUpdateOrderStatement(order, statement);
             rowsAffected = statement.executeUpdate();
-            order.setOrderId(getGeneratedKey(statement));
+            order.setId(getGeneratedKey(statement));
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
         } finally {
@@ -157,7 +157,7 @@ public class OrderDAOImpl extends AbstractDAO implements OrderDAO {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(UPDATE_ORDER_QUERY);
             prepareUpdateOrderStatement(order, statement);
-            statement.setInt(11, order.getOrderId());
+            statement.setInt(11, order.getId());
             rowsAffected = statement.executeUpdate();
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
