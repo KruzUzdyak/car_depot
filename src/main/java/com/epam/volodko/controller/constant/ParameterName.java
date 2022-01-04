@@ -15,5 +15,5 @@ public class ParameterName {
     public static final String USER_PHONE = "user_phone";
     public static final String USER_ROLE = "user_role";
 
-
+    public static final String CARS_ALL = "cars_all";
 }

@@ -23,6 +23,17 @@
     <fmt:message bundle="${loc}" key="main.registration_successful.message" var="registration_successful_mess"/>
     <fmt:message bundle="${loc}" key="main.logination_successful.message" var="logination_successful_mess"/>
     <fmt:message bundle="${loc}" key="default.sign_out_button" var="sign_out_button"/>
+    <fmt:message bundle="${loc}" key="main.table.name" var="table_name"/>
+    <fmt:message bundle="${loc}" key="main.table.th.model" var="th_car_model"/>
+    <fmt:message bundle="${loc}" key="main.table.th.driver_name" var="th_driver_name"/>
+    <fmt:message bundle="${loc}" key="main.table.th.load_type" var="th_load_type"/>
+    <fmt:message bundle="${loc}" key="main.table.th.capacity" var="th_capacity"/>
+    <fmt:message bundle="${loc}" key="main.table.th.availability" var="th_availability"/>
+    <fmt:message bundle="${loc}" key="main.table.td.available" var="td_available"/>
+    <fmt:message bundle="${loc}" key="main.table.td.not_available" var="td_not_available"/>
+    <fmt:message bundle="${loc}" key="main.cars_loading_failed" var="td_car_loading_failed"/>
+
+
 
     <title>${title}</title>
 </head>
@@ -57,22 +68,102 @@
     </div>
 </nav>
 
-<c:set var="greeting_message" value="${param.get(ParameterName.GREETING_MESSAGE)}"/>
-<c:if test="${not empty greeting_message}">
-    <h3 style="color: limegreen">
-        <c:if test="${greeting_message eq Message.REGISTRATION_SUCCESSFUL}">
-            <c:out value="${registration_successful_mess}"/>
-        </c:if>
-        <c:if test="${greeting_message eq Message.LOGINATION_SUCCESSFUL}">
-            <c:out value="${logination_successful_mess}"/>
-        </c:if>
-    </h3>
-</c:if>
+<div class="text-center">
+    <c:set var="greeting_message" value="${param.get(ParameterName.GREETING_MESSAGE)}"/>
+    <c:if test="${not empty greeting_message}">
+        <h3 style="color: limegreen">
+            <c:if test="${greeting_message eq Message.REGISTRATION_SUCCESSFUL}">
+                <c:out value="${registration_successful_mess}"/>
+            </c:if>
+            <c:if test="${greeting_message eq Message.LOGINATION_SUCCESSFUL}">
+                <c:out value="${logination_successful_mess}"/>
+            </c:if>
+        </h3>
+    </c:if>
+    <c:if test="${empty greeting_message}">
+        <br/>
+    </c:if>
+</div>
 
+<c:set var="errorMessage" scope="page" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
+<c:set var="carsList" scope="page" value="${requestScope.get(ParameterName.CARS_ALL)}"/>
 
+<div class="container-fluid row">
+    <div class="col-3">
 
-<br/>
-
+    </div>
+    <div class="col-6">
+        <table class="table table-bordered table-striped text-center">
+            <tr>
+                <th>
+                    ${table_name}
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    ${th_car_model}
+                </th>
+                <th>
+                    ${th_driver_name}
+                </th>
+                <th>
+                    ${th_load_type}
+                </th>
+                <th>
+                    ${th_capacity}
+                </th>
+                <th>
+                    ${th_availability}
+                </th>
+            </tr>
+            <c:if test="${not empty errorMessage}">
+                <tr class="bg-danger">
+                    <td>
+                        ${td_car_loading_failed}
+                    </td>
+                    <td>
+                        ${td_car_loading_failed}
+                    </td>
+                    <td>
+                        ${td_car_loading_failed}
+                    </td>
+                    <td>
+                        ${td_car_loading_failed}
+                    </td>
+                    <td>
+                        ${td_car_loading_failed}
+                    </td>
+                </tr>
+            </c:if>
+            <c:if test="${empty errorMessage}">
+                <c:forEach var="car" items="${carsList}">
+                    <tr>
+                        <td>
+                            <p>${car.model.modelName}</p>
+                        </td>
+                        <td>
+                            <p>${car.driver.name}</p>
+                        </td>
+                        <td>
+                            <p>${car.model.loadType}</p>
+                        </td>
+                        <td>
+                            <p>${car.model.capacity}</p>
+                        </td>
+                        <td>
+                            <c:if test="${not car.broken}">
+                                <p class="text-primary">${td_available}</p>
+                            </c:if>
+                            <c:if test="${car.broken}">
+                                <p class="text-muted">${td_not_available}</p>
+                            </c:if>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </c:if>
+        </table>
+    </div>
+</div>
 
 </body>
 </html>

@@ -11,7 +11,7 @@ public class Car implements Serializable {
     private String plateNumber;
     private int fuelLevel;
     private int mileage;
-    private boolean isBroken;
+    private boolean broken;
     private CarModel model;
     private Driver driver;
 
@@ -20,12 +20,12 @@ public class Car implements Serializable {
     }
 
     public Car(int id, String plateNumber, int fuelLevel,
-               int mileage, boolean isBroken, CarModel model, Driver driver) {
+               int mileage, boolean broken, CarModel model, Driver driver) {
         this.id = id;
         this.plateNumber = plateNumber;
         this.fuelLevel = fuelLevel;
         this.mileage = mileage;
-        this.isBroken = isBroken;
+        this.broken = broken;
         this.model = model;
         this.driver = driver;
     }
@@ -47,7 +47,7 @@ public class Car implements Serializable {
     }
 
     public boolean isBroken() {
-        return isBroken;
+        return broken;
     }
 
     public CarModel getModel() {
@@ -83,7 +83,7 @@ public class Car implements Serializable {
     }
 
     public void setBroken(boolean broken) {
-        isBroken = broken;
+        this.broken = broken;
     }
 
     public void setDriver(Driver driver) {
@@ -112,13 +112,13 @@ public class Car implements Serializable {
         }
         Car car = (Car) o;
         return id == car.id && fuelLevel == car.fuelLevel && mileage == car.mileage &&
-                isBroken == car.isBroken && Objects.equals(plateNumber, car.plateNumber) &&
+                broken == car.broken && Objects.equals(plateNumber, car.plateNumber) &&
                 Objects.equals(model, car.model) && Objects.equals(driver, car.driver);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, plateNumber, fuelLevel, mileage, isBroken, model, driver);
+        return Objects.hash(id, plateNumber, fuelLevel, mileage, broken, model, driver);
     }
 
     @Override
@@ -128,7 +128,7 @@ public class Car implements Serializable {
                 ", plateNumber='" + plateNumber + '\'' +
                 ", fuelLevel=" + fuelLevel +
                 ", mileage=" + mileage +
-                ", isBroken=" + isBroken +
+                ", isBroken=" + broken +
                 ", model=" + model +
                 ", driver=" + driver +
                 '}';

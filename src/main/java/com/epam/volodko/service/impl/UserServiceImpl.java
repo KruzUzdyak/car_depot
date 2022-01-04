@@ -7,9 +7,13 @@ import com.epam.volodko.entity.user.User;
 import com.epam.volodko.service.UserService;
 import com.epam.volodko.service.exception.ServiceException;
 import com.epam.volodko.service.validator.UserValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class UserServiceImpl implements UserService {
+
+    private final Logger log = LogManager.getLogger(UserServiceImpl.class);
 
     private final UserValidator validator = new UserValidator();
     private final UserDAO<User> userDAO = DAOFactory.getInstance().getUserDAO();
