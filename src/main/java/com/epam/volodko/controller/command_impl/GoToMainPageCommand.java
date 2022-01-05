@@ -16,23 +16,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class GoToMainPageCommand extends RequestSaver implements Command {
+public class GoToMainPageCommand extends AbstractCommand implements Command {
 
     private final Logger log = LogManager.getLogger(GoToMainPageCommand.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        validateRole(request, response);
         saveRequest(request);
 
-        CarService service = ServiceFactory.getInstance().getCarService();
         try {
-            request.setAttribute(ParameterName.CARS_LIST, service.getAllCars());
+            setCarList(request);
         } catch (ServiceException e) {
             log.error("Catching: ", e);
             request.setAttribute(ParameterName.ERROR_MESSAGE, Message.CARS_LOADING_FAILED);
         }
+
         RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.MAIN_PAGE);
         dispatcher.forward(request, response);
+    }
+
+    private void setCarList(HttpServletRequest request) throws ServiceException{
+        CarService service = ServiceFactory.getInstance().getCarService();
+        request.setAttribute(ParameterName.CARS_LIST, service.getAllCars());
     }
 }

@@ -2,6 +2,8 @@ package com.epam.volodko.controller.constant;
 
 public class Message {
 
+    public static final String NOT_LOGGED_ID = "not_logged_in";
+
     public static final String REGISTRATION_SUCCESSFUL = "registration_successful";
     public static final String PASSWORD_RESTRICTION_WARN = "password_restriction_warn";
     public static final String REGISTRATION_FAILED = "registration_failed";

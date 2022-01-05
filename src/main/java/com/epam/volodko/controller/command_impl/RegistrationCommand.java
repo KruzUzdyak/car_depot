@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class RegistrationCommand extends RequestSaver implements Command {
+public class RegistrationCommand extends AbstractCommand implements Command {
 
     private static final String REGISTRATION_REDIRECT_COMMAND = String.format("%s?%s=%s&%s=%s",
             CommandName.CONTROLLER, CommandName.COMMAND, CommandName.GO_TO_MAIN_PAGE,
