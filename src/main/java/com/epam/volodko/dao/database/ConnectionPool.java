@@ -37,11 +37,14 @@ public class ConnectionPool {
     }
 
     public static ConnectionPool getInstance() throws ConnectionPoolException {
+        return instance;
+    }
+
+    public static void init() throws ConnectionPoolException {
         if (instance == null){
             instance = new ConnectionPool();
             instance.initPoolData();
         }
-        return instance;
     }
 
     private void initPoolData() throws ConnectionPoolException {

@@ -1,8 +1,12 @@
 package com.epam.volodko.dao;
 
+import com.epam.volodko.dao.database.ConnectionPool;
+import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
 import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.entity.user.Role;
 import com.epam.volodko.entity.user.User;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;
@@ -12,6 +16,11 @@ import static org.junit.Assert.*;
 public class UserDAOTest {
 
     UserDAO<User> userDAO = DAOFactory.getInstance().getUserDAO();
+
+    @BeforeClass
+    public static void init() throws ConnectionPoolException {
+        ConnectionPool.init();
+    }
 
     @Test
     public void testFindById() throws DAOException {
