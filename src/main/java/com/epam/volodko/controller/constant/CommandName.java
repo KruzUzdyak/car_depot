@@ -19,6 +19,8 @@ public class CommandName {
 
     public static final String GO_TO_ALL_ORDERS_PAGE = "go_to_all_orders_page";
 
+    public static final String GO_TO_ORDER_INFO_PAGE = "go_to_order_info_page";
+
 
 
 }

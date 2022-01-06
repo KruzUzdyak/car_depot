@@ -16,38 +16,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class GoToAllOrdersPageCommand extends AbstractCommand implements Command {
+public class GoToOrderInfoPageCommand extends AbstractCommand implements Command {
 
-    private final Logger log = LogManager.getLogger(GoToAllOrdersPageCommand.class);
+    private final Logger log = LogManager.getLogger(GoToOrderInfoPageCommand.class);
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         validateRole(request, response);
         saveRequest(request);
 
-        try {
-            setOrderList(request);
+        try{
+            setOrderInfo(request);
         } catch (ServiceException e) {
             log.error("Catching: ", e);
             request.setAttribute(ParameterName.ERROR_MESSAGE, Message.ORDER_LOADING_FAILED);
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ALL_ORDERS_PAGE);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ORDER_INFO_PAGE);
         dispatcher.forward(request, response);
     }
 
-    private void setOrderList(HttpServletRequest request) throws ServiceException {
-        String orderListType = request.getParameter(ParameterName.ORDER_LIST_TYPE);
-        String idForOrdersList = request.getParameter(ParameterName.ORDER_LIST_ID);
-
+    private void setOrderInfo(HttpServletRequest request) throws ServiceException {
+        String orderId = request.getParameter(ParameterName.ORDER_ID);
         int id = 0;
-        if (idForOrdersList != null){
-            id = Integer.parseInt(idForOrdersList);
+        if (orderId != null){
+            id = Integer.parseInt(orderId);
         }
 
         OrderService orderService = ServiceFactory.getInstance().getOrderService();
-        request.setAttribute(ParameterName.ORDER_LIST, orderService.getOrderList(orderListType, id));
+        request.setAttribute(ParameterName.ORDER, orderService.getOrderById(id));
     }
-
 }

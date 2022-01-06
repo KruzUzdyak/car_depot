@@ -37,14 +37,14 @@
                 <form action="Controller" method="post">
                     <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
                     <input type="hidden" name="${ParameterName.LOCALE}" value="ru">
-                    <input type="submit" value="${locale_button_ru}">
+                    <input type="submit" class="btn btn-outline-info" value="${locale_button_ru}">
                 </form>
             </div>
             <div class="col-2">
                 <form action="Controller" method="post">
                     <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
                     <input type="hidden" name="${ParameterName.LOCALE}" value="en">
-                    <input type="submit" value="${locale_button_en}">
+                    <input type="submit" class="btn btn-outline-info" value="${locale_button_en}">
                 </form>
             </div>
         </div>

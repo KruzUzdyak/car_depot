@@ -30,6 +30,17 @@ public class OrderServiceImpl implements OrderService {
         return orders;
     }
 
+    @Override
+    public Order getOrderById(int id) throws ServiceException {
+        Order order;
+        try {
+            order= orderDAO.findById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return order;
+    }
+
     private List<Order> processOrderListRequest(String orderListType, int id) throws DAOException {
         List<Order> orders = new ArrayList<>();
         switch (orderListType) {

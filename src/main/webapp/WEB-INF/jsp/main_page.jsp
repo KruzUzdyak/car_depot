@@ -103,7 +103,7 @@
     </div>
     <div class="col-6">
         <c:set var="errorMessage" scope="page" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
-        <c:set var="carsList" scope="page" value="${requestScope.get(ParameterName.CARS_LIST)}"/>
+        <c:set var="carsList" scope="page" value="${requestScope.get(ParameterName.CAR_LIST)}"/>
         <table class="table table-bordered table-striped text-center">
             <tr>
                 <th colspan="5">${table_name}</th>

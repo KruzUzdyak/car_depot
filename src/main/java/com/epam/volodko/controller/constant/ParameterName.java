@@ -17,7 +17,10 @@ public class ParameterName {
 
     public static final String CAR_LIST_TYPE = "car_list_type";
     public static final String CAR_LIST_ALL = "car_list_all";
-    public static final String CARS_LIST = "cars_list";
+    public static final String CAR_LIST = "car_list";
+
+    public static final String ORDER = "order";
+    public static final String ORDER_ID = "order_id";
 
     public static final String ORDER_LIST_TYPE = "order_list_type";
     public static final String ORDER_LIST_ALL = "order_list_all";
@@ -25,7 +28,8 @@ public class ParameterName {
     public static final String ORDER_LIST_ADMIN = "order_list_admin";
     public static final String ORDER_LIST_CAR = "order_list_car";
     public static final String ORDER_LIST_ID = "order_list_id";
-    public static final String ORDERS_LIST = "orders_list";
+    public static final String ORDER_LIST = "orders_list";
+
 
 
 }

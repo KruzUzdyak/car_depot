@@ -39,6 +39,6 @@ public class GoToMainPageCommand extends AbstractCommand implements Command {
 
     private void setCarList(HttpServletRequest request) throws ServiceException{
         CarService service = ServiceFactory.getInstance().getCarService();
-        request.setAttribute(ParameterName.CARS_LIST, service.getAllCars());
+        request.setAttribute(ParameterName.CAR_LIST, service.getAllCars());
     }
 }

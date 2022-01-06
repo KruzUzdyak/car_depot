@@ -22,7 +22,6 @@
     <fmt:message bundle="${loc}" key="locale.note" var="locale_note"/>
     <fmt:message bundle="${loc}" key="default.sign_out_button" var="sign_out_button"/>
 
-
     <title>${default_title}</title>
 </head>
 <body>
@@ -69,88 +68,85 @@
     </div>
 </nav>
 
+<br/><br/>
+
 <div class="container-fluid row">
-    <div class="col-1">
+    <div class="col-4">
 
     </div>
-    <div class="col-10">
+    <div class="col-4 ">
         <c:set var="errorMessage" scope="page" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
-        <c:set var="orderList" scope="page" value="${requestScope.get(ParameterName.ORDER_LIST)}"/>
-        <table class="table table-bordered table-striped text-center">
+        <c:set var="order" scope="page" value="${requestScope.get(ParameterName.ORDER)}"/>
+        <table class="table table-borderless table-striped text-center">
             <tr>
-                <th colspan="13">ORDERS_TABLE</th>
-            </tr>
-            <tr>
-                <th>order id</th>
-                <th>destination from</th>
-                <th>destination to</th>
-                <th>distance</th>
-                <th>date start</th>
-                <th>date end</th>
-                <th>load amount</th>
-                <th>load note</th>
-                <th>status</th>
-                <th>payment</th>
-                <th>client name</th>
-                <th>admin name</th>
-                <th>car model</th>
+                <th colspan="3">ORDER</th>
             </tr>
             <c:if test="${not empty errorMessage}">
                 <tr class="bg-warning">
-                    <td colspan="13">ORDER_LOAD_FAILED</td>
+                    <td colspan="3">ORDER_LOAD_FAILED</td>
                 </tr>
             </c:if>
             <c:if test="${empty errorMessage}">
-                <c:forEach var="order" items="${orderList}">
-                    <c:if test="${order.completed}">
-                        <tr class="table-secondary">
-                            <td><p>${order.id}</p></td>
-                            <td><p>${order.destFrom}</p></td>
-                            <td><p>${order.destTo}</p></td>
-                            <td><p>${order.distance}</p></td>
-                            <td><p>${order.dateStart}</p></td>
-                            <td><p>${order.dateEnd}</p></td>
-                            <td><p>${order.load}</p></td>
-                            <td><p>${order.loadNote}</p></td>
-                            <td>COMPLETED</td>
-                            <td><p>${order.payment}</p></td>
-                            <td><p>${order.client.name}</p></td>
-                            <td><p>${order.admin.name}</p></td>
-                            <td><p>${order.car.model.modelName}</p></td>
-                        </tr>
-                    </c:if>
-                    <c:if test="${not order.completed}">
-                        <tr class="table-info">
-                            <td><p>${order.id}</p></td>
-                            <td><p>${order.destFrom}</p></td>
-                            <td><p>${order.destTo}</p></td>
-                            <td><p>${order.distance}</p></td>
-                            <td><p>${order.dateStart}</p></td>
-                            <td><p>${order.dateEnd}</p></td>
-                            <td><p>${order.load}</p></td>
-                            <td><p>${order.loadNote}</p></td>
-                            <td>NOT COMPLETED</td>
-                            <td><p>${order.payment}</p></td>
-                            <td><p>${order.client.name}</p></td>
-                            <td><p>${order.admin.name}</p></td>
-                            <td><p>${order.car.model.modelName}</p></td>
-                        </tr>
-                    </c:if>
-                </c:forEach>
+                <tr>
+                    <th>order id</th>
+                    <td colspan="2">${order.id}</td>
+                </tr>
+                <tr>
+                    <th>destination from</th>
+                    <td colspan="2">${order.destFrom}</td>
+                </tr>
+                <tr>
+                    <th>destination to</th>
+                    <td colspan="2">${order.destTo}</td>
+                </tr>
+                <tr>
+                    <th>distance, km</th>
+                    <td colspan="2">${order.distance}</td>
+                </tr>
+                <tr>
+                    <th>date start</th>
+                    <td colspan="2">${order.dateStart}</td>
+                </tr>
+                <tr>
+                    <th>deadline</th>
+                    <td colspan="2">${order.dateEnd}</td>
+                </tr>
+                <tr>
+                    <th>load</th>
+                    <td colspan="2">${order.load}</td>
+                </tr>
+                <tr>
+                    <th>load note</th>
+                    <td colspan="2">${order.loadNote}</td>
+                </tr>
+                <tr>
+                    <th>completed</th>
+                    <td colspan="2">${order.completed}</td>
+                </tr>
+                <tr>
+                    <th>payment, $</th>
+                    <td colspan="2">${order.payment}</td>
+                </tr>
+                <tr>
+                    <th>client</th>
+                    <td colspan="2">${order.client.name}</td>
+                </tr>
+                <tr>
+                    <th>admin</th>
+                    <td colspan="2">${order.admin.name}</td>
+                </tr>
+                <tr>
+                    <th>car model</th>
+                    <td colspan="2">${order.car.model.modelName}</td>
+                </tr>
+                <tr>
+                    <th>car plate number</th>
+                    <td colspan="2">${order.car.plateNumber}</td>
+                </tr>
             </c:if>
         </table>
     </div>
 </div>
 
-<form action="Controller" method="get">
-    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_ORDER_INFO_PAGE}">
-    <input type="hidden" name="${ParameterName.ORDER_ID}" value="1">
-    <input type="submit" class="btn btn-outline-secondary" value="Info order 1">
-</form>
-<form action="Controller" method="get">
-    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_ORDER_INFO_PAGE}">
-    <input type="hidden" name="${ParameterName.ORDER_ID}" value="2">
-    <input type="submit" class="btn btn-outline-secondary" value="Info order 2">
-</form>
 </body>
 </html>
