@@ -4,6 +4,7 @@ import com.epam.volodko.controller.Command;
 import com.epam.volodko.controller.constant.Message;
 import com.epam.volodko.controller.constant.PagePath;
 import com.epam.volodko.controller.constant.ParameterName;
+import com.epam.volodko.entity.user.Role;
 import com.epam.volodko.service.ServiceFactory;
 import com.epam.volodko.service.UserService;
 import com.epam.volodko.service.exception.ServiceException;
@@ -14,6 +15,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class GoToUserCabinetPage implements Command {
@@ -38,8 +40,10 @@ public class GoToUserCabinetPage implements Command {
     }
 
     private void setUserInfo(HttpServletRequest request) throws ServiceException {
-        int userId = (int) request.getSession().getAttribute(ParameterName.USER_ID);
+        HttpSession session = request.getSession();
+        int userId = (int) session.getAttribute(ParameterName.USER_ID);
+        Role role = (Role) session.getAttribute(ParameterName.USER_ROLE);
         UserService service = ServiceFactory.getInstance().getUserService();
-        request.setAttribute(ParameterName.USER, service.getUser(userId));
+        request.setAttribute(ParameterName.USER, service.getUser(userId, role));
     }
 }

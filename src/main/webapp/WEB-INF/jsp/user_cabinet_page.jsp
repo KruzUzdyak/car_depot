@@ -52,11 +52,8 @@
                 <div class="col-8">
 
                 </div>
-                <div class="col-2 text-end">
-                    <form action="Controller" method="get">
-                        <input type="hidden" name="TO_USER_PAGE" value="TO_USER_PAGE">
-                        <input type="submit" class="btn btn-info" value="USER_CABINET">
-                    </form>
+                <div class="col-2">
+
                 </div>
                 <div class="col-2 text-center">
                     <form action="Controller" method="get">

@@ -1,10 +1,7 @@
 package com.epam.volodko.dao;
 
 import com.epam.volodko.dao.impl.*;
-import com.epam.volodko.entity.user.Admin;
-import com.epam.volodko.entity.user.Client;
-import com.epam.volodko.entity.user.Driver;
-import com.epam.volodko.entity.user.User;
+import com.epam.volodko.entity.user.*;
 
 public class DAOFactory {
 
@@ -72,4 +69,20 @@ public class DAOFactory {
     public RepairRecordDAO getRepairRecordDAO() {
         return repairRecordDAO;
     }
+
+    public UserDAO getUserDAO(Role role){
+        switch (role){
+            case ADMIN -> {
+                return adminDAO;
+            }
+            case CLIENT -> {
+                return clientDAO;
+            }
+            case DRIVER -> {
+                return driverDAO;
+            }
+        }
+        return userDAO;
+    }
 }
+
