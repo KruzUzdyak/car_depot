@@ -52,7 +52,7 @@
                     <label for="password">${password_note}</label>
                 </div>
                 <div class="col-7">
-                    <input type="password" id="password" required name="${ParameterName.USER_PASSWORD}" placeholder="${password_placeholder}">
+                    <input type="password" id="password" required name="${ParameterName.USER_PASS}" placeholder="${password_placeholder}">
                 </div>
             </div>
             <div class="text-center">

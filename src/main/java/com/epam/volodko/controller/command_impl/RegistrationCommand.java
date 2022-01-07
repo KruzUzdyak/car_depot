@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class RegistrationCommand extends AbstractCommand implements Command {
+public class RegistrationCommand implements Command {
 
     private static final String REGISTRATION_REDIRECT_COMMAND = String.format("%s?%s=%s&%s=%s",
             CommandName.CONTROLLER, CommandName.COMMAND, CommandName.GO_TO_MAIN_PAGE,
@@ -33,6 +33,7 @@ public class RegistrationCommand extends AbstractCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         saveRequest(request);
+
         try {
             if (validatePassword(request)){
                 registration(request, response);
@@ -51,7 +52,7 @@ public class RegistrationCommand extends AbstractCommand implements Command {
         User user = prepareUserForSave(request);
         if (userService.processRegistration(user)) {
             HttpSession session = request.getSession();
-            session.setAttribute(ParameterName.USER_LOGIN, user.getId());
+            session.setAttribute(ParameterName.USER_ID, user.getId());
             session.setAttribute(ParameterName.USER_ROLE, user.getRole());
             response.sendRedirect(REGISTRATION_REDIRECT_COMMAND);
         } else {
@@ -61,8 +62,8 @@ public class RegistrationCommand extends AbstractCommand implements Command {
     }
 
     private boolean validatePassword(HttpServletRequest request) throws ServiceException {
-        String password = request.getParameter(ParameterName.USER_PASSWORD);
-        String passwordRepeat = request.getParameter(ParameterName.USER_REPEAT_PASSWORD);
+        String password = request.getParameter(ParameterName.USER_PASS);
+        String passwordRepeat = request.getParameter(ParameterName.USER_REPEAT_PASS);
         return userService.processPasswordValidation(password, passwordRepeat);
     }
 
@@ -75,7 +76,7 @@ public class RegistrationCommand extends AbstractCommand implements Command {
 
     private User prepareUserForSave(HttpServletRequest request){
         String login = request.getParameter(ParameterName.USER_LOGIN);
-        String passwordHash = userService.encodePassword(request.getParameter(ParameterName.USER_PASSWORD));
+        String passwordHash = userService.encodePassword(request.getParameter(ParameterName.USER_PASS));
         String name = request.getParameter(ParameterName.USER_NAME).trim();
         String phone = request.getParameter(ParameterName.USER_PHONE).trim();
         Role role = Role.valueOf(request.getParameter(ParameterName.USER_ROLE).toUpperCase());

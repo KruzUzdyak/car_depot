@@ -14,7 +14,6 @@ public class PoolInitializingListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-
         try {
             ConnectionPool.init();
         } catch (ConnectionPoolException e) {

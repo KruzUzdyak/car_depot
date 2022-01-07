@@ -59,7 +59,7 @@
                     <label for="pass">${pass_note}</label>
                 </div>
                 <div class="col-5">
-                    <input type="password" id="pass" required name="${ParameterName.USER_PASSWORD}" placeholder="${pass_placeholder}">
+                    <input type="password" id="pass" required name="${ParameterName.USER_PASS}" placeholder="${pass_placeholder}">
                     <p class="help-footnote small"> ${pass_restrict_note} </p>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                     <label for="pass_repeat">${repeat_pass_note}</label>
                 </div>
                 <div class="col-5">
-                    <input type="password" id="pass_repeat"  required name="${ParameterName.USER_REPEAT_PASSWORD}" placeholder="${repeat_pass_placeholder}">
+                    <input type="password" id="pass_repeat" required name="${ParameterName.USER_REPEAT_PASS}" placeholder="${repeat_pass_placeholder}">
                 </div>
             </div>
             <br/>

@@ -16,21 +16,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class GoToMainPageCommand extends AbstractCommand implements Command {
+public class GoToMainPageCommand implements Command {
 
     private final Logger log = LogManager.getLogger(GoToMainPageCommand.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        validateRole(request, response);
+        checkUserLoggedIn(request, response);
         saveRequest(request);
 
         try {
             setCarList(request);
         } catch (ServiceException e) {
             log.error("Catching: ", e);
-            request.setAttribute(ParameterName.ERROR_MESSAGE, Message.CARS_LOADING_FAILED);
+            request.setAttribute(ParameterName.ERROR_MESSAGE, Message.CARS_LOAD_FAILED);
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.MAIN_PAGE);

@@ -17,7 +17,7 @@
 
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.locale" var="loc"/>
-    <fmt:message bundle="${loc}"  key="default.title" var="default_title"/>
+    <fmt:message bundle="${loc}" key="default.title" var="default_title"/>
     <fmt:message bundle="${loc}" key="locale.button.ru" var="locale_button_ru"/>
     <fmt:message bundle="${loc}" key="locale.button.en" var="locale_button_en"/>
     <fmt:message bundle="${loc}" key="locale.note" var="locale_note"/>
@@ -69,91 +69,59 @@
     </div>
 </nav>
 
-<br/><br/>
+<c:set var="user" value="${requestScope.get(ParameterName.USER)}"/>
+<c:set var="updateInfo" value="${requestScope.get(ParameterName.USER_UPDATE_INFO)}"/>
+<c:set var="updateLogin" value="${requestScope.get(ParameterName.USER_UPDATE_LOGIN)}"/>
+<c:set var="updatePass" value="${requestScope.get(ParameterName.USER_UPDATE_PASS)}"/>
+<c:set var="userRole" value="${requestScope.get(ParameterName.USER_ROLE)}"/>
 
-<c:set var="userRole" scope="page" value="${sessionScope.get(ParameterName.USER_ROLE)}"/>
+<br/><br/><br/>
+
 <div class="container-fluid row">
     <div class="col-4">
 
     </div>
-    <div class="col-4 ">
-        <c:set var="errorMessage" scope="page" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
-        <c:set var="order" scope="page" value="${requestScope.get(ParameterName.ORDER)}"/>
-        <table class="table table-borderless table-striped text-center">
-            <tr>
-                <th colspan="3">ORDER</th>
-            </tr>
-            <c:if test="${not empty errorMessage}">
-                <tr class="bg-warning">
-                    <td colspan="3">ORDER_LOAD_FAILED</td>
-                </tr>
-            </c:if>
-            <c:if test="${empty errorMessage}">
+    <div class="col-4">
+        <form action="Controller" method="post">
+            <table class="table table-borderless table-striped">
                 <tr>
-                    <th>order id</th>
-                    <td colspan="2">${order.id}</td>
+                    <th>Login: </th>
+                    <td colspan="3">${user.login}</td>
                 </tr>
                 <tr>
-                    <th>destination from</th>
-                    <td colspan="2">${order.destFrom}</td>
+                    <th>Name: </th>
+                    <td colspan="3">${user.name}</td>
                 </tr>
                 <tr>
-                    <th>destination to</th>
-                    <td colspan="2">${order.destTo}</td>
+                    <th>Phone: </th>
+                    <td colspan="3">${user.phone}</td>
                 </tr>
                 <tr>
-                    <th>distance, km</th>
-                    <td colspan="2">${order.distance}</td>
+                    <th>You are: </th>
+                    <td colspan="3">${user.role}</td>
                 </tr>
-                <tr>
-                    <th>date start</th>
-                    <td colspan="2">${order.dateStart}</td>
-                </tr>
-                <tr>
-                    <th>deadline</th>
-                    <td colspan="2">${order.dateEnd}</td>
-                </tr>
-                <tr>
-                    <th>load</th>
-                    <td colspan="2">${order.load}</td>
-                </tr>
-                <tr>
-                    <th>load note</th>
-                    <td colspan="2">${order.loadNote}</td>
-                </tr>
-                <tr>
-                    <th>completed</th>
-                    <td colspan="2">${order.completed}</td>
-                </tr>
-                <tr>
-                    <th>payment, $</th>
-                    <td colspan="2">${order.payment}</td>
-                </tr>
-                <tr>
-                    <th>client</th>
-                    <td colspan="2">${order.client.name}</td>
-                </tr>
-                <tr>
-                    <th>admin</th>
-                    <td colspan="2">${order.admin.name}</td>
-                </tr>
-                <tr>
-                    <th>car model</th>
-                    <td colspan="2">${order.car.model.modelName}</td>
-                </tr>
-                <tr>
-                    <th>car plate number</th>
-                    <td colspan="2">${order.car.plateNumber}</td>
-                </tr>
-            </c:if>
-        </table>
+                <c:if test="${user.role eq Role.ADMIN}">
+                    <tr>
+                        <th>Work since</th>
+                        <td colspan="3">${user.worksSince}</td>
+                    </tr>
+                    <tr>
+                        <th>Note</th>
+                        <td colspan="3">${user.note}</td>
+                    </tr>
+                </c:if>
+                <c:if test="${user.role eq Role.CLIENT}">
+                    <tr>
+                        <th>Company</th>
+                        <td colspan="3">${user.company}</td>
+                    </tr>
+                    <tr>
+                        <th>Note</th>
+                        <td colspan="3">${user.note}</td>
+                    </tr>
+                </c:if>
 
-        <br/><br/>
-
-        <form action="Controller" method="get">
-            <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_ALL_ORDERS_PAGE}">
-            <input type="hidden" name="${ParameterName.ORDER_LIST_TYPE}" value="${sessionScope.get(ParameterName.ORDER_LIST_TYPE)}">
-            <input type="submit" class="btn btn-secondary" value="Back to orders table">
+            </table>
         </form>
     </div>
 </div>

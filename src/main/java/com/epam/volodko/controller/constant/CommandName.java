@@ -1,6 +1,6 @@
 package com.epam.volodko.controller.constant;
 
-public class CommandName {
+public final class CommandName {
 
     public static final String CONTROLLER = "Controller";
     public static final String COMMAND = "command";
@@ -17,9 +17,12 @@ public class CommandName {
 
     public static final String GO_TO_MAIN_PAGE = "go_to_main_page";
 
+    public static final String GO_TO_USER_CABINET_PAGE = "go_to_user_cabinet_page";
+
     public static final String GO_TO_ALL_ORDERS_PAGE = "go_to_all_orders_page";
 
     public static final String GO_TO_ORDER_INFO_PAGE = "go_to_order_info_page";
+    public static final String UPDATE_ORDER = "update_order";
 
 
 

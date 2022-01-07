@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class LoginationCommand extends AbstractCommand implements Command {
+public class LoginationCommand implements Command {
 
 
     private static final String LOGINATION_REDIRECT_COMMAND = String.format("%s?%s=%s&%s=%s",
@@ -33,14 +33,15 @@ public class LoginationCommand extends AbstractCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         saveRequest(request);
+
         String login = request.getParameter(ParameterName.USER_LOGIN);
-        String password = request.getParameter(ParameterName.USER_PASSWORD);
+        String password = request.getParameter(ParameterName.USER_PASS);
         User user;
         try {
             user = userService.processLogination(login, password);
             if (user != null){
                 HttpSession session = request.getSession();
-                session.setAttribute(ParameterName.USER_LOGIN, user.getId());
+                session.setAttribute(ParameterName.USER_ID, user.getId());
                 session.setAttribute(ParameterName.USER_ROLE, user.getRole());
                 response.sendRedirect(LOGINATION_REDIRECT_COMMAND);
             } else {

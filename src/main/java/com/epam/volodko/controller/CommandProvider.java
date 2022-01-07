@@ -20,6 +20,7 @@ public final class CommandProvider {
         commands.put(CommandName.LOCALIZATION, new LocalizationCommand());
         commands.put(CommandName.GO_TO_ALL_ORDERS_PAGE, new GoToAllOrdersPageCommand());
         commands.put(CommandName.GO_TO_ORDER_INFO_PAGE, new GoToOrderInfoPageCommand());
+        commands.put(CommandName.GO_TO_USER_CABINET_PAGE, new GoToUserCabinetPage());
     }
 
     public Command getCommand(String commandName){

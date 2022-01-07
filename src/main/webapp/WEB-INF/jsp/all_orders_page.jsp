@@ -69,6 +69,8 @@
     </div>
 </nav>
 
+<br/><br/>
+
 <div class="container-fluid row">
     <div class="col-1">
 
@@ -78,9 +80,10 @@
         <c:set var="orderList" scope="page" value="${requestScope.get(ParameterName.ORDER_LIST)}"/>
         <table class="table table-bordered table-striped text-center">
             <tr>
-                <th colspan="13">ORDERS_TABLE</th>
+                <th colspan="14">ORDERS_TABLE</th>
             </tr>
             <tr>
+                <th></th>
                 <th>order id</th>
                 <th>destination from</th>
                 <th>destination to</th>
@@ -97,13 +100,20 @@
             </tr>
             <c:if test="${not empty errorMessage}">
                 <tr class="bg-warning">
-                    <td colspan="13">ORDER_LOAD_FAILED</td>
+                    <td colspan="14">ORDER_LOAD_FAILED</td>
                 </tr>
             </c:if>
             <c:if test="${empty errorMessage}">
                 <c:forEach var="order" items="${orderList}">
                     <c:if test="${order.completed}">
                         <tr class="table-secondary">
+                            <td>
+                                <form action="Controller" method="get">
+                                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_ORDER_INFO_PAGE}">
+                                    <input type="hidden" name="${ParameterName.ORDER_ID}" value="${order.id}">
+                                    <input type="submit" class="btn btn-outline-primary" value="VIEW">
+                                </form>
+                            </td>
                             <td><p>${order.id}</p></td>
                             <td><p>${order.destFrom}</p></td>
                             <td><p>${order.destTo}</p></td>
@@ -121,6 +131,13 @@
                     </c:if>
                     <c:if test="${not order.completed}">
                         <tr class="table-info">
+                            <td>
+                                <form action="Controller" method="get">
+                                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_ORDER_INFO_PAGE}">
+                                    <input type="hidden" name="${ParameterName.ORDER_ID}" value="${order.id}">
+                                    <input type="submit" class="btn btn-outline-primary" value="VIEW">
+                                </form>
+                            </td>
                             <td><p>${order.id}</p></td>
                             <td><p>${order.destFrom}</p></td>
                             <td><p>${order.destTo}</p></td>
@@ -142,15 +159,5 @@
     </div>
 </div>
 
-<form action="Controller" method="get">
-    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_ORDER_INFO_PAGE}">
-    <input type="hidden" name="${ParameterName.ORDER_ID}" value="1">
-    <input type="submit" class="btn btn-outline-secondary" value="Info order 1">
-</form>
-<form action="Controller" method="get">
-    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_ORDER_INFO_PAGE}">
-    <input type="hidden" name="${ParameterName.ORDER_ID}" value="2">
-    <input type="submit" class="btn btn-outline-secondary" value="Info order 2">
-</form>
 </body>
 </html>

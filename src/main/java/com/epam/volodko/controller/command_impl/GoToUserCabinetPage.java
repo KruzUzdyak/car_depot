@@ -4,8 +4,8 @@ import com.epam.volodko.controller.Command;
 import com.epam.volodko.controller.constant.Message;
 import com.epam.volodko.controller.constant.PagePath;
 import com.epam.volodko.controller.constant.ParameterName;
-import com.epam.volodko.service.OrderService;
 import com.epam.volodko.service.ServiceFactory;
+import com.epam.volodko.service.UserService;
 import com.epam.volodko.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,9 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class GoToOrderInfoPageCommand implements Command {
+public class GoToUserCabinetPage implements Command {
 
-    private final Logger log = LogManager.getLogger(GoToOrderInfoPageCommand.class);
+    private final Logger log = LogManager.getLogger(GoToUserCabinetPage.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
@@ -27,24 +27,19 @@ public class GoToOrderInfoPageCommand implements Command {
         saveRequest(request);
 
         try{
-            setOrderInfo(request);
+            setUserInfo(request);
         } catch (ServiceException e) {
             log.error("Catching: ", e);
-            request.setAttribute(ParameterName.ERROR_MESSAGE, Message.ORDER_LOAD_FAILED);
+            request.setAttribute(ParameterName.ERROR_MESSAGE, Message.USER_INFO_LOAD_FAILED);
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ORDER_INFO_PAGE);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_CABINET_PAGE);
         dispatcher.forward(request, response);
     }
 
-    private void setOrderInfo(HttpServletRequest request) throws ServiceException {
-        String orderId = request.getParameter(ParameterName.ORDER_ID);
-        int id = 0;
-        if (orderId != null){
-            id = Integer.parseInt(orderId);
-        }
-
-        OrderService orderService = ServiceFactory.getInstance().getOrderService();
-        request.setAttribute(ParameterName.ORDER, orderService.getOrderById(id));
+    private void setUserInfo(HttpServletRequest request) throws ServiceException {
+        int userId = (int) request.getSession().getAttribute(ParameterName.USER_ID);
+        UserService service = ServiceFactory.getInstance().getUserService();
+        request.setAttribute(ParameterName.USER, service.getUser(userId));
     }
 }

@@ -58,6 +58,11 @@ public class UserServiceImpl implements UserService {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
+    @Override
+    public User getUser(int id) throws ServiceException {
+        return null;
+    }
+
     private boolean verifyPassword(String password, String storedPasswordHash){
         return storedPasswordHash != null && BCrypt.checkpw(password, storedPasswordHash);
     }

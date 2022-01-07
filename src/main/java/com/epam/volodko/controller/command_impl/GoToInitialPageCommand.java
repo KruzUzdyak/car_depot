@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class GoToInitialPageCommand extends AbstractCommand implements Command {
+public class GoToInitialPageCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
