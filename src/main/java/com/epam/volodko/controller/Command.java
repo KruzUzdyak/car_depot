@@ -4,6 +4,9 @@ import com.epam.volodko.controller.constant.Message;
 import com.epam.volodko.controller.constant.PagePath;
 import com.epam.volodko.controller.constant.ParameterName;
 import com.epam.volodko.entity.user.Role;
+import com.epam.volodko.service.ServiceFactory;
+import com.epam.volodko.service.UserService;
+import com.epam.volodko.service.exception.ServiceException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,5 +33,13 @@ public interface Command {
             RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.INITIAL_PAGE);
             dispatcher.forward(request, response);
         }
+    }
+
+    default void setUserInfo(HttpServletRequest request) throws ServiceException {
+        HttpSession session = request.getSession();
+        int userId = (int) session.getAttribute(ParameterName.USER_ID);
+        Role role = (Role) session.getAttribute(ParameterName.USER_ROLE);
+        UserService service = ServiceFactory.getInstance().getUserService();
+        request.setAttribute(ParameterName.USER, service.getUser(userId, role));
     }
 }

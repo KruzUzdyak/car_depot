@@ -20,15 +20,15 @@ import java.util.List;
 public class AdminDAOImpl extends AbstractUserDAO<Admin> implements UserDAO<Admin>{
 
     private static final String FIND_ADMIN_BY_ID_QUERY = String.format(
-            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s ai ON u.%s = ai.%s WHERE u.%s = ?;",
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s LEFT JOIN %s ai ON u.%s = ai.%s WHERE u.%s = ?;",
             Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.ADMIN_INFO,
             Column.USERS_ID, Column.ADMIN_INFO_USER_ID, Column.USERS_ID);
     private static final String FIND_ADMIN_BY_LOGIN_QUERY = String.format(
-            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s ai ON u.%s = ai.%s WHERE u.%s = ?;",
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s LEFT JOIN %s ai ON u.%s = ai.%s WHERE u.%s = ?;",
             Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.ADMIN_INFO,
             Column.USERS_ID, Column.ADMIN_INFO_USER_ID, Column.USERS_LOGIN);
     private static final String FIND_ALL_ADMINS_QUERY = String.format(
-            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s ai ON u.%s = ai.%s WHERE r.%s = ?;",
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s LEFT JOIN %s ai ON u.%s = ai.%s WHERE r.%s = ?;",
             Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.ADMIN_INFO,
             Column.USERS_ID, Column.ADMIN_INFO_USER_ID, Column.ROLES_ID);
     private static final String SAVE_NEW_ADMIN_INFO_QUERY = String.format(
@@ -37,8 +37,6 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> implements UserDAO<Admi
     private static final String UPDATE_ADMIN_INFO_QUERY = String.format(
             "UPDATE %s SET %s = ?, %s = ? WHERE %s = ?;",
             Table.ADMIN_INFO, Column.ADMIN_INFO_WORKS_SINCE, Column.ADMIN_INFO_NOTE, Column.ADMIN_INFO_USER_ID);
-
-
 
     @Override
     public Admin findById(int id) throws DAOException {

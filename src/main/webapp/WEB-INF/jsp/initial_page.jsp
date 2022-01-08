@@ -51,6 +51,8 @@
     </div>
 </nav>
 
+<br/><br/>
+
 <div class="container">
     <div class="text-center">
         <form action="Controller" method="get">
@@ -63,5 +65,6 @@
         </form>
     </div>
 </div>
+
 </body>
 </html>

@@ -22,11 +22,12 @@ import java.io.IOException;
 public class LoginationCommand implements Command {
 
 
-    private static final String LOGINATION_REDIRECT_COMMAND = String.format("%s?%s=%s&%s=%s",
+    private static final String LOGINATION_REDIRECT_COMMAND = String.format(
+            "%s?%s=%s&%s=%s",
             CommandName.CONTROLLER, CommandName.COMMAND, CommandName.GO_TO_MAIN_PAGE,
             ParameterName.GREETING_MESSAGE, Message.LOGINATION_SUCCESSFUL);
 
-    private static final Logger log = LogManager.getLogger(LoginationCommand.class);
+    private final Logger log = LogManager.getLogger(LoginationCommand.class);
     private final UserService userService = ServiceFactory.getInstance().getUserService();
     
     @Override

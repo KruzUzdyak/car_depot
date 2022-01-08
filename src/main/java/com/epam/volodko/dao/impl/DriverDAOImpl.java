@@ -19,25 +19,23 @@ import java.util.List;
 public class DriverDAOImpl extends AbstractUserDAO<Driver> implements UserDAO<Driver> {
 
     private static final String FIND_DRIVER_BY_ID_QUERY = String.format(
-            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s AS dl ON u.%s = dl.%s JOIN " +
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s LEFT JOIN %s AS dl ON u.%s = dl.%s LEFT JOIN " +
                     "%s AS lt ON dl.%s = lt.%s WHERE u.%s = ?;",
             Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.DRIVER_LICENSES,
             Column.USERS_ID, Column.DRIVER_LICENSES_USER_ID, Table.LICENSE_TYPES, Column.DRIVER_LICENSES_LICENSE_ID,
             Column.LICENSE_ID, Column.USERS_ID);
     private static final String FIND_DRIVER_BY_LOGIN_QUERY = String.format(
-            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s AS dl ON u.%s = dl.%s JOIN " +
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s LEFT JOIN %s AS dl ON u.%s = dl.%s LEFT JOIN " +
                     "%s AS lt ON dl.%s = lt.%s WHERE u.%s = ?;",
             Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.DRIVER_LICENSES,
             Column.USERS_ID, Column.DRIVER_LICENSES_USER_ID, Table.LICENSE_TYPES, Column.DRIVER_LICENSES_LICENSE_ID,
             Column.LICENSE_ID, Column.USERS_LOGIN);
     private static final String FIND_ALL_DRIVERS_QUERY = String.format(
-            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s dl " +
-                    "ON u.%s = dl.%s JOIN %s lt ON dl.%s = lt.%s",
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s LEFT JOIN %s dl " +
+                    "ON u.%s = dl.%s LEFT JOIN %s lt ON dl.%s = lt.%s",
             Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.DRIVER_LICENSES,
             Column.USERS_ID, Column.DRIVER_LICENSES_USER_ID, Table.LICENSE_TYPES,
             Column.DRIVER_LICENSES_LICENSE_ID, Column.LICENSE_ID);
-
-    DriverLicenseDAOImpl licenseDAO = new DriverLicenseDAOImpl();
 
     @Override
     public Driver findById(int userId) throws DAOException {

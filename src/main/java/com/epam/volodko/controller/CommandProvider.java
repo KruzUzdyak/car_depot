@@ -21,6 +21,13 @@ public final class CommandProvider {
         commands.put(CommandName.GO_TO_ALL_ORDERS_PAGE, new GoToAllOrdersPageCommand());
         commands.put(CommandName.GO_TO_ORDER_INFO_PAGE, new GoToOrderInfoPageCommand());
         commands.put(CommandName.GO_TO_USER_CABINET_PAGE, new GoToUserCabinetPage());
+        commands.put(CommandName.UPDATE_LOGIN, new GoToUpdateLoginCommand());
+        commands.put(CommandName.UPDATE_PASS, new GoToUpdatePassCommand());
+        commands.put(CommandName.UPDATE_INFO, new GoToUpdateInfoCommand());
+        commands.put(CommandName.SAVE_LICENSE, new GoToLicenseSaveCommand());
+        commands.put(CommandName.DELETE_LICENSE, new GoToLicenseDeleteCommand());
+        commands.put(CommandName.DELETE_LICENSE_CONFIRM, new LicenseDeleteCommand());
+        commands.put(CommandName.SAVE_LICENSE_CONFIRM, new LicenseSaveCommand());
     }
 
     public Command getCommand(String commandName){

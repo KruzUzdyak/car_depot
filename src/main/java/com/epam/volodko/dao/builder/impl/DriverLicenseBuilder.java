@@ -12,9 +12,14 @@ import java.sql.SQLException;
 public class DriverLicenseBuilder {
 
     public DriverLicense build(ResultSet resultSet) throws SQLException {
-        DriverLicenseType type = BuilderFactory.getLicenseTypeBuilder().build(resultSet);
-        Date obtainingDate = new Date(resultSet.getLong(Column.DRIVER_LICENSES_OBTAINING_DATE));
-        String licenseNumber = resultSet.getString(Column.DRIVER_LICENSES_LICENSE_NUMBER);
-        return new DriverLicense(type, obtainingDate, licenseNumber);
+        DriverLicense license = new DriverLicense();
+        license.setLicenseType(BuilderFactory.getLicenseTypeBuilder().build(resultSet));
+        if (license.getLicenseType() != null){
+            license.setObtainingDate(new Date(resultSet.getLong(Column.DRIVER_LICENSES_OBTAINING_DATE)));
+        } else{
+            license.setObtainingDate(null);
+        }
+        license.setLicenseNumber(resultSet.getString(Column.DRIVER_LICENSES_LICENSE_NUMBER));
+        return license;
     }
 }

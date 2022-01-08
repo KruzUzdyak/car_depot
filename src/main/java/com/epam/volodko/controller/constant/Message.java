@@ -13,6 +13,8 @@ public final class Message {
     public static final String LOGINATION_FAILED = "logination_failed";
     public static final String LOGINATION_EXCEPTION = "logination_exception";
 
+    public static final String LICENSE_DELETE_SUCCESSFUL = "license_delete_successful";
+
     public static final String USER_INFO_LOAD_FAILED = "user_info_load_failed";
 
     public static final String CARS_LOAD_FAILED = "cars_load_failed";

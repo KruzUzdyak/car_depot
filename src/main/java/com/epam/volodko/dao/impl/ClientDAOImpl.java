@@ -17,15 +17,15 @@ import java.util.List;
 public class ClientDAOImpl extends AbstractUserDAO<Client> implements UserDAO<Client> {
 
     private static final String FIND_CLIENT_BY_ID_QUERY = String.format(
-            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s ci ON u.%s = ci.%s WHERE u.%s = ?;",
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s LEFT JOIN %s ci ON u.%s = ci.%s WHERE u.%s = ?;",
             Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.CLIENT_INFO,
             Column.USERS_ID, Column.CLIENT_INFO_USER_ID, Column.USERS_ID);
     private static final String FIND_CLIENT_BY_LOGIN_QUERY = String.format(
-            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s ci ON u.%s = ci.%s WHERE u.%s = ?;",
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s LEFT JOIN %s ci ON u.%s = ci.%s WHERE u.%s = ?;",
             Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.CLIENT_INFO,
             Column.USERS_ID, Column.CLIENT_INFO_USER_ID, Column.USERS_LOGIN);
     private static final String FIND_ALL_CLIENTS_QUERY = String.format(
-            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s JOIN %s ci ON u.%s = ci.%s WHERE r.%s = ?;",
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s LEFT JOIN %s ci ON u.%s = ci.%s WHERE r.%s = ?;",
             Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.CLIENT_INFO,
             Column.USERS_ID, Column.CLIENT_INFO_USER_ID, Column.ROLES_ID);
     private static final String SAVE_NEW_CLIENT_INFO_QUERY = String.format(

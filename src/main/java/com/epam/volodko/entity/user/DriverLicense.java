@@ -6,9 +6,13 @@ import java.util.Objects;
 
 public class DriverLicense implements Serializable {
 
-    private final DriverLicenseType licenseType;
-    private final Date obtainingDate;
-    private final String licenseNumber;
+    private DriverLicenseType licenseType;
+    private Date obtainingDate;
+    private String licenseNumber;
+
+    public DriverLicense(){
+
+    }
 
     public DriverLicense(DriverLicenseType licenseType,
                          Date obtainingDate, String licenseNumber) {
@@ -27,6 +31,18 @@ public class DriverLicense implements Serializable {
 
     public String getLicenseNumber() {
         return licenseNumber;
+    }
+
+    public void setLicenseType(DriverLicenseType licenseType) {
+        this.licenseType = licenseType;
+    }
+
+    public void setObtainingDate(Date obtainingDate) {
+        this.obtainingDate = obtainingDate;
+    }
+
+    public void setLicenseNumber(String licenseNumber) {
+        this.licenseNumber = licenseNumber;
     }
 
     @Override

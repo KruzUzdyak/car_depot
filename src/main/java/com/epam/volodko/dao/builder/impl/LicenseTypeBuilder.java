@@ -9,6 +9,10 @@ import java.sql.SQLException;
 public class LicenseTypeBuilder {
 
     public DriverLicenseType build(ResultSet resultSet) throws SQLException {
-        return DriverLicenseType.valueOf(resultSet.getString(Column.LICENSE_TYPE).toUpperCase());
+        String licenseType = resultSet.getString(Column.LICENSE_TYPE);
+        if (licenseType != null){
+            return DriverLicenseType.valueOf(licenseType.toUpperCase());
+        }
+        return null;
     }
 }
