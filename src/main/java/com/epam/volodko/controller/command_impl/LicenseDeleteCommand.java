@@ -42,24 +42,8 @@ public class LicenseDeleteCommand implements Command {
             }
         } catch (ServiceException e) {
             log.error("Catching: ", e);
-            forwardOnFailedDelete(request, response, "temp");
+            forwardToUserCabinet(request, response, Message.LICENSE_DELETE_FAILED, log);
         }
-    }
-
-    private void forwardOnFailedDelete(HttpServletRequest request, HttpServletResponse response, String message)
-            throws ServletException, IOException {
-
-        request.setAttribute(ParameterName.ERROR_MESSAGE, message);
-
-        try {
-            setUserInfo(request);
-        } catch (ServiceException e) {
-            log.error("Catching: ", e);
-            request.setAttribute(ParameterName.ERROR_MESSAGE, Message.USER_INFO_LOAD_FAILED);
-        }
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_CABINET_PAGE);
-        dispatcher.forward(request, response);
     }
 
 }

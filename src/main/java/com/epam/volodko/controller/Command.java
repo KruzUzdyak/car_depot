@@ -7,6 +7,7 @@ import com.epam.volodko.entity.user.Role;
 import com.epam.volodko.service.ServiceFactory;
 import com.epam.volodko.service.UserService;
 import com.epam.volodko.service.exception.ServiceException;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,5 +42,20 @@ public interface Command {
         Role role = (Role) session.getAttribute(ParameterName.USER_ROLE);
         UserService service = ServiceFactory.getInstance().getUserService();
         request.setAttribute(ParameterName.USER, service.getUser(userId, role));
+    }
+
+    default void forwardToUserCabinet(HttpServletRequest request, HttpServletResponse response, String message, Logger log)
+            throws ServletException, IOException {
+        request.setAttribute(ParameterName.ERROR_MESSAGE, message);
+
+        try {
+            setUserInfo(request);
+        } catch (ServiceException e) {
+            log.error("Catching: ", e);
+            request.setAttribute(ParameterName.ERROR_MESSAGE, Message.USER_INFO_LOAD_FAILED);
+        }
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_CABINET_PAGE);
+        dispatcher.forward(request, response);
     }
 }

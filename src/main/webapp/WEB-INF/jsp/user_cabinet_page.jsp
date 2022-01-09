@@ -105,7 +105,7 @@
                     <c:if test="${updateLogin}">
                         <th><label for="newLogin">Login: </label></th>
                         <td colspan="3">
-                            <input type="text" id="newLogin" name="${ParameterName.USER_LOGIN}" value="${user.login}">
+                            <input type="text" id="newLogin" required name="${ParameterName.USER_LOGIN}" value="${user.login}">
                         </td>
                     </c:if>
                 </tr>
@@ -156,7 +156,7 @@
                             <th><label for="newAdminNote">Note: </label></th>
                             <td colspan="3">
                                 <textarea cols="50" rows="5" id="newAdminNote" name="${ParameterName.ADMIN_NOTE}"
-                                          placeholder="500 symbols max" maxlength="500"></textarea>
+                                          placeholder="500 symbols max" maxlength="500">${user.note}</textarea>
                             </td>
                         </c:if>
 
@@ -171,8 +171,8 @@
                         <c:if test="${updateInfo}">
                             <th><label for="newCompany">Company: </label></th>
                             <td colspan="3">
-                                <textarea cols="50" rows="5" id="newCompany" name="${ParameterName.CLIENT_NOTE}"
-                                          placeholder="500 symbols max" maxlength="500"></textarea>
+                                <input type="text" id="newCompany" name="${ParameterName.CLIENT_COMPANY}" value="${user.company}">
+
                             </td>
                         </c:if>
                     </tr>
@@ -184,7 +184,8 @@
                         <c:if test="${updateInfo}">
                             <th><label for="newClientNote">Note: </label></th>
                             <td colspan="3">
-                                <input type="text" id="newClientNote" name="${ParameterName.CLIENT_NOTE}" value="${user.note}">
+                                <textarea cols="50" rows="5" id="newClientNote" name="${ParameterName.CLIENT_NOTE}"
+                                          placeholder="500 symbols max" maxlength="500">${user.note}</textarea>
                             </td>
                         </c:if>
                     </tr>
@@ -289,8 +290,7 @@
                         <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.SAVE_LICENSE_CONFIRM}">
                         <tr>
                             <td>
-                                <select name="${ParameterName.LICENSE_TYPE}">
-                                    <option disabled selected>License category</option>
+                                <select required name="${ParameterName.LICENSE_TYPE_ID}">
                                     <option value="${DriverLicenseType.AM.id}">${DriverLicenseType.AM}</option>
                                     <option value="${DriverLicenseType.A.id}">${DriverLicenseType.A}</option>
                                     <option value="${DriverLicenseType.A1.id}">${DriverLicenseType.A1}</option>
@@ -305,10 +305,10 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="date" name="${ParameterName.LICENSE_OBTAINING_DATE}" placeholder="OBTAINING DATE">
+                                <input type="date" required name="${ParameterName.LICENSE_OBTAINING_DATE}" placeholder="OBTAINING DATE">
                             </td>
                             <td>
-                                <input type="text" name="${ParameterName.LICENSE_NUMBER}" placeholder="LICENSE NUMBER">
+                                <input type="text" required name="${ParameterName.LICENSE_NUMBER}" placeholder="LICENSE NUMBER">
                             </td>
                         </tr>
                         <tr>
