@@ -32,8 +32,6 @@ public class RegistrationCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        saveRequest(request);
-
         try {
             if (validatePassword(request)){
                 registration(request, response);

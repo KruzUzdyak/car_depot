@@ -2,6 +2,10 @@ package com.epam.volodko.controller;
 
 import com.epam.volodko.controller.impl.*;
 import com.epam.volodko.controller.constant.CommandName;
+import com.epam.volodko.controller.impl.main_page.GoToMainPageCommand;
+import com.epam.volodko.controller.impl.orders_page.GoToAllOrdersPageCommand;
+import com.epam.volodko.controller.impl.orders_page.GoToOrderInfoPageCommand;
+import com.epam.volodko.controller.impl.user_cabinet.*;
 
 import java.util.HashMap;
 import java.util.Map;

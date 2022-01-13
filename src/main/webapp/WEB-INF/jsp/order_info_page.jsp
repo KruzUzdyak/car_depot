@@ -49,12 +49,18 @@
         </div>
         <div class="col-10">
             <div class="row">
-                <div class="col-8">
+                <div class="col-6">
 
                 </div>
-                <div class="col-2 text-end">
+                <div class="col-2 text-center">
                     <form action="Controller" method="get">
-                        <input type="hidden" name="TO_USER_PAGE" value="TO_USER_PAGE">
+                        <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_MAIN_PAGE}">
+                        <input type="submit" class="btn btn-info" value="MAIN_PAGE">
+                    </form>
+                </div>
+                <div class="col-2 text-center">
+                    <form action="Controller" method="get">
+                        <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_USER_CABINET_PAGE}">
                         <input type="submit" class="btn btn-info" value="USER_CABINET">
                     </form>
                 </div>

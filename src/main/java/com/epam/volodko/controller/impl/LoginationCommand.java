@@ -33,8 +33,6 @@ public class LoginationCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        saveRequest(request);
-
         String login = request.getParameter(ParameterName.USER_LOGIN);
         String password = request.getParameter(ParameterName.USER_PASS);
         User user;

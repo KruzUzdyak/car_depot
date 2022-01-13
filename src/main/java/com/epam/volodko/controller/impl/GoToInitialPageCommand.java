@@ -16,7 +16,6 @@ public class GoToInitialPageCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        saveRequest(request);
         HttpSession session = request.getSession();
         session.setAttribute(ParameterName.USER_LOGIN, null);
         session.setAttribute(ParameterName.USER_ROLE, null);

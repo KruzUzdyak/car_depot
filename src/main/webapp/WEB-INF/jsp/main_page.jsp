@@ -63,7 +63,7 @@
                 <div class="col-8">
 
                 </div>
-                <div class="col-2 text-end">
+                <div class="col-2 text-center">
                     <form action="Controller" method="get">
                         <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_USER_CABINET_PAGE}">
                         <input type="submit" class="btn btn-info" value="USER_CABINET">

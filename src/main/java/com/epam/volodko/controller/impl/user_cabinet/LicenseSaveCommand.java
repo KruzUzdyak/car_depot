@@ -1,4 +1,4 @@
-package com.epam.volodko.controller.impl;
+package com.epam.volodko.controller.impl.user_cabinet;
 
 import com.epam.volodko.controller.Command;
 import com.epam.volodko.controller.constant.CommandName;
@@ -33,8 +33,6 @@ public class LicenseSaveCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        saveRequest(request);
-
         try{
             processLicenseSaving(request, response);
         } catch (ParseException | ServiceException e) {

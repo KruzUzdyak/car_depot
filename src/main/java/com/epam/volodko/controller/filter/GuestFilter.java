@@ -20,6 +20,7 @@ public class GuestFilter implements Filter {
     {
         guestCommands.add(CommandName.GO_TO_LOGINATION);
         guestCommands.add(CommandName.GO_TO_REGISTRATION);
+        guestCommands.add(CommandName.GO_TO_INITIAL_PAGE);
         guestCommands.add(CommandName.LOGINATION);
         guestCommands.add(CommandName.REGISTRATION);
         guestCommands.add(CommandName.LOCALIZATION);
