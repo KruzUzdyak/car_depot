@@ -45,20 +45,15 @@ public class LoginationCommand implements Command {
                 response.sendRedirect(LOGINATION_REDIRECT_COMMAND);
             } else {
                 log.warn(String.format("Logination failed with user login - %s.", login));
-                forwardOnFailedLogination(request, response, Message.LOGINATION_FAILED);
+                forwardOnFail(request, response, PagePath.LOGINATION_PAGE, Message.LOGINATION_FAILED);
             }
         } catch (ServiceException e) {
             log.error("Catching:", e);
-            forwardOnFailedLogination(request, response, Message.LOGINATION_EXCEPTION);
+            forwardOnFail(request, response, PagePath.LOGINATION_PAGE, Message.LOGINATION_EXCEPTION);
         }
     }
 
-    private void forwardOnFailedLogination(HttpServletRequest request, HttpServletResponse response, String message)
-            throws ServletException, IOException {
-        request.setAttribute(ParameterName.ERROR_MESSAGE, message);
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.LOGINATION_PAGE);
-        dispatcher.forward(request, response);
-    }
+
 
 
 }

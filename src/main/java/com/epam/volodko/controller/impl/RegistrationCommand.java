@@ -37,11 +37,11 @@ public class RegistrationCommand implements Command {
                 registration(request, response);
             } else {
                 log.info("Registration failed - password not valid.");
-                forwardOnFailedRegistration(request, response, Message.PASSWORD_RESTRICTION_WARN);
+                forwardOnFail(request, response, PagePath.REGISTRATION_PAGE, Message.PASSWORD_RESTRICTION_WARN);
             }
         } catch (ServiceException e) {
             log.error("Catching:", e);
-            forwardOnFailedRegistration(request, response, Message.REGISTRATION_EXCEPTION);
+            forwardOnFail(request, response, PagePath.REGISTRATION_PAGE, Message.REGISTRATION_EXCEPTION);
         }
     }
 
@@ -55,7 +55,7 @@ public class RegistrationCommand implements Command {
             response.sendRedirect(REGISTRATION_REDIRECT_COMMAND);
         } else {
             log.info("Registration failed - wrong user data.");
-            forwardOnFailedRegistration(request, response, Message.REGISTRATION_FAILED);
+            forwardOnFail(request, response, PagePath.REGISTRATION_PAGE, Message.REGISTRATION_FAILED);
         }
     }
 
@@ -63,13 +63,6 @@ public class RegistrationCommand implements Command {
         String password = request.getParameter(ParameterName.USER_PASS);
         String passwordRepeat = request.getParameter(ParameterName.USER_REPEAT_PASS);
         return userService.processPasswordValidation(password, passwordRepeat);
-    }
-
-    private void forwardOnFailedRegistration(HttpServletRequest request, HttpServletResponse response, String message)
-            throws ServletException, IOException {
-        request.setAttribute(ParameterName.ERROR_MESSAGE, message);
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.REGISTRATION_PAGE);
-        dispatcher.forward(request, response);
     }
 
     private User prepareUserForSave(HttpServletRequest request){

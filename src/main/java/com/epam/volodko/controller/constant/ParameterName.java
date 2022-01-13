@@ -44,6 +44,6 @@ public final class ParameterName {
     public static final String ORDER_LIST_ADMIN = "order_list_admin";
     public static final String ORDER_LIST_CAR = "order_list_car";
     public static final String ORDER_LIST_ENTITY_ID = "order_list_entity_id";
-    public static final String ORDER_LIST = "orders_list";
+    public static final String ORDER_LIST = "order_list";
 
 }

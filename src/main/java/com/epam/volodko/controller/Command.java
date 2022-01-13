@@ -21,19 +21,6 @@ public interface Command {
 
     void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
-    default void saveRequest(HttpServletRequest request){
-        HttpSession session = request.getSession();
-        session.setAttribute(ParameterName.LAST_REQUEST, new HashMap<>(request.getParameterMap()));
-    }
-
-    default void setUserInfo(HttpServletRequest request) throws ServiceException {
-        HttpSession session = request.getSession();
-        int userId = (int) session.getAttribute(ParameterName.USER_ID);
-        Role role = (Role) session.getAttribute(ParameterName.USER_ROLE);
-        UserService service = ServiceFactory.getInstance().getUserService();
-        request.setAttribute(ParameterName.USER, service.getUser(userId, role));
-    }
-
     default void forwardToUserCabinet(HttpServletRequest request, HttpServletResponse response, String message, Logger log)
             throws ServletException, IOException {
         request.setAttribute(ParameterName.ERROR_MESSAGE, message);
@@ -46,6 +33,21 @@ public interface Command {
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_CABINET_PAGE);
+        dispatcher.forward(request, response);
+    }
+
+    default void setUserInfo(HttpServletRequest request) throws ServiceException {
+        HttpSession session = request.getSession();
+        int userId = (int) session.getAttribute(ParameterName.USER_ID);
+        Role role = (Role) session.getAttribute(ParameterName.USER_ROLE);
+        UserService service = ServiceFactory.getInstance().getUserService();
+        request.setAttribute(ParameterName.USER, service.getUser(userId, role));
+    }
+
+    default void forwardOnFail(HttpServletRequest request, HttpServletResponse response, String pagePath, String message)
+            throws ServletException, IOException {
+        request.setAttribute(ParameterName.ERROR_MESSAGE, message);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(pagePath);
         dispatcher.forward(request, response);
     }
 }

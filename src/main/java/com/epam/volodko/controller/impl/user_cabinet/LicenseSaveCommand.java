@@ -45,10 +45,12 @@ public class LicenseSaveCommand implements Command {
             throws ParseException, ServiceException, IOException, ServletException {
         int driverId = (int) request.getSession().getAttribute(ParameterName.USER_ID);
         int licenseTypeId = Integer.parseInt(request.getParameter(ParameterName.LICENSE_TYPE_ID));
+
         DriverLicenseType licenseType = LicenseTypeProvider.getLicenseType(licenseTypeId);
         Date obtainingDate = parseDateFromRequest(request);
         String licenseNumber = request.getParameter(ParameterName.LICENSE_NUMBER);
         DriverLicense license = new DriverLicense(licenseType, obtainingDate, licenseNumber);
+
         if (userService.saveNewDriverLicense(driverId, license)){
             response.sendRedirect(LICENSE_SAVE_REDIRECT_COMMAND);
         } else {
