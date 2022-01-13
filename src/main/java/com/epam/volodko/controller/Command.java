@@ -27,9 +27,9 @@ public interface Command {
         dispatcher.forward(request, response);
     }
 
-    default void forwardToUserCabinet(HttpServletRequest request, HttpServletResponse response, String message, Logger log)
+    default void forwardToUserCabinet(HttpServletRequest request, HttpServletResponse response, String errorMessage, Logger log)
             throws ServletException, IOException {
-        request.setAttribute(ParameterName.ERROR_MESSAGE, message);
+        request.setAttribute(ParameterName.ERROR_MESSAGE, errorMessage);
 
         try {
             setUserInfo(request);
@@ -37,9 +37,7 @@ public interface Command {
             log.error("Catching: ", e);
             request.setAttribute(ParameterName.ERROR_MESSAGE, Message.USER_INFO_LOAD_FAILED);
         }
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_CABINET_PAGE);
-        dispatcher.forward(request, response);
+        forward(request, response, PagePath.USER_CABINET_PAGE);
     }
 
     default void setUserInfo(HttpServletRequest request) throws ServiceException {
@@ -50,9 +48,9 @@ public interface Command {
         request.setAttribute(ParameterName.USER, service.getUser(userId, role));
     }
 
-    default void forwardOnFail(HttpServletRequest request, HttpServletResponse response, String pagePath, String message)
+    default void forwardOnFail(HttpServletRequest request, HttpServletResponse response, String pagePath, String errorMessage)
             throws ServletException, IOException {
-        request.setAttribute(ParameterName.ERROR_MESSAGE, message);
+        request.setAttribute(ParameterName.ERROR_MESSAGE, errorMessage);
         RequestDispatcher dispatcher = request.getRequestDispatcher(pagePath);
         dispatcher.forward(request, response);
     }

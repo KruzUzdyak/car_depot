@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateLogin(int id, String oldLogin, String newLogin) throws ServiceException {
+    public boolean updateLogin(int id, String newLogin) throws ServiceException {
         if (!validator.notEmptyString(newLogin)){
             return false;
         }

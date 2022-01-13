@@ -19,7 +19,7 @@ public interface UserService {
 
     boolean updateUser(User user) throws ServiceException;
 
-    boolean updateLogin(int id, String oldLogin, String newLogin) throws ServiceException;
+    boolean updateLogin(int id, String newLogin) throws ServiceException;
 
     boolean updatePassword(int userId, String newPassword, String newPasswordRepeat) throws ServiceException;
 

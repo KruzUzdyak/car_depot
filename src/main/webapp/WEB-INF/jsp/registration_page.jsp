@@ -68,7 +68,7 @@
                     <label for="pass_repeat">${repeat_pass_note}</label>
                 </div>
                 <div class="col-5">
-                    <input type="password" id="pass_repeat" required name="${ParameterName.USER_REPEAT_PASS}" placeholder="${repeat_pass_placeholder}">
+                    <input type="password" id="pass_repeat" required name="${ParameterName.USER_PASS_REPEAT}" placeholder="${repeat_pass_placeholder}">
                 </div>
             </div>
             <br/>

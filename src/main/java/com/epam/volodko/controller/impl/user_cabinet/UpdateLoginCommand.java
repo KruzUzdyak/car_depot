@@ -20,7 +20,7 @@ public class UpdateLoginCommand implements Command {
     private final static String UPDATE_LOGIN_REDIRECT_COMMAND = String.format(
             "%s?%s=%s&%s=%s",
             CommandName.CONTROLLER, CommandName.COMMAND, CommandName.GO_TO_USER_CABINET_PAGE,
-            ParameterName.MESSAGE, Message.UPDATE_INFO_SUCCESSFUL);
+            ParameterName.MESSAGE, Message.UPDATE_LOGIN_SUCCESSFUL);
 
     private final Logger log = LogManager.getLogger(UpdateLoginCommand.class);
 
@@ -30,18 +30,17 @@ public class UpdateLoginCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int userId = (int) request.getSession().getAttribute(ParameterName.USER_ID);
-        String currentLogin = (String) request.getSession().getAttribute(ParameterName.USER_LOGIN);
         String newLogin = request.getParameter(ParameterName.USER_LOGIN);
 
         try {
-            if (userService.updateLogin(userId, currentLogin, newLogin)){
+            if (userService.updateLogin(userId, newLogin)){
                 response.sendRedirect(UPDATE_LOGIN_REDIRECT_COMMAND);
             } else {
-                forwardToUserCabinet(request, response, Message.UPDATE_INFO_FAILED, log);
+                forwardToUserCabinet(request, response, Message.UPDATE_LOGIN_FAILED, log);
             }
         } catch (ServiceException e) {
             log.error("Catching: ", e);
-            forwardToUserCabinet(request, response, Message.UPDATE_INFO_FAILED, log);
+            forwardToUserCabinet(request, response, Message.UPDATE_LOGIN_FAILED, log);
         }
     }
 

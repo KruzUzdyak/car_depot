@@ -13,7 +13,7 @@ public final class ParameterName {
     public static final String USER_ID = "user_id";
     public static final String USER_LOGIN = "user_login";
     public static final String USER_PASS = "user_password";
-    public static final String USER_REPEAT_PASS = "user_repeat_pass";
+    public static final String USER_PASS_REPEAT = "user_pass_repeat";
     public static final String USER_NAME = "user_name";
     public static final String USER_PHONE = "user_phone";
     public static final String USER_ROLE = "user_role";

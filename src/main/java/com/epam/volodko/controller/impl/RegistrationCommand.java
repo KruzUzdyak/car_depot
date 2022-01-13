@@ -60,7 +60,7 @@ public class RegistrationCommand implements Command {
 
     private boolean validatePassword(HttpServletRequest request) throws ServiceException {
         String password = request.getParameter(ParameterName.USER_PASS);
-        String passwordRepeat = request.getParameter(ParameterName.USER_REPEAT_PASS);
+        String passwordRepeat = request.getParameter(ParameterName.USER_PASS_REPEAT);
         return userService.processPasswordValidation(password, passwordRepeat);
     }
 

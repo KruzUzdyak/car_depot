@@ -83,13 +83,27 @@
 <c:set var="message" value="${requestScope.get(ParameterName.MESSAGE)}"/>
 <c:set var="errorMessage" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
 
-<c:if test="${not empty errorMessage}">
+<br/>
+
+<%--<c:if test="${not empty errorMessage}">--%>
     <div class="text-center text-warning">
         <h3>
-            ${errorMessage}
+            <c:out value="${empty errorMessage}"/>
+            <c:out value="${errorMessage}"/>
         </h3>
     </div>
-</c:if>
+<%--</c:if>--%>
+
+<%--<c:if test="${not empty message}">  --%>
+    <div class="text-center text-info">
+        <h3>
+            <c:out value="${requestScope.get(ParameterName.MESSAGE)}"/>
+                ---<br/>
+            <c:out value="${empty message}"/>
+            <c:out value="${message}"/>
+        </h3>
+    </div>
+<%--</c:if>--%>
 
 <br/><br/><br/>
 
@@ -217,7 +231,7 @@
                     <tr>
                         <th><label for="repeatPass">Repeat password</label></th>
                         <td>
-                            <input type="password" id="repeatPass" required name="${ParameterName.USER_REPEAT_PASS}" placeholder="Repeat pass">
+                            <input type="password" id="repeatPass" required name="${ParameterName.USER_PASS_REPEAT}" placeholder="Repeat new pass">
                         </td>
                     </tr>
                     <tr>
