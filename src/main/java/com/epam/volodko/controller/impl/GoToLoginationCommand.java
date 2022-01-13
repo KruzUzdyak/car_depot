@@ -1,4 +1,4 @@
-package com.epam.volodko.controller.command_impl;
+package com.epam.volodko.controller.impl;
 
 import com.epam.volodko.controller.Command;
 import com.epam.volodko.controller.constant.PagePath;

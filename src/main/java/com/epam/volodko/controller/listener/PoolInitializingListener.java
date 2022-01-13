@@ -21,4 +21,14 @@ public class PoolInitializingListener implements ServletContextListener {
             // TODO: 06.01.2022 Action on failed initialize of ConnectionPool
         }
     }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+        try {
+            ConnectionPool.getInstance().dispose();
+        } catch (ConnectionPoolException e) {
+            log.error("Catching: ", e);
+            // TODO: 06.01.2022 Action on failed disposing of ConnectionPool
+        }
+    }
 }

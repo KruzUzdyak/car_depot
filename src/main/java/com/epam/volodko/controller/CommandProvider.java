@@ -1,6 +1,6 @@
 package com.epam.volodko.controller;
 
-import com.epam.volodko.controller.command_impl.*;
+import com.epam.volodko.controller.impl.*;
 import com.epam.volodko.controller.constant.CommandName;
 
 import java.util.HashMap;

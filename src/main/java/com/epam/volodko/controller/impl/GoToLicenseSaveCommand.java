@@ -1,6 +1,7 @@
-package com.epam.volodko.controller.command_impl;
+package com.epam.volodko.controller.impl;
 
 import com.epam.volodko.controller.Command;
+import com.epam.volodko.controller.constant.CommandName;
 import com.epam.volodko.controller.constant.Message;
 import com.epam.volodko.controller.constant.PagePath;
 import com.epam.volodko.controller.constant.ParameterName;
@@ -14,13 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class GoToUpdatePassCommand implements Command {
+public class GoToLicenseSaveCommand implements Command {
 
-    private final Logger log = LogManager.getLogger(GoToUpdatePassCommand.class);
+    private final Logger log = LogManager.getLogger(GoToLicenseSaveCommand.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        checkUserLoggedIn(request, response);
         saveRequest(request);
 
         try{
@@ -29,7 +29,7 @@ public class GoToUpdatePassCommand implements Command {
             log.error("Catching: ", e);
             request.setAttribute(ParameterName.ERROR_MESSAGE, Message.USER_INFO_LOAD_FAILED);
         }
-        request.setAttribute(ParameterName.USER_UPDATE_PASS, true);
+        request.setAttribute(CommandName.SAVE_LICENSE, true);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_CABINET_PAGE);
         dispatcher.forward(request, response);

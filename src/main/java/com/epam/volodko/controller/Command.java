@@ -26,16 +26,6 @@ public interface Command {
         session.setAttribute(ParameterName.LAST_REQUEST, new HashMap<>(request.getParameterMap()));
     }
 
-    default void checkUserLoggedIn(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        Role role = (Role) request.getSession().getAttribute(ParameterName.USER_ROLE);
-        if (role == null){
-            request.setAttribute(ParameterName.ERROR_MESSAGE, Message.NOT_LOGGED_ID);
-            RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.INITIAL_PAGE);
-            dispatcher.forward(request, response);
-        }
-    }
-
     default void setUserInfo(HttpServletRequest request) throws ServiceException {
         HttpSession session = request.getSession();
         int userId = (int) session.getAttribute(ParameterName.USER_ID);

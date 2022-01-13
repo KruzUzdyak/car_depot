@@ -1,10 +1,10 @@
-package com.epam.volodko.controller.command_impl;
+package com.epam.volodko.controller.impl;
 
 import com.epam.volodko.controller.Command;
 import com.epam.volodko.controller.constant.Message;
 import com.epam.volodko.controller.constant.PagePath;
 import com.epam.volodko.controller.constant.ParameterName;
-import com.epam.volodko.service.CarService;
+import com.epam.volodko.service.OrderService;
 import com.epam.volodko.service.ServiceFactory;
 import com.epam.volodko.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -16,29 +16,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class GoToMainPageCommand implements Command {
+public class GoToOrderInfoPageCommand implements Command {
 
-    private final Logger log = LogManager.getLogger(GoToMainPageCommand.class);
+    private final Logger log = LogManager.getLogger(GoToOrderInfoPageCommand.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        checkUserLoggedIn(request, response);
         saveRequest(request);
 
-        try {
-            setCarList(request);
+        try{
+            setOrderInfo(request);
         } catch (ServiceException e) {
             log.error("Catching: ", e);
-            request.setAttribute(ParameterName.ERROR_MESSAGE, Message.CARS_LOAD_FAILED);
+            request.setAttribute(ParameterName.ERROR_MESSAGE, Message.ORDER_LOAD_FAILED);
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.MAIN_PAGE);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ORDER_INFO_PAGE);
         dispatcher.forward(request, response);
     }
 
-    private void setCarList(HttpServletRequest request) throws ServiceException{
-        CarService service = ServiceFactory.getInstance().getCarService();
-        request.setAttribute(ParameterName.CAR_LIST, service.getAllCars());
+    private void setOrderInfo(HttpServletRequest request) throws ServiceException {
+        String orderId = request.getParameter(ParameterName.ORDER_ID);
+        int id = 0;
+        if (orderId != null){
+            id = Integer.parseInt(orderId);
+        }
+
+        OrderService orderService = ServiceFactory.getInstance().getOrderService();
+        request.setAttribute(ParameterName.ORDER, orderService.getOrderById(id));
     }
 }

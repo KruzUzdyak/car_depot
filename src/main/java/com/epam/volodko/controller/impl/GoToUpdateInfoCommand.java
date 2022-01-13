@@ -1,4 +1,4 @@
-package com.epam.volodko.controller.command_impl;
+package com.epam.volodko.controller.impl;
 
 import com.epam.volodko.controller.Command;
 import com.epam.volodko.controller.constant.Message;
@@ -14,14 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class GoToUpdateLoginCommand implements Command {
+public class GoToUpdateInfoCommand implements Command {
 
-    private final Logger log = LogManager.getLogger(GoToUpdateLoginCommand.class);
+    private final Logger log = LogManager.getLogger(GoToUpdateInfoCommand.class);
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        checkUserLoggedIn(request, response);
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         saveRequest(request);
 
         try{
@@ -31,7 +29,7 @@ public class GoToUpdateLoginCommand implements Command {
             request.setAttribute(ParameterName.ERROR_MESSAGE, Message.USER_INFO_LOAD_FAILED);
         }
 
-        request.setAttribute(ParameterName.USER_UPDATE_LOGIN, true);
+        request.setAttribute(ParameterName.USER_UPDATE_INFO, true);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_CABINET_PAGE);
         dispatcher.forward(request, response);
