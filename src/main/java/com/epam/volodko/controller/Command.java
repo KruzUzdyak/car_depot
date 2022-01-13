@@ -21,6 +21,12 @@ public interface Command {
 
     void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
+    default void forward(HttpServletRequest request, HttpServletResponse response, String pagePath)
+            throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher(pagePath);
+        dispatcher.forward(request, response);
+    }
+
     default void forwardToUserCabinet(HttpServletRequest request, HttpServletResponse response, String message, Logger log)
             throws ServletException, IOException {
         request.setAttribute(ParameterName.ERROR_MESSAGE, message);

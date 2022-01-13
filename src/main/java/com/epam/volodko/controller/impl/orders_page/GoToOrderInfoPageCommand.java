@@ -30,8 +30,7 @@ public class GoToOrderInfoPageCommand implements Command {
             request.setAttribute(ParameterName.ERROR_MESSAGE, Message.ORDER_LOAD_FAILED);
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ORDER_INFO_PAGE);
-        dispatcher.forward(request, response);
+        forward(request, response, PagePath.ORDER_INFO_PAGE);
     }
 
     private void setOrderInfo(HttpServletRequest request) throws ServiceException {

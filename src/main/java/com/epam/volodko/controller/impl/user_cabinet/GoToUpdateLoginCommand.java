@@ -30,7 +30,6 @@ public class GoToUpdateLoginCommand implements Command {
 
         request.setAttribute(ParameterName.USER_UPDATE_LOGIN, true);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_CABINET_PAGE);
-        dispatcher.forward(request, response);
+        forward(request, response, PagePath.USER_CABINET_PAGE);
     }
 }

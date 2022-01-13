@@ -190,7 +190,8 @@
         </div>
         <div class="col-2 text-center">
             <form action="Controller" method="get">
-                <input type="hidden" name="stub" value="stub">
+                <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_ALL_ORDERS_PAGE}">
+                <input type="hidden" name="${ParameterName.ORDER_LIST_TYPE}" value="${ParameterName.ORDER_LIST_CAR}">
                 <input type="submit" class="btn btn-info" value="ALL_ORDERS">
             </form>
         </div>

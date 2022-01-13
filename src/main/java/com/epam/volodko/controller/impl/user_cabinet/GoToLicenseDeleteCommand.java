@@ -29,7 +29,6 @@ public class GoToLicenseDeleteCommand implements Command {
         }
         request.setAttribute(CommandName.DELETE_LICENSE, true);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_CABINET_PAGE);
-        dispatcher.forward(request, response);
+        forward(request, response, PagePath.USER_CABINET_PAGE);
     }
 }

@@ -30,8 +30,7 @@ public class GoToMainPageCommand implements Command {
             request.setAttribute(ParameterName.ERROR_MESSAGE, Message.CARS_LOAD_FAILED);
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.MAIN_PAGE);
-        dispatcher.forward(request, response);
+        forward(request, response, PagePath.MAIN_PAGE);
     }
 
     private void setCarList(HttpServletRequest request) throws ServiceException{

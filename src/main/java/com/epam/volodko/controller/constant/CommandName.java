@@ -23,7 +23,7 @@ public final class CommandName {
     public static final String UPDATE_LOGIN = "update_login";
     public static final String UPDATE_LOGIN_CONFIRM = "update_login_confirm";
     public static final String UPDATE_INFO = "update_info";
-    public static final String UPDATE_INFO_CONFIRM = "update_info";
+    public static final String UPDATE_INFO_CONFIRM = "update_info_confirm";
     public static final String SAVE_LICENSE = "save_license";
     public static final String SAVE_LICENSE_CONFIRM = "save_license_confirm";
     public static final String DELETE_LICENSE = "delete_license";

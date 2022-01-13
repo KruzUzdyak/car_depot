@@ -29,7 +29,6 @@ public class GoToLicenseSaveCommand implements Command {
         }
         request.setAttribute(CommandName.SAVE_LICENSE, true);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_CABINET_PAGE);
-        dispatcher.forward(request, response);
+        forward(request, response, PagePath.USER_CABINET_PAGE);
     }
 }

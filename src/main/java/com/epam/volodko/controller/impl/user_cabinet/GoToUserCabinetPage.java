@@ -28,7 +28,6 @@ public class GoToUserCabinetPage implements Command {
             request.setAttribute(ParameterName.ERROR_MESSAGE, Message.USER_INFO_LOAD_FAILED);
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_CABINET_PAGE);
-        dispatcher.forward(request, response);
+        forward(request, response, PagePath.USER_CABINET_PAGE);
     }
 }

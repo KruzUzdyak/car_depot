@@ -30,7 +30,6 @@ public class GoToUpdateInfoCommand implements Command {
 
         request.setAttribute(ParameterName.USER_UPDATE_INFO, true);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_CABINET_PAGE);
-        dispatcher.forward(request, response);
+        forward(request, response, PagePath.USER_CABINET_PAGE);
     }
 }

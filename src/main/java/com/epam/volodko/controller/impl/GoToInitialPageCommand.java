@@ -19,7 +19,7 @@ public class GoToInitialPageCommand implements Command {
         HttpSession session = request.getSession();
         session.setAttribute(ParameterName.USER_LOGIN, null);
         session.setAttribute(ParameterName.USER_ROLE, null);
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.INITIAL_PAGE);
-        dispatcher.forward(request, response);
+
+        forward(request, response, PagePath.INITIAL_PAGE);
     }
 }

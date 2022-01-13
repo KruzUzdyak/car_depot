@@ -28,7 +28,6 @@ public class GoToUpdatePassCommand implements Command {
         }
         request.setAttribute(ParameterName.USER_UPDATE_PASS, true);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.USER_CABINET_PAGE);
-        dispatcher.forward(request, response);
+        forward(request, response, PagePath.USER_CABINET_PAGE);
     }
 }

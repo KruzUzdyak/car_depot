@@ -33,8 +33,7 @@ public class GoToAllOrdersPageCommand implements Command {
 
         saveLastOrderListType(request);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(PagePath.ALL_ORDERS_PAGE);
-        dispatcher.forward(request, response);
+        forward(request, response, PagePath.ALL_ORDERS_PAGE);
     }
 
     private void setOrderList(HttpServletRequest request) throws ServiceException {

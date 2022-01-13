@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+        saveNewUserInfo(user);
         return saveResponse == 1;
     }
 
@@ -103,13 +104,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateLogin(User user) throws ServiceException {
-        if (!validator.notEmptyString(user.getLogin())){
+    public boolean updateLogin(int id, String oldLogin, String newLogin) throws ServiceException {
+        if (!validator.notEmptyString(newLogin)){
             return false;
         }
         int rowsAffected;
         try {
-            rowsAffected = userDAO.updateLogin(user.getId(), user.getLogin());
+            rowsAffected = userDAO.updateLogin(id, newLogin);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -141,13 +142,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean saveNewUserInfo(User user) throws ServiceException {
-        int rowsAffected;
+        int rowsAffected = 0;
         try{
-            rowsAffected = daoFactory.getUserDAO(user.getRole()).saveInfo(user);
+            if(checkNotDriver(user)) {
+                rowsAffected = daoFactory.getUserDAO(user.getRole()).saveInfo(user);
+            }
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
         return rowsAffected > 0;
+    }
+
+    private boolean checkNotDriver(User user){
+        return user.getRole() != null && user.getRole() != Role.DRIVER;
     }
 
     private boolean verifyPassword(String password, String storedPasswordHash){

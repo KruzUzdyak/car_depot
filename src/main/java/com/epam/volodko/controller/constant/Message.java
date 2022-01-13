@@ -18,9 +18,10 @@ public final class Message {
     public static final String LICENSE_SAVE_FAILED = "license_save_failed";
 
     public static final String USER_INFO_LOAD_FAILED = "user_info_load_failed";
+    public static final String UPDATE_INFO_FAILED = "update_info_failed";
+    public static final String UPDATE_INFO_SUCCESSFUL = "update_info_success";
 
     public static final String CARS_LOAD_FAILED = "cars_load_failed";
 
     public static final String ORDER_LOAD_FAILED = "orders_load_failed";
-
 }
