@@ -27,7 +27,7 @@ public interface UserDAO<T extends User> {
 
     int updatePassword(int userId, String newPassword) throws DAOException;
 
-    int saveInfo(T user) throws DAOException;
+    int saveInfo(int userId) throws DAOException;
 
     int updateInfo(T user) throws DAOException;
 

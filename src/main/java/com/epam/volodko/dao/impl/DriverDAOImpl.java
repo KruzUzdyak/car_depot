@@ -103,4 +103,9 @@ public class DriverDAOImpl extends AbstractUserDAO<Driver> implements UserDAO<Dr
         }
         return drivers;
     }
+
+    @Override
+    public int saveInfo(int userId) throws DAOException {
+        return 0;
+    }
 }

@@ -10,6 +10,7 @@ import com.epam.volodko.entity.user.LicenseTypeProvider;
 import com.epam.volodko.service.ServiceFactory;
 import com.epam.volodko.service.UserService;
 import com.epam.volodko.service.exception.ServiceException;
+import com.epam.volodko.service.util.DateFormatter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -47,7 +48,7 @@ public class LicenseSaveCommand implements Command {
         int licenseTypeId = Integer.parseInt(request.getParameter(ParameterName.LICENSE_TYPE_ID));
 
         DriverLicenseType licenseType = LicenseTypeProvider.getLicenseType(licenseTypeId);
-        Date obtainingDate = parseDateFromRequest(request);
+        Date obtainingDate = DateFormatter.format(request.getParameter(ParameterName.LICENSE_OBTAINING_DATE));
         String licenseNumber = request.getParameter(ParameterName.LICENSE_NUMBER);
         DriverLicense license = new DriverLicense(licenseType, obtainingDate, licenseNumber);
 
@@ -56,10 +57,5 @@ public class LicenseSaveCommand implements Command {
         } else {
             forwardToUserCabinet(request, response, Message.LICENSE_SAVE_FAILED, log);
         }
-    }
-
-    private Date parseDateFromRequest(HttpServletRequest request) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        return format.parse(request.getParameter(ParameterName.LICENSE_OBTAINING_DATE));
     }
 }

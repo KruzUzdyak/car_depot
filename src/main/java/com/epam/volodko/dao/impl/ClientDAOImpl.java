@@ -29,8 +29,8 @@ public class ClientDAOImpl extends AbstractUserDAO<Client> implements UserDAO<Cl
             Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.CLIENT_INFO,
             Column.USERS_ID, Column.CLIENT_INFO_USER_ID, Column.ROLES_ID);
     private static final String SAVE_NEW_CLIENT_INFO_QUERY = String.format(
-            "INSERT INTO %s (%s, %s, %s) VALUES (?, ?, ?);",
-            Table.CLIENT_INFO, Column.CLIENT_INFO_USER_ID, Column.CLIENT_INFO_COMPANY, Column.CLIENT_INFO_NOTE);
+            "INSERT INTO %s (%s) VALUES (?);",
+            Table.CLIENT_INFO, Column.CLIENT_INFO_USER_ID);
     private static final String UPDATE_CLIENT_INFO_QUERY = String.format(
             "UPDATE %s SET %s = ?, %s = ? WHERE %s = ?;",
             Table.CLIENT_INFO, Column.CLIENT_INFO_COMPANY, Column.CLIENT_INFO_NOTE, Column.CLIENT_INFO_USER_ID);
@@ -102,26 +102,22 @@ public class ClientDAOImpl extends AbstractUserDAO<Client> implements UserDAO<Cl
     }
 
     @Override
-    public int saveInfo(Client client) throws DAOException {
-        return processUpdateInfo(client, SAVE_NEW_CLIENT_INFO_QUERY);
+    public int saveInfo(int userId) throws DAOException {
+        return saveInfo(userId, SAVE_NEW_CLIENT_INFO_QUERY);
     }
 
 
     @Override
     public int updateInfo(Client client) throws DAOException {
-        return processUpdateInfo(client, UPDATE_CLIENT_INFO_QUERY);
-    }
-
-    private int processUpdateInfo(Client client, String query) throws DAOException {
-        int rowsAffected = 0;
+        int rowsAffected;
         Connection connection = null;
         PreparedStatement statement = null;
         try{
             connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareStatement(query);
-            statement.setInt(1, client.getId());
-            statement.setString(2, client.getCompany());
-            statement.setString(3, client.getNote());
+            statement = connection.prepareStatement(UPDATE_CLIENT_INFO_QUERY);
+            statement.setString(1, client.getCompany());
+            statement.setString(2, client.getNote());
+            statement.setInt(3, client.getId());
             rowsAffected = statement.executeUpdate();
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException(e);
@@ -130,5 +126,4 @@ public class ClientDAOImpl extends AbstractUserDAO<Client> implements UserDAO<Cl
         }
         return rowsAffected;
     }
-
 }

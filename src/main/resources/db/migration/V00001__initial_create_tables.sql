@@ -238,7 +238,7 @@ DROP TABLE IF EXISTS `car_depot`.`admin_info` ;
 
 CREATE TABLE IF NOT EXISTS `car_depot`.`admin_info` (
     `user_id` INT NOT NULL,
-    `works_since` BIGINT NOT NULL,
+    `works_since` BIGINT NULL,
      `note` TEXT NULL,
      PRIMARY KEY (`user_id`),
      UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,

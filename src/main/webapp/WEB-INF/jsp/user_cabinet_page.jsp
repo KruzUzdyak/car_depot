@@ -80,30 +80,26 @@
 <c:set var="saveLicense" value="${requestScope.get(CommandName.SAVE_LICENSE)}"/>
 <c:set var="deleteLicense" value="${requestScope.get(CommandName.DELETE_LICENSE)}"/>
 <c:set var="userRole" value="${requestScope.get(ParameterName.USER_ROLE)}"/>
-<c:set var="message" value="${requestScope.get(ParameterName.MESSAGE)}"/>
+<c:set var="message" value="${param.get(ParameterName.MESSAGE)}"/>
 <c:set var="errorMessage" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
 
 <br/>
 
-<%--<c:if test="${not empty errorMessage}">--%>
+<c:if test="${not empty errorMessage}">
     <div class="text-center text-warning">
         <h3>
-            <c:out value="${empty errorMessage}"/>
             <c:out value="${errorMessage}"/>
         </h3>
     </div>
-<%--</c:if>--%>
+</c:if>
 
-<%--<c:if test="${not empty message}">  --%>
+<c:if test="${not empty message}">
     <div class="text-center text-info">
         <h3>
-            <c:out value="${requestScope.get(ParameterName.MESSAGE)}"/>
-                ---<br/>
-            <c:out value="${empty message}"/>
             <c:out value="${message}"/>
         </h3>
     </div>
-<%--</c:if>--%>
+</c:if>
 
 <br/><br/><br/>
 

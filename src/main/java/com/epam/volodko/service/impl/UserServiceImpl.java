@@ -145,7 +145,7 @@ public class UserServiceImpl implements UserService {
         int rowsAffected = 0;
         try{
             if(checkNotDriver(user)) {
-                rowsAffected = daoFactory.getUserDAO(user.getRole()).saveInfo(user);
+                rowsAffected = daoFactory.getUserDAO(user.getRole()).saveInfo(user.getId());
             }
         } catch (DAOException e) {
             throw new ServiceException(e);

@@ -97,12 +97,8 @@ public class UserDAOImpl extends AbstractUserDAO<User> implements UserDAO<User> 
     }
 
     @Override
-    public int saveInfo(User user) throws DAOException {
-        throw new UnsupportedOperationException("Use concrete classes like AdminDAO, ClientDAO, DriverDAO for this operation");
+    public int saveInfo(int userId) throws DAOException {
+        return 0;
     }
 
-    @Override
-    public int updateInfo(User user) throws DAOException {
-        throw new UnsupportedOperationException("Use concrete classes like AdminDAO, ClientDAO, DriverDAO for this operation");
-    }
 }

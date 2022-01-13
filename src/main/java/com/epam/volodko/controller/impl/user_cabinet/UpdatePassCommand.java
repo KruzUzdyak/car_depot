@@ -23,7 +23,6 @@ public class UpdatePassCommand implements Command {
             ParameterName.MESSAGE, Message.UPDATE_PASS_SUCCESSFUL);
 
     private final Logger log = LogManager.getLogger(UpdatePassCommand.class);
-
     private final UserService userService = ServiceFactory.getInstance().getUserService();
 
     @Override

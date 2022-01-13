@@ -127,11 +127,24 @@ public abstract class AbstractUserDAO<T extends User> extends AbstractDAO{
         return rowsAffected;
     }
 
-    public int saveInfo(T user) throws DAOException {
-        throw new UnsupportedOperationException("Use AdminDAO or ClientDAO for this operation.");
+    int saveInfo(int userId, String query) throws DAOException {
+        int rowsAffected;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
+            rowsAffected = statement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement);
+        }
+        return rowsAffected;
     }
 
     public int updateInfo(T user) throws DAOException {
-        throw new UnsupportedOperationException("Use AdminDAO or ClientDAO for this operation.");
+        return 0;
     }
 }

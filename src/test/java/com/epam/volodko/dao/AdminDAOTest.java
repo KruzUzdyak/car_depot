@@ -46,26 +46,6 @@ public class AdminDAOTest {
         }
     }
 
-    @Test
-    public void testSaveAdminInfo() throws DAOException{
-        Admin admin = new Admin();
-        admin.setLogin("adminTestLogin1231231");
-        admin.setPassword("pass");
-        admin.setName("name");
-        admin.setPhone("test");
-        adminDAO.saveNew(admin);
-        admin.setPassword(null);
-
-        admin.setWorksSince(new Date(new java.util.Date().getTime()));
-        admin.setNote("test note");
-        int rowsAffected = adminDAO.saveInfo(admin);
-        int expectedAffect = 1;
-        Admin actualAdmin = adminDAO.findById(admin.getId());
-
-        assertEquals(admin, actualAdmin);
-        assertEquals(expectedAffect, rowsAffected);
-    }
-
 
 
 }

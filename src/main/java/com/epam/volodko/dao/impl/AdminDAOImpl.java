@@ -32,8 +32,8 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> implements UserDAO<Admi
             Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.ADMIN_INFO,
             Column.USERS_ID, Column.ADMIN_INFO_USER_ID, Column.ROLES_ID);
     private static final String SAVE_NEW_ADMIN_INFO_QUERY = String.format(
-            "INSERT INTO %s (%s, %s, %s) VALUES (?, ?, ?);",
-            Table.ADMIN_INFO, Column.ADMIN_INFO_USER_ID, Column.ADMIN_INFO_WORKS_SINCE, Column.ADMIN_INFO_NOTE);
+            "INSERT INTO %s (%s) VALUES (?);",
+            Table.ADMIN_INFO, Column.ADMIN_INFO_USER_ID);
     private static final String UPDATE_ADMIN_INFO_QUERY = String.format(
             "UPDATE %s SET %s = ?, %s = ? WHERE %s = ?;",
             Table.ADMIN_INFO, Column.ADMIN_INFO_WORKS_SINCE, Column.ADMIN_INFO_NOTE, Column.ADMIN_INFO_USER_ID);
@@ -105,25 +105,21 @@ public class AdminDAOImpl extends AbstractUserDAO<Admin> implements UserDAO<Admi
     }
 
     @Override
-    public int saveInfo(Admin admin) throws DAOException {
-        return processUpdateInfo(admin, SAVE_NEW_ADMIN_INFO_QUERY);
+    public int saveInfo(int userId) throws DAOException {
+        return saveInfo(userId, SAVE_NEW_ADMIN_INFO_QUERY);
     }
 
     @Override
     public int updateInfo(Admin admin) throws DAOException {
-        return processUpdateInfo(admin, UPDATE_ADMIN_INFO_QUERY);
-    }
-
-    private int processUpdateInfo(Admin admin, String query) throws DAOException {
-        int rowsAffected = 0;
+        int rowsAffected;
         Connection connection = null;
         PreparedStatement statement = null;
         try{
             connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareStatement(query);
-            statement.setInt(1,  admin.getId());
-            statement.setLong(2,  admin.getWorksSince().getTime());
-            statement.setString(3, admin.getNote());
+            statement = connection.prepareStatement(UPDATE_ADMIN_INFO_QUERY);
+            statement.setLong(1,  admin.getWorksSince().getTime());
+            statement.setString(2, admin.getNote());
+            statement.setInt(3,  admin.getId());
             rowsAffected = statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);

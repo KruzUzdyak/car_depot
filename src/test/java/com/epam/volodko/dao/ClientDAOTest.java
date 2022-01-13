@@ -47,25 +47,6 @@ public class ClientDAOTest {
         }
     }
 
-    @Test
-    public void testSaveInfo() throws DAOException{
-        Client client = new Client();
-        client.setLogin("clientTestLogin0912340");
-        client.setPassword("asdasd");
-        client.setName("client name");
-        client.setPhone("+12412341");
-        clientDAO.saveNew(client);
-        client.setPassword(null);
-
-        client.setCompany("Company");
-        client.setNote("client note");
-        int rowsAffected = clientDAO.saveInfo(client);
-        int expectedAffect = 1;
-        Client actualClient = clientDAO.findById(client.getId());
-
-        assertEquals(client, actualClient);
-        assertEquals(expectedAffect, rowsAffected);
-    }
 
 
 }
