@@ -41,13 +41,13 @@ public class OrderServiceImpl implements OrderService {
         return order;
     }
 
-    private List<Order> processOrderListRequest(String orderListType, int id) throws DAOException {
+    private List<Order> processOrderListRequest(String orderListType, int userId) throws DAOException {
         List<Order> orders = new ArrayList<>();
         switch (orderListType) {
             case ParameterName.ORDER_LIST_ALL -> orders = orderDAO.findAll();
-            case ParameterName.ORDER_LIST_ADMIN -> orders = orderDAO.findByAdminId(id);
-            case ParameterName.ORDER_LIST_CLIENT -> orders = orderDAO.findByClientId(id);
-            case ParameterName.ORDER_LIST_CAR -> orders = orderDAO.findByCarId(id);
+            case ParameterName.ORDER_LIST_ADMIN -> orders = orderDAO.findByAdminId(userId);
+            case ParameterName.ORDER_LIST_CLIENT -> orders = orderDAO.findByClientId(userId);
+            case ParameterName.ORDER_LIST_CAR -> orders = orderDAO.findByCarId(userId);
         }
         return orders;
     }

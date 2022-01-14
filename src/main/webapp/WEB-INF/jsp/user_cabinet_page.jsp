@@ -79,7 +79,7 @@
 <c:set var="updatePass" value="${requestScope.get(ParameterName.USER_UPDATE_PASS)}"/>
 <c:set var="saveLicense" value="${requestScope.get(CommandName.SAVE_LICENSE)}"/>
 <c:set var="deleteLicense" value="${requestScope.get(CommandName.DELETE_LICENSE)}"/>
-<c:set var="userRole" value="${requestScope.get(ParameterName.USER_ROLE)}"/>
+<c:set var="userRole" value="${sessionScope.get(ParameterName.USER_ROLE)}"/>
 <c:set var="message" value="${param.get(ParameterName.MESSAGE)}"/>
 <c:set var="errorMessage" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
 
@@ -150,7 +150,7 @@
                     </c:if>
                 </tr>
 
-                <c:if test="${user.role eq Role.ADMIN}">
+                <c:if test="${userRole eq Role.ADMIN}">
                     <tr>
                         <c:if test="${not updateInfo}">
                             <th>Work since: </th>
@@ -178,7 +178,7 @@
 
                     </tr>
                 </c:if>
-                <c:if test="${user.role eq Role.CLIENT}">
+                <c:if test="${userRole eq Role.CLIENT}">
                     <tr>
                         <c:if test="${not updateInfo}">
                             <th>Company: </th>
@@ -273,7 +273,7 @@
 
         <br/><br/>
 
-        <c:if test="${user.role eq Role.DRIVER}">
+        <c:if test="${userRole eq Role.DRIVER}">
             <table class="table table-bordered table-striped text-center">
                 <tr>
                     <th colspan="3">Your driver licenses</th>
@@ -359,6 +359,24 @@
                 </div>
             </c:if>
         </c:if>
+        
+        <br/>
+
+        <div class="text-center">
+            <form action="Controller" method="get">
+                <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_ALL_ORDERS_PAGE}">
+                <c:if test="${userRole eq Role.ADMIN}">
+                    <input type="hidden" name="${ParameterName.ORDER_LIST_TYPE}" value="${ParameterName.ORDER_LIST_ADMIN}">
+                </c:if>
+                <c:if test="${userRole eq Role.CLIENT}">
+                    <input type="hidden" name="${ParameterName.ORDER_LIST_TYPE}" value="${ParameterName.ORDER_LIST_CLIENT}">
+                </c:if>
+                <c:if test="${userRole eq Role.DRIVER}">
+                    <input type="hidden" name="${ParameterName.ORDER_LIST_TYPE}" value="${ParameterName.ORDER_LIST_CAR}">
+                </c:if>
+                <input type="submit" class="btn btn-info" value="VIEW ORDERS">
+            </form>
+        </div>
     </div>
 </div>
 

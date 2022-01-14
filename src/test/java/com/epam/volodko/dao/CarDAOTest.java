@@ -27,8 +27,8 @@ public class CarDAOTest {
 
     @Test
     public void testFindCarByDriver() throws DAOException {
-        Driver driver = new Driver(2, null, null, null, null, Role.DRIVER);
-        Car actualCar = carDAO.findByDriver(driver);
+        int driverId = 2;
+        Car actualCar = carDAO.findByDriver(driverId);
 
         System.out.println(actualCar);
         //todo make full test.

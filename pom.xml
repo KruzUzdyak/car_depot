@@ -5,8 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.epam.volodko</groupId>
-    <artifactId>car_depot</artifactId>
+    <artifactId>car-depot</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <name>car-depot</name>
+    <packaging>war</packaging>
+
 
     <properties>
         <maven.compiler.source>15</maven.compiler.source>
@@ -66,6 +69,7 @@
     </dependencies>
 
     <build>
+        <finalName>car-depot</finalName>
         <plugins>
             <plugin>
                 <groupId>org.flywaydb</groupId>
@@ -81,7 +85,20 @@
                     <locations>filesystem:src/main/resources/db/migration</locations>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <url>http://localhost:8081/car-depot</url>
+                    <uriEncoding>UTF-8</uriEncoding>
+                    <server>TomcatServer</server>
+                    <port>8081</port>
+                    <path>/${project.build.finalName}</path>
+                    <update>true</update>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-    
+
 </project>

@@ -61,36 +61,23 @@ public class CarDAOImpl extends AbstractDAO implements CarDAO {
 
     @Override
     public Car findById(int carId) throws DAOException {
-        Car car = null;
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareStatement(FIND_CAR_BY_ID_QUERY);
-            statement.setInt(1, carId);
-            resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                car = BuilderFactory.getCarBuilder().build(resultSet);
-            }
-        } catch (ConnectionPoolException | SQLException e) {
-            throw new DAOException(e);
-        } finally {
-            closeConnection(connection, statement, resultSet);
-        }
-        return car;
+        return findCarById(carId, FIND_CAR_BY_ID_QUERY);
     }
 
     @Override
-    public Car findByDriver(Driver driver) throws DAOException {
+    public Car findByDriver(int driverId) throws DAOException {
+        return findCarById(driverId, FIND_CAR_BY_DRIVER_QUERY);
+    }
+
+    private Car findCarById(int driverId, String findByIdQuery) throws DAOException {
         Car car = null;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
             connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareStatement(FIND_CAR_BY_DRIVER_QUERY);
-            statement.setInt(1, driver.getId());
+            statement = connection.prepareStatement(findByIdQuery);
+            statement.setInt(1, driverId);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                  car = BuilderFactory.getCarBuilder().build(resultSet);

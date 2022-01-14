@@ -38,15 +38,10 @@ public class GoToAllOrdersPageCommand implements Command {
 
     private void setOrderList(HttpServletRequest request) throws ServiceException {
         String orderListType = request.getParameter(ParameterName.ORDER_LIST_TYPE);
-        String idForOrdersList = request.getParameter(ParameterName.ORDER_LIST_ENTITY_ID);
-
-        int id = 0;
-        if (idForOrdersList != null){
-            id = Integer.parseInt(idForOrdersList);
-        }
+        int userId = (int) request.getSession().getAttribute(ParameterName.USER_ID);
 
         OrderService orderService = ServiceFactory.getInstance().getOrderService();
-        request.setAttribute(ParameterName.ORDER_LIST, orderService.getOrderList(orderListType, id));
+        request.setAttribute(ParameterName.ORDER_LIST, orderService.getOrderList(orderListType, userId));
     }
 
     private void saveLastOrderListType(HttpServletRequest request) {

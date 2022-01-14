@@ -17,7 +17,8 @@ public class GuestFilter implements Filter {
 
     private final List<String> guestCommands = new ArrayList<>();
 
-    {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
         guestCommands.add(CommandName.GO_TO_LOGINATION);
         guestCommands.add(CommandName.GO_TO_REGISTRATION);
         guestCommands.add(CommandName.GO_TO_INITIAL_PAGE);
@@ -47,5 +48,10 @@ public class GuestFilter implements Filter {
         } else {
             chain.doFilter(request, response);
         }
+    }
+
+    @Override
+    public void destroy() {
+
     }
 }

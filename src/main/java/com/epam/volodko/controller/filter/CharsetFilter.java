@@ -21,4 +21,9 @@ public class CharsetFilter implements Filter {
         servletRequest.setCharacterEncoding(encoding);
         filterChain.doFilter(servletRequest, servletResponse);
     }
+
+    @Override
+    public void destroy() {
+
+    }
 }

@@ -15,7 +15,8 @@ public class RequestSaveFilter implements Filter {
 
     private final List<String> notSavedCommands = new ArrayList<>();
 
-    {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
         notSavedCommands.add(CommandName.LOCALIZATION);
     }
 
@@ -34,5 +35,8 @@ public class RequestSaveFilter implements Filter {
         session.setAttribute(ParameterName.LAST_REQUEST, new HashMap<>(request.getParameterMap()));
     }
 
+    @Override
+    public void destroy() {
 
+    }
 }
