@@ -27,6 +27,9 @@ public final class Message {
 
     public static final String CARS_LOAD_FAILED = "cars_load_failed";
 
+    public static final String CAR_INFO_LOAD_FAIL = "car_info_load_failed";
+
     public static final String ORDER_LOAD_FAILED = "orders_load_failed";
+
 
 }

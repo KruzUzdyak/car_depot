@@ -27,6 +27,16 @@
     <title>${default_title}</title>
 </head>
 <body>
+<c:set var="user" value="${requestScope.get(ParameterName.USER)}"/>
+<c:set var="updateInfo" value="${requestScope.get(ParameterName.USER_UPDATE_INFO)}"/>
+<c:set var="updateLogin" value="${requestScope.get(ParameterName.USER_UPDATE_LOGIN)}"/>
+<c:set var="updatePass" value="${requestScope.get(ParameterName.USER_UPDATE_PASS)}"/>
+<c:set var="saveLicense" value="${requestScope.get(CommandName.SAVE_LICENSE)}"/>
+<c:set var="deleteLicense" value="${requestScope.get(CommandName.DELETE_LICENSE)}"/>
+<c:set var="userRole" value="${sessionScope.get(ParameterName.USER_ROLE)}"/>
+<c:set var="message" value="${param.get(ParameterName.MESSAGE)}"/>
+<c:set var="errorMessage" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
+
 <nav class="navbar navbar-default">
     <div class="container-fluid bg-light">
         <div class="navbar-header row">
@@ -72,16 +82,6 @@
         </div>
     </div>
 </nav>
-
-<c:set var="user" value="${requestScope.get(ParameterName.USER)}"/>
-<c:set var="updateInfo" value="${requestScope.get(ParameterName.USER_UPDATE_INFO)}"/>
-<c:set var="updateLogin" value="${requestScope.get(ParameterName.USER_UPDATE_LOGIN)}"/>
-<c:set var="updatePass" value="${requestScope.get(ParameterName.USER_UPDATE_PASS)}"/>
-<c:set var="saveLicense" value="${requestScope.get(CommandName.SAVE_LICENSE)}"/>
-<c:set var="deleteLicense" value="${requestScope.get(CommandName.DELETE_LICENSE)}"/>
-<c:set var="userRole" value="${sessionScope.get(ParameterName.USER_ROLE)}"/>
-<c:set var="message" value="${param.get(ParameterName.MESSAGE)}"/>
-<c:set var="errorMessage" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
 
 <br/>
 
@@ -376,6 +376,14 @@
                 </c:if>
                 <input type="submit" class="btn btn-info" value="VIEW ORDERS">
             </form>
+
+            <c:if test="${userRole eq Role.DRIVER}">
+                <form action="Controller" method="get">
+                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_CAR_INFO_PAGE}">
+                    <input type="hidden" name="${ParameterName.CAR_REQUEST_TYPE}" value="${ParameterName.CAR_BY_DRIVER_ID}">
+                    <input type="submit" class="btn btn-info" value="VIEW CAR">
+                </form>
+            </c:if>
         </div>
     </div>
 </div>

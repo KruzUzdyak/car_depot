@@ -13,9 +13,26 @@ import java.util.List;
 
 public class CarServiceImpl implements CarService {
 
-    private final Logger log = LogManager.getLogger(CarServiceImpl.class);
-
     private final CarDAO carDAO = DAOFactory.getInstance().getCarDAO();
+
+    @Override
+    public Car getCarById(int carId) throws ServiceException {
+        return null;
+    }
+
+    @Override
+    public Car getCarByDriverId(int driverId) throws ServiceException {
+        if (driverId == 0){
+            throw new ServiceException("Driver id is null");
+        }
+        Car car;
+        try {
+            car = carDAO.findByDriver(driverId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return car;
+    }
 
     @Override
     public List<Car> getAllCars() throws ServiceException {

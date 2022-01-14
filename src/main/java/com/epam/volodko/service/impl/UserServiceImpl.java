@@ -140,8 +140,7 @@ public class UserServiceImpl implements UserService {
         return rowsAffected > 0;
     }
 
-    @Override
-    public boolean saveNewUserInfo(User user) throws ServiceException {
+    private boolean saveNewUserInfo(User user) throws ServiceException {
         int rowsAffected = 0;
         try{
             if(checkNotDriver(user)) {

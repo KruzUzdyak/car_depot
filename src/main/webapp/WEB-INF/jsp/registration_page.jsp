@@ -3,6 +3,7 @@
 <%@ page import="com.epam.volodko.controller.constant.CommandName" %>
 <%@ page import="com.epam.volodko.controller.constant.ParameterName" %>
 <%@ page import="com.epam.volodko.controller.constant.Message" %>
+<%@ page import="com.epam.volodko.entity.user.Role" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -17,27 +18,88 @@
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.locale" var="loc"/>
     <fmt:message bundle="${loc}"  key="default.title" var="default_title"/>
-    <fmt:message bundle="${loc}"  key="registration.login.note" var="login_note"/>
-    <fmt:message bundle="${loc}"  key="registration.login.placeholder" var="login_placeholder"/>
-    <fmt:message bundle="${loc}"  key="registration.password.note" var="pass_note"/>
-    <fmt:message bundle="${loc}"  key="registration.password.placeholder" var="pass_placeholder"/>
-    <fmt:message bundle="${loc}"  key="registration.pass_restrict.note" var="pass_restrict_note"/>
-    <fmt:message bundle="${loc}"  key="registration.repeat_password.note" var="repeat_pass_note"/>
-    <fmt:message bundle="${loc}"  key="registration.repeat_password.placeholder" var="repeat_pass_placeholder"/>
-    <fmt:message bundle="${loc}"  key="registration.name.note" var="name_note"/>
-    <fmt:message bundle="${loc}"  key="registration.name.placeholder" var="name_placeholder"/>
-    <fmt:message bundle="${loc}"  key="registration.phone.note" var="phone_note"/>
-    <fmt:message bundle="${loc}"  key="registration.phone.placeholder" var="phone_placeholder"/>
-    <fmt:message bundle="${loc}"  key="registration.register.button" var="register_button"/>
-    <fmt:message bundle="${loc}"  key="registration.to_initial_page.button" var="to_initial_page_button"/>
-    <fmt:message bundle="${loc}"  key="registration.pass_restrict.message" var="pass_restrict_mess"/>
-    <fmt:message bundle="${loc}"  key="registration.failed.message" var="registration_failed_mess"/>
-    <fmt:message bundle="${loc}"  key="registration.exception.message" var="registration_exception_mess"/>
+    <fmt:message bundle="${loc}" key="locale.button.ru" var="locale_button_ru"/>
+    <fmt:message bundle="${loc}" key="locale.button.en" var="locale_button_en"/>
+    <fmt:message bundle="${loc}" key="locale.note" var="locale_note"/>
+    <fmt:message bundle="${loc}" key="default.sign_out_button" var="sign_out_button"/>
+    <fmt:message bundle="${loc}" key="registration.register_new.note" var="register_new_note"/>
+    <fmt:message bundle="${loc}" key="registration.login.note" var="login_note"/>
+    <fmt:message bundle="${loc}" key="registration.login.placeholder" var="login_placeholder"/>
+    <fmt:message bundle="${loc}" key="registration.password.note" var="pass_note"/>
+    <fmt:message bundle="${loc}" key="registration.password.placeholder" var="pass_placeholder"/>
+    <fmt:message bundle="${loc}" key="registration.pass_restrict.note" var="pass_restrict_note"/>
+    <fmt:message bundle="${loc}" key="registration.repeat_password.note" var="repeat_pass_note"/>
+    <fmt:message bundle="${loc}" key="registration.repeat_password.placeholder" var="repeat_pass_placeholder"/>
+    <fmt:message bundle="${loc}" key="registration.name.note" var="name_note"/>
+    <fmt:message bundle="${loc}" key="registration.name.placeholder" var="name_placeholder"/>
+    <fmt:message bundle="${loc}" key="registration.phone.note" var="phone_note"/>
+    <fmt:message bundle="${loc}" key="registration.phone.placeholder" var="phone_placeholder"/>
+    <fmt:message bundle="${loc}" key="registration.register.button" var="register_button"/>
+    <fmt:message bundle="${loc}" key="registration.to_initial_page.button" var="to_initial_page_button"/>
+    <fmt:message bundle="${loc}" key="registration.pass_restrict.message" var="pass_restrict_mess"/>
+    <fmt:message bundle="${loc}" key="registration.failed.message" var="registration_failed_mess"/>
+    <fmt:message bundle="${loc}" key="registration.exception.message" var="registration_exception_mess"/>
 
     <title>${default_title}</title>
 </head>
 <body>
-<br/><br/><br/><br/>
+<c:set var="userRole" value="${sessionScope.get(ParameterName.USER_ROLE)}"/>
+
+<c:if test="${userRole eq Role.ADMIN}">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid bg-light">
+            <div class="navbar-header row">
+                <div class="col-4">
+                    <c:out value="${locale_note}"/>
+                </div>
+                <div class="col-2">
+                    <form action="Controller" method="post">
+                        <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
+                        <input type="hidden" name="${ParameterName.LOCALE}" value="ru">
+                        <input type="submit" class="btn btn-outline-info" value="${locale_button_ru}">
+                    </form>
+                </div>
+                <div class="col-2">
+                    <form action="Controller" method="post">
+                        <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
+                        <input type="hidden" name="${ParameterName.LOCALE}" value="en">
+                        <input type="submit" class="btn btn-outline-info" value="${locale_button_en}">
+                    </form>
+                </div>
+            </div>
+            <div class="col-10">
+                <div class="row">
+                    <div class="col-6">
+
+                    </div>
+                    <div class="col-2 text-center">
+                        <form action="Controller" method="get">
+                            <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_MAIN_PAGE}">
+                            <input type="submit" class="btn btn-info" value="MAIN_PAGE">
+                        </form>
+                    </div>
+                    <div class="col-2 text-center">
+                        <form action="Controller" method="get">
+                            <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_USER_CABINET_PAGE}">
+                            <input type="submit" class="btn btn-info" value="USER_CABINET">
+                        </form>
+                    </div>
+                    <div class="col-2 text-center">
+                        <form action="Controller" method="get">
+                            <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_INITIAL_PAGE}">
+                            <input type="submit" class="btn btn-outline-danger" value="${sign_out_button}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <br/><br/>
+</c:if>
+<c:if test="${empty userRole}">
+    <br/><br/><br/><br/>
+</c:if>
+
 <div class="container-fluid row">
     <div class="col-3">
 
@@ -45,7 +107,11 @@
     <div class="col-6">
         <form action="Controller" method="post" autocomplete="off">
             <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.REGISTRATION}">
+            <input type="hidden" name="${ParameterName.USER_ROLE}" value="${param.get(ParameterName.REGISTER_ROLE)}">
             <div class="row">
+                <p class="text-center text-info">
+                    ${register_new_note} (${param.get(ParameterName.REGISTER_ROLE.toLowerCase())}):
+                </p>
                 <div class="col-5 text-end">
                     <label for="login">${login_note}</label>
                 </div>
@@ -91,15 +157,6 @@
             </div>
             <br/>
             <div class="text-center">
-                Role<br/>
-                <select name="user_role" size="1">
-                    <option disabled selected>Choose your role</option>
-                    <option value="admin">admin</option>
-                    <option value="client">client</option>
-                    <option value="driver">driver</option>
-                </select>
-                <br/><br/>
-
                 <input type="submit" class="btn btn-success" value="${register_button}">
             </div>
         </form>

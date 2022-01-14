@@ -9,6 +9,8 @@ public final class ParameterName {
 
     public static final String LOCALE = "locale";
 
+    public static final String REGISTER_ROLE = "register_role";
+
     public static final String USER = "user";
     public static final String USER_ID = "user_id";
     public static final String USER_LOGIN = "user_login";
@@ -35,6 +37,11 @@ public final class ParameterName {
     public static final String CAR_LIST_ALL = "car_list_all";
     public static final String CAR_LIST = "car_list";
 
+    public static final String CAR_REQUEST_TYPE = "car_request_type";
+    public static final String CAR_BY_DRIVER_ID = "car_by_driver_id";
+
+    public static final String CAR = "car";
+
     public static final String ORDER = "order";
     public static final String ORDER_ID = "order_id";
 
@@ -45,5 +52,6 @@ public final class ParameterName {
     public static final String ORDER_LIST_CAR = "order_list_car";
     public static final String ORDER_LIST_ENTITY_ID = "order_list_entity_id";
     public static final String ORDER_LIST = "order_list";
+
 
 }

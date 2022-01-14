@@ -172,13 +172,15 @@
         </div>
         <div class="col-2 text-center">
             <form action="Controller" method="get">
-                <input type="hidden" name="stub" value="stub">
+                <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_REGISTRATION}">
+                <input type="hidden" name="${ParameterName.REGISTER_ROLE}" value="${Role.ADMIN}">
                 <input type="submit" class="btn btn-info" value="REGISTER_NEW_ADMIN">
             </form>
         </div>
         <div class="col-2 text-center">
             <form action="Controller" method="get">
-                <input type="hidden" name="stub" value="stub">
+                <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_REGISTRATION}">
+                <input type="hidden" name="${ParameterName.REGISTER_ROLE}" value="${Role.DRIVER}">
                 <input type="submit" class="btn btn-info" value="REGISTER_NEW_DRIVER">
             </form>
         </div>
@@ -197,9 +199,6 @@
         </div>
     </c:if>
 </div>
-
-
-
 
 </body>
 </html>

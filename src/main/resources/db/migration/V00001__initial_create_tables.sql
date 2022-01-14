@@ -220,7 +220,7 @@ DROP TABLE IF EXISTS `car_depot`.`client_info`;
 CREATE TABLE IF NOT EXISTS `car_depot`.`client_info`
 (
     `user_id` INT          NOT NULL,
-    `company` VARCHAR(100) NOT NULL,
+    `company` VARCHAR(100) NULL,
     `note`    TEXT         NULL,
     UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
     PRIMARY KEY (`user_id`),

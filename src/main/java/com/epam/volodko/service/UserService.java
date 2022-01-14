@@ -27,5 +27,4 @@ public interface UserService {
 
     boolean deleteDriverLicense(int driverId, int licenseTypeId) throws ServiceException;
 
-    boolean saveNewUserInfo(User user) throws ServiceException;
 }

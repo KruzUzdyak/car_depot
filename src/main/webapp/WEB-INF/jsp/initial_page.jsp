@@ -1,8 +1,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.epam.volodko.controller.constant.CommandName" %>
 <%@ page import="com.epam.volodko.controller.constant.ParameterName" %>
+<%@ page import="com.epam.volodko.controller.constant.Message" %>
+<%@ page import="com.epam.volodko.entity.user.Role" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +19,7 @@
 
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.locale" var="loc"/>
-    <fmt:message bundle="${loc}"  key="default.title" var="default_title"/>
+    <fmt:message bundle="${loc}" key="default.title" var="default_title"/>
     <fmt:message bundle="${loc}" key="locale.button.ru" var="locale_button_ru"/>
     <fmt:message bundle="${loc}" key="locale.button.en" var="locale_button_en"/>
     <fmt:message bundle="${loc}" key="locale.note" var="locale_note"/>
@@ -27,6 +30,8 @@
 </head>
 
 <body>
+<c:set var="errorMessage" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
+
 <nav class="navbar navbar-default">
     <div class="container-fluid bg-light">
         <div class="navbar-header row">
@@ -51,7 +56,13 @@
     </div>
 </nav>
 
-<br/><br/>
+<br/>
+<h3 class="text-warning text-center">
+    <c:if test="${errorMessage eq Message.NOT_LOGGED_ID}">
+        <fmt:message bundle="${loc}" key="initial.error_message.not_logged_in"/>
+    </c:if>
+</h3>
+<br/>
 
 <div class="container">
     <div class="text-center">
@@ -61,6 +72,7 @@
         </form><br/>
         <form action="Controller" method="get">
             <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_REGISTRATION}">
+            <input type="hidden" name="${ParameterName.REGISTER_ROLE}" value="${Role.CLIENT}"/>
             <input type="submit" class="btn btn-info" value="${button_registration}">
         </form>
     </div>
