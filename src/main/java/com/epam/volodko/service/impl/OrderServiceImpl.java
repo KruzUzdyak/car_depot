@@ -4,6 +4,7 @@ import com.epam.volodko.controller.constant.ParameterName;
 import com.epam.volodko.dao.DAOFactory;
 import com.epam.volodko.dao.OrderDAO;
 import com.epam.volodko.dao.exception.DAOException;
+import com.epam.volodko.entity.car.Car;
 import com.epam.volodko.entity.order.Order;
 import com.epam.volodko.service.OrderService;
 import com.epam.volodko.service.exception.ServiceException;
@@ -47,7 +48,10 @@ public class OrderServiceImpl implements OrderService {
             case ParameterName.ORDER_LIST_ALL -> orders = orderDAO.findAll();
             case ParameterName.ORDER_LIST_ADMIN -> orders = orderDAO.findByAdminId(userId);
             case ParameterName.ORDER_LIST_CLIENT -> orders = orderDAO.findByClientId(userId);
-            case ParameterName.ORDER_LIST_CAR -> orders = orderDAO.findByCarId(userId);
+            case ParameterName.ORDER_LIST_CAR -> {
+                Car car = DAOFactory.getInstance().getCarDAO().findByDriver(userId);
+                orders = orderDAO.findByCarId(car.getId());
+            }
         }
         return orders;
     }

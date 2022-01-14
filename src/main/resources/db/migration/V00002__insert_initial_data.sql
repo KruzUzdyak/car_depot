@@ -109,12 +109,14 @@ VALUES (3, 8, 1623190346000, '6MM645211');
 -- -----------------------------------------------------
 
 INSERT INTO `car_depot`.`orders` (`order_id`, `dest_from`, `dest_to`, `distance`, `date_start`, `date_end`,
-`load`, `load_note`, `completed`, `payment`, `client_id`, `admin_id`, `car_id`)
+                                  `load`, `load_note`, `completed`, `payment`, `client_id`, `admin_id`, `car_id`)
 VALUES (1, 'Uzda', 'Minsk', 70, 1638359946000, 1641359946000, 400, 'Packaget milk', 0, 1000, 4, 1, NULL);
 INSERT INTO `car_depot`.`orders` (`order_id`, `dest_from`, `dest_to`, `distance`, `date_start`, `date_end`,
-`load`, `load_note`, `completed`, `payment`, `client_id`, `admin_id`, `car_id`)
+                                  `load`, `load_note`, `completed`, `payment`, `client_id`, `admin_id`, `car_id`)
  VALUES (2, 'Village', 'Uzda', 10, 1637359946000, 1640359946000, 3000, 'Milk in tank', 0, 1500, 4, 1, NULL);
-
+INSERT INTO `car_depot`.`orders` (`order_id`, `dest_from`, `dest_to`, `distance`, `date_start`, `date_end`,
+                                  `load`, `load_note`, `completed`, `payment`, `client_id`, `admin_id`, `car_id`)
+VALUES (3, 'Town', 'City', 130, 1637354446000, 1640359646000, 3000, 'Paper', 1, 10500, 6, 5, 3);
 
 -- -----------------------------------------------------
 -- Data for table `car_depot`.`repair_records`
