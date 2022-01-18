@@ -18,7 +18,7 @@ public class Controller extends HttpServlet {
 
     @Override
     public void init(){
-        log.warn(String.format("Receive request from client. Starting new Thread - %s.", Thread.currentThread()));
+        log.warn("Receive request from client. Starting new Thread.");
     }
 
     @Override

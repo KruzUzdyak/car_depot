@@ -78,12 +78,4 @@ public abstract class AbstractDAO {
         }
         return generatedKey;
     }
-
-    void rollback(Connection connection) throws DAOException {
-        try {
-            connection.rollback();
-        } catch (SQLException e) {
-            throw new DAOException("SQLException when try to rollback changes.", e);
-        }
-    }
 }

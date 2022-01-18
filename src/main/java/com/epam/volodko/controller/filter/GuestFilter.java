@@ -19,6 +19,7 @@ public class GuestFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        guestCommands.add(null);
         guestCommands.add(CommandName.GO_TO_LOGINATION);
         guestCommands.add(CommandName.GO_TO_REGISTRATION);
         guestCommands.add(CommandName.GO_TO_INITIAL_PAGE);
