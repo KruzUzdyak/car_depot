@@ -17,6 +17,9 @@
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.locale" var="loc"/>
     <fmt:message bundle="${loc}" key="default.title" var="default_title"/>
+    <fmt:message bundle="${loc}" key="locale.button.ru" var="locale_button_ru"/>
+    <fmt:message bundle="${loc}" key="locale.button.en" var="locale_button_en"/>
+    <fmt:message bundle="${loc}" key="locale.note" var="locale_note"/>
     <fmt:message bundle="${loc}" key="loginanion.login.note" var="login_note"/>
     <fmt:message bundle="${loc}" key="logination.login.placeholder" var="login_placeholder"/>
     <fmt:message bundle="${loc}" key="logination.password.note" var="password_note"/>
@@ -30,6 +33,31 @@
 </head>
 
 <body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid bg-light">
+        <div class="navbar-header row">
+            <div class="col-4">
+                <p>${locale_note}</p>
+            </div>
+            <div class="col-2">
+                <form action="Controller" method="post">
+                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
+                    <input type="hidden" name="${ParameterName.LOCALE}" value="ru">
+                    <input type="submit" class="btn btn-outline-info" value="${locale_button_ru}">
+                </form>
+            </div>
+            <div class="col-2">
+                <form action="Controller" method="post">
+                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
+                    <input type="hidden" name="${ParameterName.LOCALE}" value="en">
+                    <input type="submit" class="btn btn-outline-info" value="${locale_button_en}">
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+
 <br/><br/><br/><br/>
 <div class="container-fluid row">
     <div class="col-3">

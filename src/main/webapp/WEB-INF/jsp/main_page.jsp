@@ -18,12 +18,13 @@
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.locale" var="loc"/>
     <fmt:message bundle="${loc}"  key="default.title" var="default_title"/>
+    <fmt:message bundle="${loc}" key="default.sign_out.button" var="sign_out_button"/>
+    <fmt:message bundle="${loc}" key="default.user_cabinet.button" var="user_cabinet_button"/>
     <fmt:message bundle="${loc}" key="locale.button.ru" var="locale_button_ru"/>
     <fmt:message bundle="${loc}" key="locale.button.en" var="locale_button_en"/>
     <fmt:message bundle="${loc}" key="locale.note" var="locale_note"/>
     <fmt:message bundle="${loc}" key="main.registration_successful.message" var="registration_successful_mess"/>
     <fmt:message bundle="${loc}" key="main.logination_successful.message" var="logination_successful_mess"/>
-    <fmt:message bundle="${loc}" key="default.sign_out_button" var="sign_out_button"/>
     <fmt:message bundle="${loc}" key="main.table.name" var="table_name"/>
     <fmt:message bundle="${loc}" key="main.table.th.model" var="th_car_model"/>
     <fmt:message bundle="${loc}" key="main.table.th.driver_name" var="th_driver_name"/>
@@ -66,7 +67,7 @@
                 <div class="col-2 text-center">
                     <form action="Controller" method="get">
                         <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_USER_CABINET_PAGE}">
-                        <input type="submit" class="btn btn-info" value="USER_CABINET">
+                        <input type="submit" class="btn btn-info" value="${user_cabinet_button}">
                     </form>
                 </div>
                 <div class="col-2 text-center">

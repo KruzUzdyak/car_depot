@@ -8,6 +8,8 @@ public final class ParameterName {
     public static final String LAST_REQUEST = "last_request";
 
     public static final String LOCALE = "locale";
+    public static final String LOCALE_EN = "en";
+    public static final String LOCALE_RU = "ru";
 
     public static final String REGISTER_ROLE = "register_role";
 

@@ -17,11 +17,11 @@
 
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.locale" var="loc"/>
-    <fmt:message bundle="${loc}"  key="default.title" var="default_title"/>
+    <fmt:message bundle="${loc}" key="default.title" var="default_title"/>
     <fmt:message bundle="${loc}" key="locale.button.ru" var="locale_button_ru"/>
     <fmt:message bundle="${loc}" key="locale.button.en" var="locale_button_en"/>
     <fmt:message bundle="${loc}" key="locale.note" var="locale_note"/>
-    <fmt:message bundle="${loc}" key="default.sign_out_button" var="sign_out_button"/>
+    <fmt:message bundle="${loc}" key="default.sign_out.button" var="sign_out_button"/>
     <fmt:message bundle="${loc}" key="registration.register_new.note" var="register_new_note"/>
     <fmt:message bundle="${loc}" key="registration.login.note" var="login_note"/>
     <fmt:message bundle="${loc}" key="registration.login.placeholder" var="login_placeholder"/>
@@ -44,6 +44,30 @@
 </head>
 <body>
 <c:set var="userRole" value="${sessionScope.get(ParameterName.USER_ROLE)}"/>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid bg-light">
+        <div class="navbar-header row">
+            <div class="col-4">
+                <p>${locale_note}</p>
+            </div>
+            <div class="col-2">
+                <form action="Controller" method="post">
+                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
+                    <input type="hidden" name="${ParameterName.LOCALE}" value="ru">
+                    <input type="submit" class="btn btn-outline-info" value="${locale_button_ru}">
+                </form>
+            </div>
+            <div class="col-2">
+                <form action="Controller" method="post">
+                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
+                    <input type="hidden" name="${ParameterName.LOCALE}" value="en">
+                    <input type="submit" class="btn btn-outline-info" value="${locale_button_en}">
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
 
 <c:if test="${userRole eq Role.ADMIN}">
     <nav class="navbar navbar-default">

@@ -16,10 +16,19 @@ public class GoToInitialPageCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(true);
         session.setAttribute(ParameterName.USER_LOGIN, null);
         session.setAttribute(ParameterName.USER_ROLE, null);
 
+        setLocale(session);
+
         forward(request, response, PagePath.INITIAL_PAGE);
+    }
+
+    private void setLocale(HttpSession session) {
+        String locale = (String) session.getAttribute(ParameterName.LOCALE);
+        if (locale == null){
+            session.setAttribute(ParameterName.LOCALE, ParameterName.LOCALE_EN);
+        }
     }
 }
