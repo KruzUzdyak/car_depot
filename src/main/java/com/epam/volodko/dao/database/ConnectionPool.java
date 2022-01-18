@@ -36,7 +36,7 @@ public class ConnectionPool {
         }
     }
 
-    public static ConnectionPool getInstance() throws ConnectionPoolException {
+    public static ConnectionPool getInstance(){
         return instance;
     }
 
@@ -64,12 +64,12 @@ public class ConnectionPool {
         }
     }
 
-    public void dispose(){
+    public void dispose() throws ConnectionPoolException {
         clearConnectionQueue();
     }
 
     public Connection takeConnection() throws ConnectionPoolException {
-        Connection connection = null;
+        Connection connection;
         try {
             connection = connectionQueue.take();
             givenAwayConQueue.add(connection);
@@ -79,45 +79,45 @@ public class ConnectionPool {
         return connection;
     }
 
-    private void clearConnectionQueue(){
+    private void clearConnectionQueue() throws ConnectionPoolException {
         try {
             closeConnectionsQueue(givenAwayConQueue);
             closeConnectionsQueue(connectionQueue);
         } catch (SQLException e){
-            //todo logger.log(Level.ERROR, "Error closing the connection.", e);
+            throw new ConnectionPoolException("Error closing the connection.", e);
         }
     }
 
-    public void closeConnection(Connection con, Statement st, ResultSet rs){
+    public void closeConnection(Connection con, Statement st, ResultSet rs) throws ConnectionPoolException {
         try {
             rs.close();
         } catch (SQLException e){
-            //todo logger.log(Level.ERROR, "ResultSet isn't closed.");
+            throw new ConnectionPoolException("ResultSet isn't closed.", e);
         }
 
         try {
             st.close();
         } catch (SQLException e){
-            //todo logger.log(Level.ERROR, "Statement isn't closed.");
+            throw new ConnectionPoolException("Statement isn't closed.", e);
         }
 
         try {
             con.close();
         } catch (SQLException e){
-            //todo logger.log(Level.ERROR, "Connection isn't return to the pool.");
+            throw new ConnectionPoolException("Connection isn't return to the pool.", e);
         }
     }
 
-    public void closeConnection(Connection con, Statement st){
+    public void closeConnection(Connection con, Statement st) throws ConnectionPoolException {
         try {
             st.close();
         } catch (SQLException e){
-            //todo logger.log(Level.ERROR, "Statement isn't closed.");
+            throw new ConnectionPoolException("Statement isn't closed.", e);
         }
         try {
             con.close();
         } catch (SQLException e){
-            //todo logger.log(Level.ERROR, "Connection isn't return to the pool.");
+            throw new ConnectionPoolException("Connection isn't return to the pool.", e);
         }
     }
 
