@@ -1,5 +1,6 @@
 package com.epam.volodko.dao;
 
+import com.epam.volodko.dao.database.ConnectionPool;
 import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.entity.user.Admin;
 import com.epam.volodko.entity.user.Role;
@@ -43,6 +44,7 @@ public class AdminDAOTest {
         for (Admin admin: admins){
             assertNotNull(admin);
             assertEquals(Role.ADMIN, admin.getRole());
+            System.out.println(admin);
         }
     }
 

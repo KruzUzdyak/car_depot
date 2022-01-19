@@ -13,6 +13,8 @@ public final class ParameterName {
 
     public static final String REGISTER_ROLE = "register_role";
 
+    public static final String DRIVER_LIST = "driver_list";
+
     public static final String USER = "user";
     public static final String USER_ID = "user_id";
     public static final String USER_LOGIN = "user_login";
@@ -46,6 +48,14 @@ public final class ParameterName {
 
     public static final String CAR = "car";
     public static final String CAR_ID = "car_id";
+    public static final String CAR_PLATE_NUMBER = "car_plate_number";
+    public static final String CAR_FUEL_LEVEL = "car_fuel_level";
+    public static final String CAR_MILEAGE = "car_mileage";
+    public static final String CAR_BROKEN = "car_broken";
+    public static final String CAR_MODEL_ID = "car_model_id";
+    public static final String CAR_DRIVER_ID = "car_driver_id";
+
+    public static final String CAR_MODEL_LIST = "car_model_list";
 
     public static final String ORDER = "order";
     public static final String ORDER_ID = "order_id";
@@ -57,6 +67,4 @@ public final class ParameterName {
     public static final String ORDER_LIST_CAR = "order_list_car";
     public static final String ORDER_LIST_ENTITY_ID = "order_list_entity_id";
     public static final String ORDER_LIST = "order_list";
-
-
 }

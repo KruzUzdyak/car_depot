@@ -1,9 +1,12 @@
 package com.epam.volodko.service;
 
+import com.epam.volodko.entity.user.Driver;
 import com.epam.volodko.entity.user.DriverLicense;
 import com.epam.volodko.entity.user.Role;
 import com.epam.volodko.entity.user.User;
 import com.epam.volodko.service.exception.ServiceException;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -27,4 +30,5 @@ public interface UserService {
 
     boolean deleteDriverLicense(int driverId, int licenseTypeId) throws ServiceException;
 
+    List<User> getUserList(Role role) throws ServiceException;
 }

@@ -45,7 +45,7 @@
 <body>
 <c:set var="userRole" value="${sessionScope.get(ParameterName.USER_ROLE)}"/>
 
-<c:if test="${userRole != Role.ADMIN}">
+<c:if test="${!userRole.equals(Role.ADMIN)}">
     <nav class="navbar navbar-default">
         <div class="container-fluid bg-light">
             <div class="navbar-header row">
@@ -71,7 +71,7 @@
     </nav>
 </c:if>
 
-<c:if test="${userRole eq Role.ADMIN}">
+<c:if test="${userRole.equals(Role.ADMIN)}">
     <nav class="navbar navbar-default">
         <div class="container-fluid bg-light">
             <div class="navbar-header row">
@@ -207,13 +207,15 @@
             </c:if>
         </div>
 
-        <div class="text-center">
-            <br/><br/><br/>
-            <form action="Controller" method="get">
-                <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_INITIAL_PAGE}">
-                <input type="submit" class="btn btn-outline-info" value="${to_initial_page_button}">
-            </form>
-        </div>
+        <c:if test="${!userRole.equals(Role.ADMIN)}">
+            <div class="text-center">
+                <br/><br/><br/>
+                <form action="Controller" method="get">
+                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_INITIAL_PAGE}">
+                    <input type="submit" class="btn btn-outline-info" value="${to_initial_page_button}">
+                </form>
+            </div>
+        </c:if>
     </div>
 </div>
 </body>

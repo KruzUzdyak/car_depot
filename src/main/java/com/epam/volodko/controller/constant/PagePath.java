@@ -14,7 +14,6 @@ public final class PagePath {
     public static final String ORDER_INFO_PAGE = "/WEB-INF/jsp/order_info_page.jsp";
 
     public static final String CAR_INFO_PAGE = "/WEB-INF/jsp/car_info_page.jsp";
-    public static final String ADD_NEW_CAR_PAGE = "/WEB-INF/jsp/add_new_car_page.jsp";
 
     public static final String ERROR_PAGE = "/WEB-INF/jsp/error_page.jsp";
 

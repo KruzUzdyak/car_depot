@@ -13,7 +13,11 @@ import com.epam.volodko.service.validator.DriverLicenseValidator;
 import com.epam.volodko.service.validator.UserValidator;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.List;
+
 public class UserServiceImpl implements UserService {
+
+    private static final String ROLE_CANT_BE_NULL = "Role can't be null";
 
     private final UserValidator userValidator = new UserValidator();
     private final DriverLicenseValidator licenseValidator = new DriverLicenseValidator();
@@ -138,6 +142,21 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
         return rowsAffected > 0;
+    }
+
+    @Override
+    public List<User> getUserList(Role role) throws ServiceException {
+        if (role == null){
+            throw new ServiceException(ROLE_CANT_BE_NULL);
+        }
+
+        List<User> users;
+        try {
+            users = daoFactory.getUserDAO(role).findAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return users;
     }
 
     private boolean saveNewUserInfo(User user) throws ServiceException {

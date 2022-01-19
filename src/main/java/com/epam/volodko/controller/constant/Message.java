@@ -14,6 +14,8 @@ public final class Message {
     public static final String LOGINATION_FAILED = "logination_failed";
     public static final String LOGINATION_EXCEPTION = "logination_exception";
 
+    public static final String DRIVER_LIST_LOAD_FAIL = "driver_list_load_fail";
+
     public static final String LICENSE_DELETE_FAILED = "license_delete_failed";
     public static final String LICENSE_DELETE_SUCCESSFUL = "license_delete_successful";
     public static final String LICENSE_SAVE_FAILED = "license_save_failed";
@@ -30,6 +32,9 @@ public final class Message {
 
     public static final String CAR_INFO_LOAD_FAIL = "car_info_load_failed";
 
+    public static final String CAR_MODELS_LOAD_FAILED = "car_models_load_failed";
+
     public static final String ORDER_LOAD_FAILED = "orders_load_failed";
+
 
 }

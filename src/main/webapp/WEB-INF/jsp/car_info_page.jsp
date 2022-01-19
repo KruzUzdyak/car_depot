@@ -31,9 +31,12 @@
 </head>
 <body>
 <c:set var="userRole" value="${sessionScope.get(ParameterName.USER_ROLE)}"/>
+<c:set var="newCar" value="${requestScope.get(ParameterName.NEW_CAR)}"/>
 <c:set var="message" value="${requestScope.get(ParameterName.MESSAGE)}"/>
 <c:set var="errorMessage" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
 <c:set var="car" value="${requestScope.get(ParameterName.CAR)}"/>
+<c:set var="carModelList" value="${requestScope.get(ParameterName.CAR_MODEL_LIST)}"/>
+<c:set var="driverList" value="${requestScope.get(ParameterName.DRIVER_LIST)}"/>
 
 <nav class="navbar navbar-default">
     <div class="container-fluid bg-light">
@@ -85,92 +88,160 @@
 </nav>
 
 <br/>
-<div class="container-fluid row">
-    <div class="col-4">
+<c:if test="${not newCar}">
+    <div class="container-fluid row">
+        <div class="col-4">
 
+        </div>
+        <div class="col-4 ">
+            <table class="table table-borderless table-striped text-center">
+                <tr>
+                    <th colspan="3">CAR</th>
+                </tr>
+                <c:if test="${errorMessage eq Message.CAR_INFO_LOAD_FAIL}">
+                    <tr class="bg-warning">
+                        <td colspan="3">${errorMessage}</td>
+                    </tr>
+                </c:if>
+                <c:if test="${!errorMessage.equals(Message.CAR_INFO_LOAD_FAIL)}">
+                    <tr>
+                        <th>car id</th>
+                        <td colspan="2">${car.id}</td>
+                    </tr>
+                    <tr>
+                        <th>current driver id</th>
+                        <td colspan="2">${car.driver.id}</td>
+                    </tr>
+                    <tr>
+                        <th>current driver name</th>
+                        <td colspan="2">${car.driver.name}</td>
+                    </tr>
+                    <tr>
+                        <th>plate number</th>
+                        <td colspan="2">${car.plateNumber}</td>
+                    </tr>
+                    <tr>
+                        <th>current fuel</th>
+                        <td colspan="2">${car.fuelLevel}</td>
+                    </tr>
+                    <tr>
+                        <th>fuel tank capacity</th>
+                        <td colspan="2">${car.model.fuelTank}</td>
+                    </tr>
+                    <tr>
+                        <th>current mileage</th>
+                        <td colspan="2">${car.mileage}</td>
+                    </tr>
+                    <tr>
+                        <th>need repair</th>
+                        <c:if test="${car.broken}">
+                            <td colspan="2" class="text-danger">NEED REPAIR</td>
+                        </c:if>
+                        <c:if test="${not car.broken}">
+                            <td colspan="2">workable</td>
+                        </c:if>
+                    </tr>
+                    <tr>
+                        <th>model id</th>
+                        <td colspan="2">${car.model.id}</td>
+                    </tr>
+                    <tr>
+                        <th>model name</th>
+                        <td colspan="2">${car.model.modelName}</td>
+                    </tr>
+                    <tr>
+                        <th>car load type</th>
+                        <td colspan="2">${car.model.loadType}</td>
+                    </tr>
+                    <tr>
+                        <th>car capacity</th>
+                        <td colspan="2">${car.model.capacity}</td>
+                    </tr>
+                    <tr>
+                        <th>car type id</th>
+                        <td colspan="2">${car.model.type.carTypeId}</td>
+                    </tr>
+                    <tr>
+                        <th>car type name</th>
+                        <td colspan="2">${car.model.type.typeName}</td>
+                    </tr>
+                    <tr>
+                        <th>required driving license</th>
+                        <td colspan="2">${car.model.type.requiredLicense}</td>
+                    </tr>
+                </c:if>
+            </table>
+
+            <br/><br/>
+
+        </div>
     </div>
-    <div class="col-4 ">
-        <table class="table table-borderless table-striped text-center">
-            <tr>
-                <th colspan="3">CAR</th>
-            </tr>
-            <c:if test="${not empty errorMessage}">
-                <tr class="bg-warning">
-                    <td colspan="3">${errorMessage}</td>
-                </tr>
-            </c:if>
-            <c:if test="${empty errorMessage}">
-                <tr>
-                    <th>car id</th>
-                    <td colspan="2">${car.id}</td>
-                </tr>
-                <tr>
-                    <th>current driver id</th>
-                    <td colspan="2">${car.driver.id}</td>
-                </tr>
-                <tr>
-                    <th>current driver name</th>
-                    <td colspan="2">${car.driver.name}</td>
-                </tr>
-                <tr>
-                    <th>plate number</th>
-                    <td colspan="2">${car.plateNumber}</td>
-                </tr>
-                <tr>
-                    <th>current fuel</th>
-                    <td colspan="2">${car.fuelLevel}</td>
-                </tr>
-                <tr>
-                    <th>fuel tank capacity</th>
-                    <td colspan="2">${car.model.fuelTank}</td>
-                </tr>
-                <tr>
-                    <th>current mileage</th>
-                    <td colspan="2">${car.mileage}</td>
-                </tr>
-                <tr>
-                    <th>need repair</th>
-                    <c:if test="${car.broken}">
-                        <td colspan="2" class="text-danger">NEED REPAIR</td>
-                    </c:if>
-                    <c:if test="${not car.broken}">
-                        <td colspan="2">workable</td>
-                    </c:if>
-                </tr>
-                <tr>
-                    <th>model id</th>
-                    <td colspan="2">${car.model.id}</td>
-                </tr>
-                <tr>
-                    <th>model name</th>
-                    <td colspan="2">${car.model.modelName}</td>
-                </tr>
-                <tr>
-                    <th>car load type</th>
-                    <td colspan="2">${car.model.loadType}</td>
-                </tr>
-                <tr>
-                    <th>car capacity</th>
-                    <td colspan="2">${car.model.capacity}</td>
-                </tr>
-                <tr>
-                    <th>car type id</th>
-                    <td colspan="2">${car.model.type.carTypeId}</td>
-                </tr>
-                <tr>
-                    <th>car type name</th>
-                    <td colspan="2">${car.model.type.typeName}</td>
-                </tr>
-                <tr>
-                    <th>required driving license</th>
-                    <td colspan="2">${car.model.type.requiredLicense}</td>
-                </tr>
-            </c:if>
-        </table>
+</c:if>
 
-        <br/><br/>
 
+<c:if test="${newCar}">
+    <div class="container-fluid row">
+        <div class="col-4">
+
+        </div>
+        <div class="col-4 ">
+            <table class="table table-borderless table-striped text-center">
+                <form action="Controller" method="post">
+                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.ADD_NEW_CAR}">
+                    <tr>
+                        <th colspan="3">CAR</th>
+                    </tr>
+                    <tr>
+                        <th>current driver</th>
+                        <td colspan="2">
+                            <c:if test="${errorMessage eq Message.DRIVER_LIST_LOAD_FAIL}">
+                                ${errorMessage}
+                            </c:if>
+                            <select required name="${ParameterName.CAR_DRIVER_ID}">
+                                <c:forEach var="driver" items="${driverList}">
+                                    <option value="${driver.id}">${driver.id} : ${driver.name}</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>plate number</th>
+                        <td colspan="2"><input type="text" name="${ParameterName.CAR_PLATE_NUMBER}"></td>
+                    </tr>
+                    <tr>
+                        <th>current fuel</th>
+                        <td colspan="2"><input type="number" name="${ParameterName.CAR_FUEL_LEVEL}"></td>
+                    </tr>
+                    <tr>
+                        <th>current mileage</th>
+                        <td colspan="2"><input type="number" name="${ParameterName.CAR_MILEAGE}"></td>
+                    </tr>
+                    <tr>
+                        <th>Need repair</th>
+                        <td colspan="2"><input type="checkbox" name="${ParameterName.CAR_BROKEN}"></td>
+                    </tr>
+                    <tr>
+                        <th>model id</th>
+                        <td colspan="2">
+                            <c:if test="${errorMessage eq Message.CAR_MODELS_LOAD_FAILED}">
+                                ${errorMessage}
+                            </c:if>
+                            <select required name="${ParameterName.CAR_MODEL_ID}">
+                                <c:forEach var="carModel" items="${carModelList}">
+                                    <option value="${carModel.id}">${carModel.modelName}</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-center">
+                            <input type="submit" class="btn btn-success" value="ADD NEW CAR">
+                        </td>
+                    </tr>
+                </form>
+            </table>
+        </div>
     </div>
-</div>
+</c:if>
 </body>
 </html>

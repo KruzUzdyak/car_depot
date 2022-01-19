@@ -8,6 +8,7 @@ import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.dao.table_name.Table;
 import com.epam.volodko.entity.user.Driver;
+import com.epam.volodko.entity.user.Role;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,10 +33,10 @@ public class DriverDAOImpl extends AbstractUserDAO<Driver> implements UserDAO<Dr
             Column.LICENSE_ID, Column.USERS_LOGIN);
     private static final String FIND_ALL_DRIVERS_QUERY = String.format(
             "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s LEFT JOIN %s dl " +
-                    "ON u.%s = dl.%s LEFT JOIN %s lt ON dl.%s = lt.%s",
+                    "ON u.%s = dl.%s LEFT JOIN %s lt ON dl.%s = lt.%s WHERE r.%s = ?",
             Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.DRIVER_LICENSES,
             Column.USERS_ID, Column.DRIVER_LICENSES_USER_ID, Table.LICENSE_TYPES,
-            Column.DRIVER_LICENSES_LICENSE_ID, Column.LICENSE_ID);
+            Column.DRIVER_LICENSES_LICENSE_ID, Column.LICENSE_ID, Column.ROLES_ID);
 
     @Override
     public Driver findById(int userId) throws DAOException {
@@ -92,6 +93,7 @@ public class DriverDAOImpl extends AbstractUserDAO<Driver> implements UserDAO<Dr
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(FIND_ALL_DRIVERS_QUERY,
                     ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            statement.setInt(1, Role.DRIVER.getRoleId());
             resultSet = statement.executeQuery();
             while(resultSet.next()){
                 drivers.add(BuilderFactory.getDriverBuilder().build(resultSet));

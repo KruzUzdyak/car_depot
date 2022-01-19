@@ -15,7 +15,6 @@ public class Car implements Serializable {
     private CarModel model;
     private Driver driver;
 
-
     public Car(){
     }
 
