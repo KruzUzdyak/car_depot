@@ -62,6 +62,7 @@
     <fmt:message bundle="${loc}" key="cabinet.update_info_failed" var="update_info_failed"/>
     <fmt:message bundle="${loc}" key="cabinet.save_new_license_failed" var="save_new_license_failed"/>
     <fmt:message bundle="${loc}" key="cabinet.delete_license_failed" var="delete_license_failed"/>
+    <fmt:message bundle="${loc}" key="cabinet.back.button" var="back_button"/>
 
     <title>${default_title}</title>
 </head>
@@ -339,6 +340,15 @@
                 </c:if>
             </table>
         </form>
+        
+        <c:if test="${updateLogin or updatePass or updateInfo}">
+            <div class="text-center">
+                <form action="Controller" method="get">
+                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_USER_CABINET_PAGE}">
+                    <input type="submit" class="btn btn-outline-warning" value="${back_button}">
+                </form>
+            </div>
+        </c:if>
 
         <c:if test="${not updateLogin and not updatePass and not updateInfo}">
             <div class="container-fluid row">
@@ -428,7 +438,6 @@
                 </c:if>
             </table>
 
-
             <c:if test="${not saveLicense and not deleteLicense}">
                 <div class="container-fluid row text-center">
                     <div class="col-6">
@@ -443,6 +452,15 @@
                             <input type="submit" class="btn btn-outline-info" value="${license_delete_button}">
                         </form>
                     </div>
+                </div>
+            </c:if>
+
+            <c:if test="${saveLicense or deleteLicense}">
+                <div class="text-center">
+                    <form action="Controller" method="get">
+                        <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_USER_CABINET_PAGE}">
+                        <input type="submit" class="btn btn-outline-warning" value="${back_button}">
+                    </form>
                 </div>
             </c:if>
         </c:if>

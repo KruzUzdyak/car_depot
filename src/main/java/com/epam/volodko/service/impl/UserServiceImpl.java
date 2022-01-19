@@ -4,36 +4,34 @@ import com.epam.volodko.dao.DAOFactory;
 import com.epam.volodko.dao.DriverLicenseDAO;
 import com.epam.volodko.dao.UserDAO;
 import com.epam.volodko.dao.exception.DAOException;
-import com.epam.volodko.entity.user.*;
+import com.epam.volodko.entity.user.DriverLicense;
+import com.epam.volodko.entity.user.Role;
+import com.epam.volodko.entity.user.User;
 import com.epam.volodko.service.UserService;
 import com.epam.volodko.service.exception.ServiceException;
+import com.epam.volodko.service.validator.DriverLicenseValidator;
 import com.epam.volodko.service.validator.UserValidator;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class UserServiceImpl implements UserService {
 
-    private final Logger log = LogManager.getLogger(UserServiceImpl.class);
-
-    private final UserValidator validator = new UserValidator();
+    private final UserValidator userValidator = new UserValidator();
+    private final DriverLicenseValidator licenseValidator = new DriverLicenseValidator();
     private final UserDAO<User> userDAO = DAOFactory.getInstance().getUserDAO();
     private final DAOFactory daoFactory = DAOFactory.getInstance();
     private final DriverLicenseDAO licenseDAO = DAOFactory.getInstance().getLicenseDAO();
 
-    // TODO: 07.01.2022 add more validation
-
     @Override
     public boolean processRegistration(User user) throws ServiceException {
-        if (!validator.validateRegistration(user)){
+        if (!userValidator.validateRegistration(user)) {
             return false;
         }
         return saveNewUser(user);
     }
 
     @Override
-    public boolean processPasswordValidation(String password, String passwordRepeat){
-        return validator.validatePasswordRepeat(password, passwordRepeat);
+    public boolean processPasswordValidation(String password, String passwordRepeat) {
+        return userValidator.validatePasswordRepeat(password, passwordRepeat);
     }
 
     private boolean saveNewUser(User user) throws ServiceException {
@@ -49,18 +47,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User processLogination(String login, String password) throws ServiceException {
-        if (!validator.validateLoginAndPassword(login, password)) {
+        if (!userValidator.validateLoginAndPassword(login, password)) {
             return null;
         }
         String storedPasswordHash = getStoredPasswordHash(login);
-        if (verifyPassword(password, storedPasswordHash)){
+        if (verifyPassword(password, storedPasswordHash)) {
             return getUserFromDB(login);
         }
         return null;
     }
 
     @Override
-    public String encodePassword(String password){
+    public String encodePassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
@@ -79,7 +77,7 @@ public class UserServiceImpl implements UserService {
     public boolean updateUser(User user) throws ServiceException {
         int rowsAffectedUser;
         int rowsAffectedInfo;
-        try{
+        try {
             rowsAffectedUser = userDAO.update(user);
             rowsAffectedInfo = daoFactory.getUserDAO(user.getRole()).updateInfo(user);
         } catch (DAOException e) {
@@ -90,7 +88,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updatePassword(int userId, String newPassword, String newPasswordRepeat) throws ServiceException {
-        if (!validator.validatePasswordRepeat(newPassword, newPasswordRepeat)){
+        if (!userValidator.validatePasswordRepeat(newPassword, newPasswordRepeat)) {
             return false;
         }
         String passwordHash = encodePassword(newPassword);
@@ -105,7 +103,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateLogin(int id, String newLogin) throws ServiceException {
-        if (!validator.notEmptyString(newLogin)){
+        if (!userValidator.notEmptyString(newLogin)) {
             return false;
         }
         int rowsAffected;
@@ -114,14 +112,16 @@ public class UserServiceImpl implements UserService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
-
         return rowsAffected > 0;
     }
 
     @Override
     public boolean saveNewDriverLicense(int driverId, DriverLicense license) throws ServiceException {
+        if (!licenseValidator.validate(license)) {
+            return false;
+        }
         int rowsAffected;
-        try{
+        try {
             rowsAffected = licenseDAO.saveNew(driverId, license);
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean deleteDriverLicense(int driverId, int licenseTypeId) throws ServiceException {
         int rowsAffected;
-        try{
+        try {
             rowsAffected = licenseDAO.deleteById(driverId, licenseTypeId);
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -142,8 +142,8 @@ public class UserServiceImpl implements UserService {
 
     private boolean saveNewUserInfo(User user) throws ServiceException {
         int rowsAffected = 0;
-        try{
-            if(checkNotDriver(user)) {
+        try {
+            if (checkNotDriver(user)) {
                 rowsAffected = daoFactory.getUserDAO(user.getRole()).saveInfo(user.getId());
             }
         } catch (DAOException e) {
@@ -152,17 +152,17 @@ public class UserServiceImpl implements UserService {
         return rowsAffected > 0;
     }
 
-    private boolean checkNotDriver(User user){
+    private boolean checkNotDriver(User user) {
         return user.getRole() != null && user.getRole() != Role.DRIVER;
     }
 
-    private boolean verifyPassword(String password, String storedPasswordHash){
+    private boolean verifyPassword(String password, String storedPasswordHash) {
         return storedPasswordHash != null && BCrypt.checkpw(password, storedPasswordHash);
     }
 
     private User getUserFromDB(String login) throws ServiceException {
         User user;
-        try{
+        try {
             user = userDAO.findByLogin(login);
         } catch (DAOException e) {
             throw new ServiceException(e);

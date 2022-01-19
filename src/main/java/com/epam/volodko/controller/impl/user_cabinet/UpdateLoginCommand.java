@@ -17,13 +17,12 @@ import java.io.IOException;
 
 public class UpdateLoginCommand implements Command {
 
-    private final static String UPDATE_LOGIN_REDIRECT_COMMAND = String.format(
+    private static final String UPDATE_LOGIN_REDIRECT_COMMAND = String.format(
             "%s?%s=%s&%s=%s",
             CommandName.CONTROLLER, CommandName.COMMAND, CommandName.GO_TO_USER_CABINET_PAGE,
             ParameterName.MESSAGE, Message.UPDATE_LOGIN_SUCCESSFUL);
 
     private final Logger log = LogManager.getLogger(UpdateLoginCommand.class);
-
     private final UserService userService = ServiceFactory.getInstance().getUserService();
 
     @Override

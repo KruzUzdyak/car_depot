@@ -61,10 +61,7 @@ public class UpdateInfoCommand implements Command {
         admin.setId((int) request.getSession().getAttribute(ParameterName.USER_ID));
         admin.setName(request.getParameter(ParameterName.USER_NAME));
         admin.setPhone(request.getParameter(ParameterName.USER_PHONE));
-        String workSince = request.getParameter(ParameterName.ADMIN_WORKS_SINCE);
-        if (workSince != null && !workSince.isEmpty()){
-            admin.setWorksSince(DateFormatter.format(workSince));
-        }
+        admin.setWorksSince(DateFormatter.format(request.getParameter(ParameterName.ADMIN_WORKS_SINCE)));
         admin.setNote(request.getParameter(ParameterName.ADMIN_NOTE));
         return admin;
     }

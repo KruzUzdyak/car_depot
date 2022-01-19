@@ -9,6 +9,6 @@ public final class DateFormatter {
     private final static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
     public static Date format(String date) throws ParseException {
-        return formatter.parse(date);
+        return (date != null) ? formatter.parse(date) : null;
     }
 }
