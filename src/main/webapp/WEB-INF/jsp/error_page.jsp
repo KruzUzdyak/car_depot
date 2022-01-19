@@ -16,11 +16,13 @@
 
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="localization.locale" var="loc"/>
-    <fmt:message bundle="${loc}"  key="default.title" var="default_title"/>
+    <fmt:message bundle="${loc}" key="default.title" var="default_title"/>
 
     <title>${default_title}</title>
 </head>
 <body>
+
+<c:set var="errorMessage" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
 
 <br/><br/><br/>
 
@@ -28,6 +30,10 @@
     <p>THIS IS ERROR PAGE</p>
 
     <br/><br/>
+
+    <c:if test="${not empty errorMessage}">
+        <h4>${errorMessage}</h4>
+    </c:if>
 
     <form action="Controller" method="get">
         <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_MAIN_PAGE}">

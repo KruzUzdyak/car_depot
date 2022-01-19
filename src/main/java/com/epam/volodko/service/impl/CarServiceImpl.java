@@ -13,17 +13,29 @@ import java.util.List;
 
 public class CarServiceImpl implements CarService {
 
+    private static final String DRIVER_ID_NULL = "Driver id is null";
+    private static final String CAR_ID_NULL = "Car id is null";
+
     private final CarDAO carDAO = DAOFactory.getInstance().getCarDAO();
 
     @Override
     public Car getCarById(int carId) throws ServiceException {
-        return null;
+        if (carId == 0){
+            throw new ServiceException(CAR_ID_NULL);
+        }
+        Car car;
+        try{
+            car = carDAO.findById(carId);
+        } catch (DAOException e){
+            throw new ServiceException(e);
+        }
+        return car;
     }
 
     @Override
     public Car getCarByDriverId(int driverId) throws ServiceException {
         if (driverId == 0){
-            throw new ServiceException("Driver id is null");
+            throw new ServiceException(DRIVER_ID_NULL);
         }
         Car car;
         try {

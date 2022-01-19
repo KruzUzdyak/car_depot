@@ -38,6 +38,9 @@
     <title>${default_title}</title>
 </head>
 <body>
+
+<c:set var="userRole" scope="page" value="${sessionScope.get(ParameterName.USER_ROLE)}"/>
+
 <nav class="navbar navbar-default">
     <div class="container-fluid bg-light">
         <div class="navbar-header row">
@@ -116,13 +119,9 @@
                 <th>${th_capacity}</th>
                 <th>${th_availability}</th>
             </tr>
-            <c:if test="${not empty errorMessage}">
+            <c:if test="${errorMessage eq Message.CARS_LOAD_FAILED}">
                 <tr class="bg-warning">
-                    <td>${td_car_loading_failed}</td>
-                    <td>${td_car_loading_failed}</td>
-                    <td>${td_car_loading_failed}</td>
-                    <td>${td_car_loading_failed}</td>
-                    <td>${td_car_loading_failed}</td>
+                    <td colspan="5">${td_car_loading_failed}</td>
                 </tr>
             </c:if>
             <c:if test="${empty errorMessage}">
@@ -132,13 +131,22 @@
                         <td><p>${car.driver.name}</p></td>
                         <td><p>${car.model.loadType}</p></td>
                         <td><p>${car.model.capacity}</p></td>
-                        <td><c:if test="${not car.broken}">
-                                <p class="text-primary">${td_available}</p>
-                            </c:if>
-                            <c:if test="${car.broken}">
-                                <p class="text-muted">${td_not_available}</p>
-                            </c:if>
-                        </td>
+                        <c:if test="${not car.broken}">
+                            <td class="text-primary">${td_available}</td>
+                        </c:if>
+                        <c:if test="${car.broken}">
+                            <td class="text-muted">${td_not_available}</td>
+                        </c:if>
+                        <c:if test="${userRole eq Role.ADMIN}">
+                            <td class="text-center">
+                                <form action="Controller" method="get">
+                                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_CAR_INFO_PAGE}" >
+                                    <input type="hidden" name="${ParameterName.CAR_REQUEST_TYPE}" value="${ParameterName.CAR_BY_ID}">
+                                    <input type="hidden" name="${ParameterName.CAR_ID}" value="${car.id}">
+                                    <input type="submit" class="btn btn-info" value="INFO">
+                                </form>
+                            </td>
+                        </c:if>
                     </tr>
                 </c:forEach>
             </c:if>
@@ -146,7 +154,6 @@
     </div>
 </div>
 
-<c:set var="userRole" scope="page" value="${sessionScope.get(ParameterName.USER_ROLE)}"/>
 <div class="container-fluid row">
     <c:if test="${userRole eq Role.CLIENT}">
         <div class="col-5">
@@ -161,7 +168,7 @@
     </c:if>
 
     <c:if test="${userRole eq Role.ADMIN}">
-        <div class="col-3">
+        <div class="col-2">
 
         </div>
         <div class="col-2 text-center">
@@ -183,6 +190,12 @@
                 <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_REGISTRATION}">
                 <input type="hidden" name="${ParameterName.REGISTER_ROLE}" value="${Role.DRIVER}">
                 <input type="submit" class="btn btn-info" value="REGISTER_NEW_DRIVER">
+            </form>
+        </div>
+        <div class="col-2 text-center">
+            <form action="Controller" method="get">
+                <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_ADD_NEW_CAR}">
+                <input type="submit" class="btn btn-info" value="ADD NEW CAR">
             </form>
         </div>
     </c:if>

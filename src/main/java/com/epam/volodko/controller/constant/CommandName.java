@@ -35,7 +35,6 @@ public final class CommandName {
     public static final String UPDATE_ORDER = "update_order";
 
     public static final String GO_TO_CAR_INFO_PAGE = "go_to_car_info_page";
-
-
-
+    public static final String GO_TO_ADD_NEW_CAR = "go_to_add_new_car";
+    public static final String ADD_NEW_CAR = "add_new_car";
 }

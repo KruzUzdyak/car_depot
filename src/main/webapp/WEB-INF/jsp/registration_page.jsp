@@ -45,29 +45,31 @@
 <body>
 <c:set var="userRole" value="${sessionScope.get(ParameterName.USER_ROLE)}"/>
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid bg-light">
-        <div class="navbar-header row">
-            <div class="col-4">
-                <p>${locale_note}</p>
-            </div>
-            <div class="col-2">
-                <form action="Controller" method="post">
-                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
-                    <input type="hidden" name="${ParameterName.LOCALE}" value="ru">
-                    <input type="submit" class="btn btn-outline-info" value="${locale_button_ru}">
-                </form>
-            </div>
-            <div class="col-2">
-                <form action="Controller" method="post">
-                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
-                    <input type="hidden" name="${ParameterName.LOCALE}" value="en">
-                    <input type="submit" class="btn btn-outline-info" value="${locale_button_en}">
-                </form>
+<c:if test="${userRole != Role.ADMIN}">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid bg-light">
+            <div class="navbar-header row">
+                <div class="col-4">
+                    <p>${locale_note}</p>
+                </div>
+                <div class="col-2">
+                    <form action="Controller" method="post">
+                        <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
+                        <input type="hidden" name="${ParameterName.LOCALE}" value="ru">
+                        <input type="submit" class="btn btn-outline-info" value="${locale_button_ru}">
+                    </form>
+                </div>
+                <div class="col-2">
+                    <form action="Controller" method="post">
+                        <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.LOCALIZATION}">
+                        <input type="hidden" name="${ParameterName.LOCALE}" value="en">
+                        <input type="submit" class="btn btn-outline-info" value="${locale_button_en}">
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-</nav>
+    </nav>
+</c:if>
 
 <c:if test="${userRole eq Role.ADMIN}">
     <nav class="navbar navbar-default">

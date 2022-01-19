@@ -39,10 +39,13 @@ public final class ParameterName {
     public static final String CAR_LIST_ALL = "car_list_all";
     public static final String CAR_LIST = "car_list";
 
+    public static final String NEW_CAR = "new_car";
     public static final String CAR_REQUEST_TYPE = "car_request_type";
+    public static final String CAR_BY_ID = "car_by_id";
     public static final String CAR_BY_DRIVER_ID = "car_by_driver_id";
 
     public static final String CAR = "car";
+    public static final String CAR_ID = "car_id";
 
     public static final String ORDER = "order";
     public static final String ORDER_ID = "order_id";

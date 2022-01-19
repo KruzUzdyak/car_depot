@@ -3,6 +3,7 @@ package com.epam.volodko.controller.constant;
 public final class Message {
 
     public static final String NOT_LOGGED_ID = "not_logged_in";
+    public static final String NOT_ENOUGH_RIGHTS = "not_enough_rights";
 
     public static final String REGISTRATION_SUCCESSFUL = "registration_successful";
     public static final String PASSWORD_RESTRICTION_WARN = "password_restriction_warn";
@@ -30,6 +31,5 @@ public final class Message {
     public static final String CAR_INFO_LOAD_FAIL = "car_info_load_failed";
 
     public static final String ORDER_LOAD_FAILED = "orders_load_failed";
-
 
 }

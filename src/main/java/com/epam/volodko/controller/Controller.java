@@ -18,12 +18,12 @@ public class Controller extends HttpServlet {
 
     @Override
     public void init(){
-        log.warn("Receive request from client. Starting new Thread.");
+        log.info("Receive request from user. Starting new Thread.");
     }
 
     @Override
     public void destroy() {
-        log.warn(String.format("Request from client completed. Thread destroy process started - %s.", Thread.currentThread()));
+        log.info(String.format("Request from user completed. Thread destroy process started - %s.", Thread.currentThread()));
     }
 
     @Override

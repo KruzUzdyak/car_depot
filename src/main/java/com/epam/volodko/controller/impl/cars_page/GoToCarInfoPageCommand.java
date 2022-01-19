@@ -16,9 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class GoToCarInfoPage implements Command {
+public class GoToCarInfoPageCommand implements Command {
 
-    private final Logger log = LogManager.getLogger(GoToCarInfoPage.class);
+    private final Logger log = LogManager.getLogger(GoToCarInfoPageCommand.class);
     private final CarService carService = ServiceFactory.getInstance().getCarService();
 
     @Override
@@ -37,12 +37,22 @@ public class GoToCarInfoPage implements Command {
         String carRequestType = request.getParameter(ParameterName.CAR_REQUEST_TYPE);
         Car car = null;
         switch (carRequestType){
-            case ParameterName.CAR_BY_DRIVER_ID -> {
-                int driverId = (int) request.getSession().getAttribute(ParameterName.USER_ID);
-                car = carService.getCarByDriverId(driverId);
-            }
+            case ParameterName.CAR_BY_ID -> car = getCarById(request);
+            case ParameterName.CAR_BY_DRIVER_ID -> car = getCarByDriver(request);
             default -> request.setAttribute(ParameterName.ERROR_MESSAGE, Message.CAR_INFO_LOAD_FAIL);
         }
         request.setAttribute(ParameterName.CAR, car);
     }
+
+    private Car getCarById(HttpServletRequest request) throws ServiceException {
+        int carId = Integer.parseInt(request.getParameter(ParameterName.CAR_ID));
+        return carService.getCarById(carId);
+    }
+
+    private Car getCarByDriver(HttpServletRequest request) throws ServiceException {
+        int driverId = (int) request.getSession().getAttribute(ParameterName.USER_ID);
+        return carService.getCarByDriverId(driverId);
+    }
+
+
 }
