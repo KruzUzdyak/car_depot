@@ -11,7 +11,23 @@ import java.util.List;
 
 public class CarModelServiceImpl implements CarModelService {
 
+    private static final String ID_NULL_OR_NEGATIVE = "Car model id can't be null or negative";
+
     private final CarModelDAO modelDAO = DAOFactory.getInstance().getCarModelDAO();
+
+    @Override
+    public CarModel getById(int id) throws ServiceException {
+        if (id <= 0){
+            throw new ServiceException(ID_NULL_OR_NEGATIVE);
+        }
+        CarModel carModel;
+        try{
+            carModel = modelDAO.findById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return carModel;
+    }
 
     @Override
     public List<CarModel> getCarModelList() throws ServiceException {
@@ -23,4 +39,6 @@ public class CarModelServiceImpl implements CarModelService {
         }
         return carModels;
     }
+
+
 }

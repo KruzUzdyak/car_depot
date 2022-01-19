@@ -12,4 +12,6 @@ public interface CarService {
     Car getCarByDriverId(int driverId) throws ServiceException;
 
     List<Car> getAllCars() throws ServiceException;
+
+    boolean saveCar(Car car) throws ServiceException;
 }

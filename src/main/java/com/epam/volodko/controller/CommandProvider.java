@@ -2,6 +2,7 @@ package com.epam.volodko.controller;
 
 import com.epam.volodko.controller.impl.*;
 import com.epam.volodko.controller.constant.CommandName;
+import com.epam.volodko.controller.impl.cars_page.AddNewCarCommand;
 import com.epam.volodko.controller.impl.cars_page.GoToAddNewCarCommand;
 import com.epam.volodko.controller.impl.cars_page.GoToCarInfoPageCommand;
 import com.epam.volodko.controller.impl.main_page.GoToMainPageCommand;
@@ -39,6 +40,7 @@ public final class CommandProvider {
         commands.put(CommandName.SAVE_LICENSE_CONFIRM, new LicenseSaveCommand());
         commands.put(CommandName.GO_TO_CAR_INFO_PAGE, new GoToCarInfoPageCommand());
         commands.put(CommandName.GO_TO_ADD_NEW_CAR, new GoToAddNewCarCommand());
+        commands.put(CommandName.ADD_NEW_CAR, new AddNewCarCommand());
     }
 
     public Command getCommand(String commandName){

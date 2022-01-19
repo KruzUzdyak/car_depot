@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface CarModelService {
 
-    public List<CarModel> getCarModelList() throws ServiceException;
+    List<CarModel> getCarModelList() throws ServiceException;
+
+    CarModel getById(int id) throws ServiceException;
 }

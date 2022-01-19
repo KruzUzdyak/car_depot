@@ -56,4 +56,18 @@ public class CarServiceImpl implements CarService {
         }
         return cars;
     }
+
+    @Override
+    public boolean saveCar(Car car) throws ServiceException {
+        if (false) {
+            return false;
+        }
+        int rowsAffected;
+        try{
+            rowsAffected = carDAO.saveNew(car);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return rowsAffected > 0;
+    }
 }

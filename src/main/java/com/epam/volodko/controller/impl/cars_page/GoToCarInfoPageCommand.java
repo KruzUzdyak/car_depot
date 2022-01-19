@@ -27,7 +27,7 @@ public class GoToCarInfoPageCommand implements Command {
             setCarInfo(request);
         } catch (ServiceException e){
             log.error("Catching: ", e);
-            request.setAttribute(ParameterName.ERROR_MESSAGE, Message.CAR_INFO_LOAD_FAIL);
+            request.setAttribute(ParameterName.ERROR_MESSAGE, Message.CAR_INFO_LOAD_FAILED);
         }
 
         forward(request, response, PagePath.CAR_INFO_PAGE);
@@ -39,7 +39,7 @@ public class GoToCarInfoPageCommand implements Command {
         switch (carRequestType){
             case ParameterName.CAR_BY_ID -> car = getCarById(request);
             case ParameterName.CAR_BY_DRIVER_ID -> car = getCarByDriver(request);
-            default -> request.setAttribute(ParameterName.ERROR_MESSAGE, Message.CAR_INFO_LOAD_FAIL);
+            default -> request.setAttribute(ParameterName.ERROR_MESSAGE, Message.CAR_INFO_LOAD_FAILED);
         }
         request.setAttribute(ParameterName.CAR, car);
     }

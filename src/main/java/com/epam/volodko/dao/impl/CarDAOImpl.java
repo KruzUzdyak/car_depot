@@ -162,7 +162,11 @@ public class CarDAOImpl extends AbstractDAO implements CarDAO {
         statement.setInt(3, car.getMileage());
         statement.setBoolean(4, car.isBroken());
         statement.setInt(5, car.getModel().getId());
-        statement.setInt(6, car.getDriver().getId());
+        if (car.getDriver() != null) {
+            statement.setInt(6, car.getDriver().getId());
+        } else{
+            statement.setObject(6, null);
+        }
     }
 
 

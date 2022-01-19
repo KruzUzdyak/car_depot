@@ -33,7 +33,7 @@
 <c:set var="userRole" value="${sessionScope.get(ParameterName.USER_ROLE)}"/>
 <c:set var="newCar" value="${requestScope.get(ParameterName.NEW_CAR)}"/>
 <c:set var="message" value="${requestScope.get(ParameterName.MESSAGE)}"/>
-<c:set var="errorMessage" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
+<c:set var="errorMessage" value="${param.get(ParameterName.ERROR_MESSAGE)}"/>
 <c:set var="car" value="${requestScope.get(ParameterName.CAR)}"/>
 <c:set var="carModelList" value="${requestScope.get(ParameterName.CAR_MODEL_LIST)}"/>
 <c:set var="driverList" value="${requestScope.get(ParameterName.DRIVER_LIST)}"/>
@@ -90,20 +90,25 @@
 <br/>
 <c:if test="${not newCar}">
     <div class="container-fluid row">
-        <div class="col-4">
-
+        <div class="col-4 text-center">
+            <c:if test="${userRole eq Role.ADMIN}">
+                <form action="Controller" method="get">
+                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_ADD_NEW_CAR}">
+                    <input type="submit" value="ADD NEW CAR">
+                </form>
+            </c:if>
         </div>
         <div class="col-4 ">
             <table class="table table-borderless table-striped text-center">
                 <tr>
                     <th colspan="3">CAR</th>
                 </tr>
-                <c:if test="${errorMessage eq Message.CAR_INFO_LOAD_FAIL}">
+                <c:if test="${errorMessage eq Message.CAR_INFO_LOAD_FAILED}">
                     <tr class="bg-warning">
                         <td colspan="3">${errorMessage}</td>
                     </tr>
                 </c:if>
-                <c:if test="${!errorMessage.equals(Message.CAR_INFO_LOAD_FAIL)}">
+                <c:if test="${!errorMessage.equals(Message.CAR_INFO_LOAD_FAILED)}">
                     <tr>
                         <th>car id</th>
                         <td colspan="2">${car.id}</td>
@@ -185,6 +190,9 @@
 
         </div>
         <div class="col-4 ">
+            <c:if test="${errorMessage eq Message.ADD_NEW_CAR_FAILED}">
+                ${errorMessage}
+            </c:if>
             <table class="table table-borderless table-striped text-center">
                 <form action="Controller" method="post">
                     <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.ADD_NEW_CAR}">
@@ -198,6 +206,7 @@
                                 ${errorMessage}
                             </c:if>
                             <select required name="${ParameterName.CAR_DRIVER_ID}">
+                                <option selected value="0">EMPTY</option>
                                 <c:forEach var="driver" items="${driverList}">
                                     <option value="${driver.id}">${driver.id} : ${driver.name}</option>
                                 </c:forEach>
@@ -206,15 +215,15 @@
                     </tr>
                     <tr>
                         <th>plate number</th>
-                        <td colspan="2"><input type="text" name="${ParameterName.CAR_PLATE_NUMBER}"></td>
+                        <td colspan="2"><input type="text" required name="${ParameterName.CAR_PLATE_NUMBER}"></td>
                     </tr>
                     <tr>
                         <th>current fuel</th>
-                        <td colspan="2"><input type="number" name="${ParameterName.CAR_FUEL_LEVEL}"></td>
+                        <td colspan="2"><input type="number" min="0" required  name="${ParameterName.CAR_FUEL_LEVEL}" placeholder="0"></td>
                     </tr>
                     <tr>
                         <th>current mileage</th>
-                        <td colspan="2"><input type="number" name="${ParameterName.CAR_MILEAGE}"></td>
+                        <td colspan="2"><input type="number" min="0" required name="${ParameterName.CAR_MILEAGE}" placeholder="0"></td>
                     </tr>
                     <tr>
                         <th>Need repair</th>
