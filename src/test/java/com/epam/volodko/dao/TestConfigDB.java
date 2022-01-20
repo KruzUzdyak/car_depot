@@ -11,7 +11,7 @@ public class TestConfigDB {
 
     private static final TestConfigDB instance = new TestConfigDB();
 
-    private final ResourceBundle bundle = ResourceBundle.getBundle("database.db_test");
+    private final ResourceBundle bundle = ResourceBundle.getBundle("db");
     private final String driverName = bundle.getString("db.driver");
     private final String url = bundle.getString("db.url");
     private final String user = bundle.getString("db.user");
