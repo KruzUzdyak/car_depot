@@ -5,7 +5,6 @@ import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.dao.table_name.Table;
 import com.epam.volodko.entity.user.*;
 import org.flywaydb.core.internal.jdbc.RowMapper;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class UserDaoIT extends DataBaseIT{
 
