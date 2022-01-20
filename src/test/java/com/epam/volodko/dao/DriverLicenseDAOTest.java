@@ -32,6 +32,9 @@ public class DriverLicenseDAOTest {
         int expectedAffect = 1;
 
         assertEquals(expectedAffect, rowsAffected);
+
     }
+
+
 
 }
