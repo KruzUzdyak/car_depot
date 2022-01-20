@@ -8,6 +8,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import static com.epam.volodko.dao.Query.*;
+
 public /*abstract*/ class DataBaseIT {
 
     private JdbcTemplate jdbcTemplate;
@@ -48,7 +50,29 @@ public /*abstract*/ class DataBaseIT {
         DataBaseIT test = new DataBaseIT();
         test.initJdbcTemplate();
         test.cleanDB();
-        test.fillDB(Query.SQL_CREATE_LICENSE_TYPES, Query.SQL_FILL_LICENSE_TYPES);
-
+        test.fillDB(SQL_CREATE_LICENSE_TYPES,
+                SQL_CREATE_CAR_TYPES,
+                SQL_CREATE_CAR_MODELS,
+                SQL_CREATE_ROLES,
+                SQL_CREATE_USERS,
+                SQL_CREATE_CARS,
+                SQL_CREATE_DRIVER_LICENSES,
+                SQL_CREATE_ORDERS,
+                SQL_CREATE_REPAIR_RECORDS,
+                SQL_CREATE_CLIENT_INFO,
+                SQL_CREATE_ADMIN_INFO,
+                SQL_CREATE_REFUEL_RECORDS);
+        test.fillDB(SQL_FILL_LICENSE_TYPES,
+                SQL_FILL_CAR_TYPES,
+                SQL_FILL_CAR_MODELS,
+                SQL_FILL_ROLES,
+                SQL_FILL_USERS,
+                SQL_FILL_CARS,
+                SQL_FILL_DRIVER_LICENSES,
+                SQL_FILL_ORDERS,
+                SQL_FILL_REPAIR_RECORDS,
+                SQL_FILL_CLIENT_INFO,
+                SQL_FILL_ADMIN_INFO,
+                SQL_FILL_REFUEL_RECORDS);
     }
 }
