@@ -43,7 +43,8 @@ public abstract class AbstractDAO {
         return rowsAffected;
     }
 
-    void closeConnection(Connection connection, Statement statement, ResultSet resultSet) throws DAOException {
+    void closeConnection(Connection connection, Statement statement, ResultSet resultSet)
+            throws DAOException {
         try {
             ConnectionPool.getInstance().closeConnection(connection, statement, resultSet);
         } catch (ConnectionPoolException e) {

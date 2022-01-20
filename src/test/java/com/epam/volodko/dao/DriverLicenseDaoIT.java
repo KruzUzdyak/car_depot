@@ -1,7 +1,5 @@
 package com.epam.volodko.dao;
 
-import com.epam.volodko.dao.database.ConnectionPool;
-import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
 import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.dao.table_name.Table;
@@ -15,8 +13,10 @@ import org.junit.Test;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class DriverLicenseDaoIT extends DataBaseIT {
 
@@ -53,10 +53,25 @@ public class DriverLicenseDaoIT extends DataBaseIT {
     }
 
     @Test(expected = DAOException.class)
-    public void testOnWrongDriverId() throws DAOException {
+    public void testSaveNewWrongDriverId() throws DAOException {
         DriverLicense license =
                 new DriverLicense(DriverLicenseType.A1, new Date(), "123qwe");
         licenseDAO.saveNew(-1, license);
+    }
+
+    @Test
+    public void testDeleteById() throws DAOException, SQLException {
+        int driverId = 6;
+        int licenseTypeId = DriverLicenseType.CE.getId();
+
+        int rowsAffected = licenseDAO.deleteById(driverId, licenseTypeId);
+        int expectedAffect = 1;
+
+        List<DriverLicense> licenses = getJdbcTemplate()
+                .query(GET_DRIVER_LICENSE, licenseMapper(), driverId, licenseTypeId);
+
+        assertEquals(expectedAffect, rowsAffected);
+        assertTrue(licenses.isEmpty());
     }
 
     private RowMapper<DriverLicense> licenseMapper(){
