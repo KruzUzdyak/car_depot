@@ -17,6 +17,7 @@ public class DriverBuilder extends UserBuilder {
 
     private void buildDriver(Driver driver, ResultSet resultSet) throws SQLException {
         buildUser(driver, resultSet);
+
         DriverLicenseBuilder licenseBuilder = BuilderFactory.getDriverLicenseBuilder();
         driver.addLicense(licenseBuilder.build(resultSet));
         int currentDriverId = driver.getId();

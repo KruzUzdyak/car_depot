@@ -3,7 +3,9 @@ package com.epam.volodko.dao;
 import com.epam.volodko.dao.database.ConnectionPool;
 import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
 import org.flywaydb.core.internal.jdbc.JdbcTemplate;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -20,9 +22,14 @@ public abstract class DataBaseIT {
         cleanDB();
     }
 
-    @Before
-    public void initConnectionPool() throws ConnectionPoolException {
+    @BeforeClass
+    public static void initConnectionPool() throws ConnectionPoolException {
         ConnectionPool.init();
+    }
+
+    @AfterClass
+    public static void disposeConnectionPool() throws ConnectionPoolException {
+        ConnectionPool.getInstance().dispose();
     }
 
     public void cleanDB() throws SQLException {
@@ -50,35 +57,4 @@ public abstract class DataBaseIT {
         }
         return builder.toString();
     }
-
-
-//    public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
-//        DataBaseIT test = new DriverLicenseDaoIT();
-//        test.initJdbcTemplate();
-//        test.cleanDB();
-//        test.fillDB(SQL_CREATE_LICENSE_TYPES,
-//                SQL_CREATE_CAR_TYPES,
-//                SQL_CREATE_CAR_MODELS,
-//                SQL_CREATE_ROLES,
-//                SQL_CREATE_USERS,
-//                SQL_CREATE_CARS,
-//                SQL_CREATE_DRIVER_LICENSES,
-//                SQL_CREATE_ORDERS,
-//                SQL_CREATE_REPAIR_RECORDS,
-//                SQL_CREATE_CLIENT_INFO,
-//                SQL_CREATE_ADMIN_INFO,
-//                SQL_CREATE_REFUEL_RECORDS);
-//        test.fillDB(SQL_FILL_LICENSE_TYPES,
-//                SQL_FILL_CAR_TYPES,
-//                SQL_FILL_CAR_MODELS,
-//                SQL_FILL_ROLES,
-//                SQL_FILL_USERS,
-//                SQL_FILL_CARS,
-//                SQL_FILL_DRIVER_LICENSES,
-//                SQL_FILL_ORDERS,
-//                SQL_FILL_REPAIR_RECORDS,
-//                SQL_FILL_CLIENT_INFO,
-//                SQL_FILL_ADMIN_INFO,
-//                SQL_FILL_REFUEL_RECORDS);
-//    }
 }
