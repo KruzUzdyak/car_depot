@@ -9,6 +9,10 @@ import com.epam.volodko.entity.user.User;
 import org.flywaydb.core.internal.jdbc.RowMapper;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.theories.DataPoints;
+import org.junit.experimental.theories.Theories;
+import org.junit.experimental.theories.Theory;
+import org.junit.runner.RunWith;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -16,6 +20,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(Theories.class)
 public class UserDaoIT extends DataBaseIT{
 
     private static final String FIND_USER_BY_ID_QUERY = String.format(
@@ -30,6 +35,11 @@ public class UserDaoIT extends DataBaseIT{
             Table.USERS, Table.ROLES,
             Column.USERS_ROLE_ID, Column.ROLES_ID);
 
+    @DataPoints
+    public static String[] logins = new String[] {"admin1", "admin2", "client1", "client2", "driver1", "driver2"};
+    @DataPoints
+    public static int[] userIds = new int[] {1, 2, 3, 4, 5, 6};
+
     private final UserDAO<User> userDAO = DAOFactory.getInstance().getUserDAO();
 
     @Before
@@ -38,36 +48,18 @@ public class UserDaoIT extends DataBaseIT{
                 Query.SQL_FILL_ROLES, Query.SQL_FILL_USERS);
     }
 
-    @Test
-    public void testFindById() throws DAOException, SQLException {
-        int userId = 1;
+    @Theory
+    public void testFindById(int userId) throws DAOException, SQLException {
         User expectedUser = getJdbcTemplate()
                 .query(FIND_USER_BY_ID_QUERY, userMapper(), userId)
                 .get(0);
         User actualUser = userDAO.findById(userId);
 
         assertEquals(expectedUser, actualUser);
-
-        userId = 3;
-        expectedUser = getJdbcTemplate()
-                .query(FIND_USER_BY_ID_QUERY, userMapper(), userId)
-                .get(0);
-        actualUser = userDAO.findById(userId);
-
-        assertEquals(expectedUser, actualUser);
-
-        userId = 5;
-        expectedUser = getJdbcTemplate()
-                .query(FIND_USER_BY_ID_QUERY, userMapper(), userId)
-                .get(0);
-        actualUser = userDAO.findById(userId);
-
-        assertEquals(expectedUser, actualUser);
     }
 
-    @Test
-    public void testFindByLogin() throws SQLException, DAOException {
-        String login = "admin1";
+    @Theory
+    public void testFindByLogin(String login) throws SQLException, DAOException {
         User expectedUser = getJdbcTemplate()
                 .query(FIND_USER_BY_LOGIN_QUERY, userMapper(), login)
                 .get(0);
@@ -84,6 +76,7 @@ public class UserDaoIT extends DataBaseIT{
 
         assertEquals(expectedUsers, actualUsers);
     }
+
 
     @Test
     public void testSaveInfoDisabled() throws DAOException {
