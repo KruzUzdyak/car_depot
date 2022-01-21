@@ -78,7 +78,40 @@ public class ClientDaoIT extends DataBaseIT{
         assertEquals(expectedClients, actualClients);
     }
 
+    @Test
+    public void testSaveInfo() throws DAOException, SQLException{
+        Client client = new Client(0, "stub", "stub", "stub",
+                "stub", Role.CLIENT, null, null);
+        clientDAO.saveNew(client);
+        client.setPassword(null);
+        int rowsAffected = clientDAO.saveInfo(client.getId());
+        Client actualClient = getJdbcTemplate()
+                .query(FIND_CLIENT_BY_ID_QUERY, clientMapper(), client.getId())
+                .get(0);
 
+        assertEquals(1, rowsAffected);
+        assertEquals(client, actualClient);
+    }
+
+    @Test
+    public void updateInfo() throws DAOException, SQLException{
+        Client client = getJdbcTemplate()
+                .query(FIND_CLIENT_BY_ID_QUERY, clientMapper(), 3)
+                .get(0);
+        client.setNote("new note");
+        client.setCompany("new company");
+        Client expectedClient = new Client(client.getId(), client.getLogin(), client.getPassword(), client.getName(),
+                client.getPhone(), client.getRole(), client.getCompany(), client.getNote());
+        client.setLogin("stub");
+        client.setName("ctub");
+        int rowsAffected = clientDAO.updateInfo(client);
+        Client actualClient = getJdbcTemplate()
+                .query(FIND_CLIENT_BY_ID_QUERY, clientMapper(), expectedClient.getId())
+                .get(0);
+
+        assertEquals(1, rowsAffected);
+        assertEquals(expectedClient, actualClient);
+    }
 
 
     private RowMapper<Client> clientMapper(){

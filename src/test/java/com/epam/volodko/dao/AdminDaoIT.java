@@ -97,7 +97,7 @@ public class AdminDaoIT extends DataBaseIT {
     }
 
     @Test
-    public void testUpdateInfo()throws DAOException, SQLException{
+    public void testUpdateInfo() throws DAOException, SQLException {
         Admin admin = getJdbcTemplate()
                 .query(FIND_ADMIN_BY_ID_QUERY, adminMapper(), 1)
                 .get(0);
@@ -116,7 +116,7 @@ public class AdminDaoIT extends DataBaseIT {
         assertEquals(expectedAdmin, actualAdmin);
     }
 
-    private RowMapper<Admin> adminMapper () {
+    private RowMapper<Admin> adminMapper() {
         return (rs) -> {
             int id = rs.getInt(Column.USERS_ID);
             String login = rs.getString(Column.USERS_LOGIN);
