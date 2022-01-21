@@ -108,15 +108,15 @@ public abstract class AbstractUserDAO<T extends User> extends AbstractDAO{
         return processUpdatingUserFieldById(userId, newPassword, UPDATE_PASSWORD_QUERY);
     }
 
-    private int processUpdatingUserFieldById(int userId, String newPassword, String updatePasswordQuery)
+    private int processUpdatingUserFieldById(int userId, String newData, String updateQuery)
             throws DAOException {
         Connection connection = null;
         PreparedStatement statement = null;
         int rowsAffected;
         try {
             connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareStatement(updatePasswordQuery);
-            statement.setString(1, newPassword);
+            statement = connection.prepareStatement(updateQuery);
+            statement.setString(1, newData);
             statement.setInt(2, userId);
             rowsAffected = statement.executeUpdate();
         } catch (ConnectionPoolException | SQLException e) {
