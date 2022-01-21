@@ -1,7 +1,5 @@
 package com.epam.volodko.dao;
 
-import org.flywaydb.core.internal.jdbc.JdbcTemplate;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,17 +15,17 @@ public class TestConfigDB {
     private final String user = bundle.getString("db.user");
     private final String password = bundle.getString("db.password");
 
-    private JdbcTemplate jdbcTemplate;
+    private ScrollableJdbcTemplate jdbcScrollableJdbcTemplate;
 
     private TestConfigDB(){}
 
-    public JdbcTemplate getJdbcTemplate() throws SQLException, ClassNotFoundException {
-        if (jdbcTemplate == null) {
+    public ScrollableJdbcTemplate getScrollableJdbcTemplate() throws SQLException, ClassNotFoundException {
+        if (jdbcScrollableJdbcTemplate == null) {
             Class.forName(driverName);
             Connection connection = DriverManager.getConnection(url, user, password);
-            jdbcTemplate = new JdbcTemplate(connection);
+            jdbcScrollableJdbcTemplate = new ScrollableJdbcTemplate(connection);
         }
-        return jdbcTemplate;
+        return jdbcScrollableJdbcTemplate;
     }
 
     public static TestConfigDB getInstance() {

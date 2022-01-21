@@ -18,7 +18,7 @@ public abstract class DataBaseIT {
 
     @Before
     public void initTestDB() throws SQLException, ClassNotFoundException {
-        jdbcTemplate = TestConfigDB.getInstance().getJdbcTemplate();
+        jdbcTemplate = TestConfigDB.getInstance().getScrollableJdbcTemplate();
         cleanDB();
     }
 
