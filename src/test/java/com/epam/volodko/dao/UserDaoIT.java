@@ -3,15 +3,16 @@ package com.epam.volodko.dao;
 import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.dao.table_name.Table;
-import com.epam.volodko.entity.user.*;
+import com.epam.volodko.entity.user.Role;
+import com.epam.volodko.entity.user.RoleProvider;
+import com.epam.volodko.entity.user.User;
 import org.flywaydb.core.internal.jdbc.RowMapper;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -20,9 +21,16 @@ public class UserDaoIT extends DataBaseIT{
     private static final String FIND_USER_BY_ID_QUERY = String.format(
             "SELECT * FROM %s WHERE %s = ?;",
             Table.USERS, Column.USERS_ID);
+    private static final String FIND_USER_BY_LOGIN_QUERY = String.format(
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s=r.%s WHERE u.%s=?;",
+            Table.USERS, Table.ROLES,
+            Column.USERS_ROLE_ID, Column.ROLES_ID, Column.USERS_LOGIN);
+    private static final String FIND_ALL_USERS_QUERY = String.format(
+            "SELECT * FROM %s AS u JOIN %s AS r ON u.%s=r.%s;",
+            Table.USERS, Table.ROLES,
+            Column.USERS_ROLE_ID, Column.ROLES_ID);
 
-
-    private final DAOFactory factory = DAOFactory.getInstance();
+    private final UserDAO<User> userDAO = DAOFactory.getInstance().getUserDAO();
 
     @Before
     public void init() throws IOException, SQLException {
@@ -36,11 +44,52 @@ public class UserDaoIT extends DataBaseIT{
         User expectedUser = getJdbcTemplate()
                 .query(FIND_USER_BY_ID_QUERY, userMapper(), userId)
                 .get(0);
-        User actualUser = factory.getUserDAO().findById(userId);
+        User actualUser = userDAO.findById(userId);
+
+        assertEquals(expectedUser, actualUser);
+
+        userId = 3;
+        expectedUser = getJdbcTemplate()
+                .query(FIND_USER_BY_ID_QUERY, userMapper(), userId)
+                .get(0);
+        actualUser = userDAO.findById(userId);
+
+        assertEquals(expectedUser, actualUser);
+
+        userId = 5;
+        expectedUser = getJdbcTemplate()
+                .query(FIND_USER_BY_ID_QUERY, userMapper(), userId)
+                .get(0);
+        actualUser = userDAO.findById(userId);
 
         assertEquals(expectedUser, actualUser);
     }
 
+    @Test
+    public void testFindByLogin() throws SQLException, DAOException {
+        String login = "admin1";
+        User expectedUser = getJdbcTemplate()
+                .query(FIND_USER_BY_LOGIN_QUERY, userMapper(), login)
+                .get(0);
+        User actualUser = userDAO.findByLogin(login);
+
+        assertEquals(expectedUser, actualUser);
+    }
+
+    @Test
+    public void testFindAll() throws SQLException, DAOException{
+        List<User> expectedUsers = getJdbcTemplate()
+                .query(FIND_ALL_USERS_QUERY, userMapper());
+        List<User> actualUsers = userDAO.findAll();
+
+        assertEquals(expectedUsers, actualUsers);
+    }
+
+    @Test
+    public void testSaveInfoDisabled() throws DAOException {
+        int result = userDAO.saveInfo(9000);
+        assertEquals(0, result);
+    }
 
     private RowMapper<User> userMapper(){
         return (rs) -> {
@@ -51,62 +100,5 @@ public class UserDaoIT extends DataBaseIT{
             Role role = RoleProvider.getRole(rs.getInt(Column.USERS_ROLE_ID));
             return new User(id, login, null, name, phone, role);
         };
-    }
-
-    private RowMapper<Admin> adminMapper(){
-        return (rs) -> {
-            int id = rs.getInt(Column.USERS_ID);
-            String login = rs.getString(Column.USERS_LOGIN);
-            String name = rs.getString(Column.USERS_NAME);
-            String phone = rs.getString(Column.USERS_PHONE);
-            Role role = RoleProvider.getRole(rs.getInt(Column.USERS_ROLE_ID));
-            String note = rs.getString(Column.ADMIN_INFO_NOTE);
-            Date workSince = new Date(rs.getLong(Column.ADMIN_INFO_WORKS_SINCE));
-            return new Admin(id, login, null, name, phone, role, workSince, note);
-        };
-    }
-
-    private RowMapper<Client> clientMapper(){
-        return (rs) -> {
-            int id = rs.getInt(Column.USERS_ID);
-            String login = rs.getString(Column.USERS_LOGIN);
-            String name = rs.getString(Column.USERS_NAME);
-            String phone = rs.getString(Column.USERS_PHONE);
-            Role role = RoleProvider.getRole(rs.getInt(Column.USERS_ROLE_ID));
-            String note = rs.getString(Column.CLIENT_INFO_NOTE);
-            String company = rs.getString(Column.CLIENT_INFO_COMPANY);
-            return new Client(id, login, null, name, phone, role, company, note);
-        };
-    }
-
-    private RowMapper<Driver> driverMapper(){
-        return (rs) -> {
-            int id = rs.getInt(Column.USERS_ID);
-            String login = rs.getString(Column.USERS_LOGIN);
-            String name = rs.getString(Column.USERS_NAME);
-            String phone = rs.getString(Column.USERS_PHONE);
-            Role role = RoleProvider.getRole(rs.getInt(Column.USERS_ROLE_ID));
-            Driver driver = new Driver(id, login, null, name, phone, role);
-            mapDriverLicenses(rs, driver);
-
-            return driver;
-        };
-    }
-
-    private void mapDriverLicenses(ResultSet rs, Driver driver) throws SQLException {
-        int id = driver.getId();
-        while (rs.next()){
-            int nextDriverId = rs.getInt(Column.USERS_ID);
-            if (id == nextDriverId){
-                DriverLicenseType licenseType =
-                        LicenseTypeProvider.getLicenseType(rs.getInt(Column.DRIVER_LICENSES_LICENSE_ID));
-                Date obtainingDate = new Date(rs.getLong(Column.DRIVER_LICENSES_OBTAINING_DATE));
-                String licenseNumber = rs.getString(Column.DRIVER_LICENSES_LICENSE_NUMBER);
-                driver.addLicense(new DriverLicense(licenseType, obtainingDate, licenseNumber));
-            } else {
-                rs.previous();
-                break;
-            }
-        }
     }
 }
