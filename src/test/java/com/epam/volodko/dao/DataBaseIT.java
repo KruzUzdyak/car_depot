@@ -3,6 +3,7 @@ package com.epam.volodko.dao;
 import com.epam.volodko.dao.database.ConnectionPool;
 import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
 import org.flywaydb.core.internal.jdbc.JdbcTemplate;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -14,7 +15,7 @@ import java.sql.SQLException;
 
 public abstract class DataBaseIT {
 
-    private JdbcTemplate jdbcTemplate;
+    private static JdbcTemplate jdbcTemplate;
 
     @Before
     public void initTestDB() throws SQLException, ClassNotFoundException {
@@ -23,7 +24,9 @@ public abstract class DataBaseIT {
     }
 
     @BeforeClass
-    public static void initConnectionPool() throws ConnectionPoolException {
+    public static void initConnectionPool() throws ConnectionPoolException, SQLException, ClassNotFoundException {
+//        jdbcTemplate = TestConfigDB.getInstance().getScrollableJdbcTemplate();
+//        cleanDB();
         ConnectionPool.init();
     }
 

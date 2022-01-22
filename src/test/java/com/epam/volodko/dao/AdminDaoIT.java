@@ -8,6 +8,7 @@ import com.epam.volodko.entity.user.Role;
 import com.epam.volodko.entity.user.RoleProvider;
 import org.flywaydb.core.internal.jdbc.RowMapper;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
