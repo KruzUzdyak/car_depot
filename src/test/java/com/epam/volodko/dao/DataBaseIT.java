@@ -3,9 +3,7 @@ package com.epam.volodko.dao;
 import com.epam.volodko.dao.database.ConnectionPool;
 import com.epam.volodko.dao.database.pool_exception.ConnectionPoolException;
 import org.flywaydb.core.internal.jdbc.JdbcTemplate;
-import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 
 import java.io.BufferedReader;
@@ -17,16 +15,10 @@ public abstract class DataBaseIT {
 
     private static JdbcTemplate jdbcTemplate;
 
-    @Before
-    public void initTestDB() throws SQLException, ClassNotFoundException {
-        jdbcTemplate = TestConfigDB.getInstance().getScrollableJdbcTemplate();
-        cleanDB();
-    }
-
     @BeforeClass
     public static void initConnectionPool() throws ConnectionPoolException, SQLException, ClassNotFoundException {
-//        jdbcTemplate = TestConfigDB.getInstance().getScrollableJdbcTemplate();
-//        cleanDB();
+        jdbcTemplate = TestConfigDB.getInstance().getScrollableJdbcTemplate();
+        cleanDB();
         ConnectionPool.init();
     }
 
@@ -35,23 +27,23 @@ public abstract class DataBaseIT {
         ConnectionPool.getInstance().dispose();
     }
 
-    public void cleanDB() throws SQLException {
+    public static void cleanDB() throws SQLException {
         getJdbcTemplate().update(Query.DROP_DATABASE);
         getJdbcTemplate().update(Query.CREATE_DATABASE);
         getJdbcTemplate().update(Query.USE_DATABASE);
     }
 
-    public JdbcTemplate getJdbcTemplate() {
+    public static JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
     }
 
-    public void fillDB(String... initQueryFiles) throws SQLException, IOException {
+    public static void fillDB(String... initQueryFiles) throws SQLException, IOException {
         for (String queryFile : initQueryFiles){
             jdbcTemplate.update(readSQLFile(Query.SQL_SCRIPTS_PATH + queryFile));
         }
     }
 
-    private String readSQLFile(String filePath) throws IOException {
+    private static String readSQLFile(String filePath) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         StringBuilder builder = new StringBuilder();
         String line;

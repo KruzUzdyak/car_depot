@@ -7,7 +7,7 @@ import com.epam.volodko.entity.user.Client;
 import com.epam.volodko.entity.user.Role;
 import com.epam.volodko.entity.user.RoleProvider;
 import org.flywaydb.core.internal.jdbc.RowMapper;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
@@ -43,8 +43,8 @@ public class ClientDaoIT extends DataBaseIT{
 
     private final UserDAO<Client> clientDAO = DAOFactory.getInstance().getClientDAO();
 
-    @Before
-    public void init() throws IOException, SQLException {
+    @BeforeClass
+    public static void initTables() throws IOException, SQLException {
         fillDB(Query.SQL_CREATE_ROLES, Query.SQL_CREATE_USERS, Query.SQL_CREATE_CLIENT_INFO,
                 Query.SQL_FILL_ROLES, Query.SQL_FILL_USERS, Query.SQL_FILL_CLIENT_INFO);
     }

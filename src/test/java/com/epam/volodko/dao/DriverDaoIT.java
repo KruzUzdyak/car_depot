@@ -5,7 +5,7 @@ import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.dao.table_name.Table;
 import com.epam.volodko.entity.user.*;
 import org.flywaydb.core.internal.jdbc.RowMapper;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
@@ -49,8 +49,8 @@ public class DriverDaoIT extends DataBaseIT {
 
     private final UserDAO<Driver> driverDAO = DAOFactory.getInstance().getDriverDAO();
 
-    @Before
-    public void init() throws IOException, SQLException {
+    @BeforeClass
+    public static void initTables() throws IOException, SQLException {
         fillDB(Query.SQL_CREATE_ROLES, Query.SQL_CREATE_USERS,
                 Query.SQL_CREATE_LICENSE_TYPES, Query.SQL_CREATE_DRIVER_LICENSES,
                 Query.SQL_FILL_ROLES, Query.SQL_FILL_USERS,

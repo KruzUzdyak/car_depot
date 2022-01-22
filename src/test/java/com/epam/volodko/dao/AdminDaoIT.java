@@ -7,7 +7,6 @@ import com.epam.volodko.entity.user.Admin;
 import com.epam.volodko.entity.user.Role;
 import com.epam.volodko.entity.user.RoleProvider;
 import org.flywaydb.core.internal.jdbc.RowMapper;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.theories.DataPoints;
@@ -46,8 +45,8 @@ public class AdminDaoIT extends DataBaseIT {
 
     private final UserDAO<Admin> adminDAO = DAOFactory.getInstance().getAdminDAO();
 
-    @Before
-    public void init() throws IOException, SQLException {
+    @BeforeClass
+    public static void init() throws IOException, SQLException {
         fillDB(Query.SQL_CREATE_ROLES, Query.SQL_CREATE_USERS, Query.SQL_CREATE_ADMIN_INFO,
                 Query.SQL_FILL_ROLES, Query.SQL_FILL_USERS, Query.SQL_FILL_ADMIN_INFO);
     }
@@ -60,7 +59,6 @@ public class AdminDaoIT extends DataBaseIT {
         Admin actualAdmin = adminDAO.findById(adminId);
 
         assertEquals(expectedAdmin, actualAdmin);
-
     }
 
     @Theory

@@ -7,7 +7,7 @@ import com.epam.volodko.entity.user.DriverLicense;
 import com.epam.volodko.entity.user.DriverLicenseType;
 import com.epam.volodko.entity.user.LicenseTypeProvider;
 import org.flywaydb.core.internal.jdbc.RowMapper;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -26,8 +26,8 @@ public class DriverLicenseDaoIT extends DataBaseIT {
 
     private final DriverLicenseDAO licenseDAO = DAOFactory.getInstance().getLicenseDAO();
 
-    @Before
-    public void init() throws IOException, SQLException {
+    @BeforeClass
+    public static void initTables() throws IOException, SQLException {
         fillDB(Query.SQL_CREATE_LICENSE_TYPES, Query.SQL_CREATE_ROLES,
                 Query.SQL_CREATE_USERS, Query.SQL_CREATE_DRIVER_LICENSES);
         fillDB(Query.SQL_FILL_ROLES, Query.SQL_FILL_LICENSE_TYPES,
@@ -60,7 +60,7 @@ public class DriverLicenseDaoIT extends DataBaseIT {
     }
 
     @Test
-    public void testDeleteById() throws DAOException, SQLException {
+    public void testDeleteById() throws DAOException, SQLException, IOException {
         int driverId = 6;
         int licenseTypeId = DriverLicenseType.CE.getId();
 
@@ -72,6 +72,9 @@ public class DriverLicenseDaoIT extends DataBaseIT {
 
         assertEquals(expectedAffect, rowsAffected);
         assertTrue(licenses.isEmpty());
+
+        cleanDB();
+        initTables();
     }
 
     private RowMapper<DriverLicense> licenseMapper(){
