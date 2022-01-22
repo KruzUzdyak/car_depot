@@ -16,8 +16,6 @@ import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
 
-    private final Logger log = LogManager.getLogger(OrderServiceImpl.class);
-
     private final OrderDAO orderDAO = DAOFactory.getInstance().getOrderDAO();
 
     @Override

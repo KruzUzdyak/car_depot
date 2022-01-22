@@ -9,6 +9,7 @@ import com.epam.volodko.entity.car.Car;
 import com.epam.volodko.entity.order.Order;
 import com.epam.volodko.entity.user.Admin;
 import com.epam.volodko.entity.user.Client;
+import com.epam.volodko.entity.user.Role;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,7 +38,7 @@ public class OrderBuilder {
     private void setClient(ResultSet resultSet, Order order) throws SQLException, DAOException {
         int clientId = resultSet.getInt(Column.ORDERS_CLIENT_ID);
         if (clientId != 0){
-            UserDAO<Client> clientDAO = DAOFactory.getInstance().getClientDAO();
+            UserDAO<Client> clientDAO = DAOFactory.getInstance().getUserDAO(Role.CLIENT);
             Client client = clientDAO.findById(clientId);
             order.setClient(client);
         }
@@ -46,7 +47,7 @@ public class OrderBuilder {
     private void setAdmin(ResultSet resultSet, Order order) throws SQLException, DAOException {
         int adminId = resultSet.getInt(Column.ORDERS_ADMIN_ID);
         if (adminId != 0){
-            UserDAO<Admin> adminDAO = DAOFactory.getInstance().getAdminDAO();
+            UserDAO<Admin> adminDAO = DAOFactory.getInstance().getUserDAO(Role.ADMIN);
             Admin admin = adminDAO.findById(adminId);
             order.setAdmin(admin);
         }

@@ -28,7 +28,6 @@ public class AdminDaoIT extends DataBaseIT {
             "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s LEFT JOIN %s ai ON u.%s = ai.%s WHERE u.%s = ?;",
             Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.ADMIN_INFO,
             Column.USERS_ID, Column.ADMIN_INFO_USER_ID, Column.USERS_ID);
-    private final DAOFactory factory = DAOFactory.getInstance();
     private static final String FIND_ADMIN_BY_LOGIN_QUERY = String.format(
             "SELECT * FROM %s AS u JOIN %s AS r ON u.%s = r.%s LEFT JOIN %s ai ON u.%s = ai.%s WHERE u.%s = ?;",
             Table.USERS, Table.ROLES, Column.USERS_ROLE_ID, Column.ROLES_ID, Table.ADMIN_INFO,
@@ -43,7 +42,7 @@ public class AdminDaoIT extends DataBaseIT {
     @DataPoints
     public static String[] logins = new String[]{"admin1", "admin2"};
 
-    private final UserDAO<Admin> adminDAO = DAOFactory.getInstance().getAdminDAO();
+    private final UserDAO<Admin> adminDAO = DAOFactory.getInstance().getUserDAO(Role.ADMIN);
 
     @BeforeClass
     public static void init() throws IOException, SQLException {

@@ -3,6 +3,9 @@ package com.epam.volodko.dao;
 import com.epam.volodko.dao.impl.*;
 import com.epam.volodko.entity.user.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DAOFactory {
 
     private final static DAOFactory instance = new DAOFactory();
@@ -11,6 +14,7 @@ public class DAOFactory {
     private final UserDAO<Admin> adminDAO = new AdminDAOImpl();
     private final UserDAO<Client> clientDAO = new ClientDAOImpl();
     private final UserDAO<Driver> driverDAO = new DriverDAOImpl();
+    private final Map<Role, UserDAO> test = new HashMap<>();
     private final DriverLicenseDAO licenseDAO = new DriverLicenseDAOImpl();
     private final CarDAO carDAO = new CarDAOImpl();
     private final OrderDAO orderDAO = new OrderDAOImpl();
@@ -20,27 +24,31 @@ public class DAOFactory {
     private final RepairRecordDAO repairRecordDAO = new RepairRecordDAOImpl();
 
     private DAOFactory(){
+        test.put(null, new UserDAOImpl());
+        test.put(Role.ADMIN,  new AdminDAOImpl());
+        test.put(Role.CLIENT, new ClientDAOImpl());
+        test.put(Role.DRIVER, new DriverDAOImpl());
     }
 
     public static DAOFactory getInstance(){
         return instance;
     }
 
-    public UserDAO<User> getUserDAO() {
-        return userDAO;
-    }
-
-    public UserDAO<Admin> getAdminDAO() {
-        return adminDAO;
-    }
-
-    public UserDAO<Client> getClientDAO() {
-        return clientDAO;
-    }
-
-    public UserDAO<Driver> getDriverDAO() {
-        return driverDAO;
-    }
+//    public UserDAO<User> getUserDAO() {
+//        return userDAO;
+//    }
+//
+//    public UserDAO<Admin> getAdminDAO() {
+//        return adminDAO;
+//    }
+//
+//    public UserDAO<Client> getClientDAO() {
+//        return clientDAO;
+//    }
+//
+//    public UserDAO<Driver> getDriverDAO() {
+//        return driverDAO;
+//    }
 
     public DriverLicenseDAO getLicenseDAO() {
         return licenseDAO;
@@ -71,18 +79,7 @@ public class DAOFactory {
     }
 
     public UserDAO getUserDAO(Role role){
-        switch (role){
-            case ADMIN -> {
-                return adminDAO;
-            }
-            case CLIENT -> {
-                return clientDAO;
-            }
-            case DRIVER -> {
-                return driverDAO;
-            }
-        }
-        return userDAO;
+        return test.get(role);
     }
 }
 

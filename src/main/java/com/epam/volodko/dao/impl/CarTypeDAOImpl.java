@@ -31,10 +31,6 @@ public class CarTypeDAOImpl extends AbstractDAO implements CarTypeDAO {
     private static final String SAVE_NEW_CAR_TYPE_QUERY = String.format(
             "INSERT INTO %s (%s, %s) VALUES (?, ?);",
             Table.CAR_TYPES, Column.CAR_TYPES_NAME, Column.CAR_TYPES_REQUIRED_LICENSE_ID);
-    private static final String GET_SAVED_CAR_TYPE_ID_QUERY = String.format(
-            "SELECT %s FROM %s WHERE %s = ? AND %s = ?;",
-            Column.CAR_TYPES_ID, Table.CAR_TYPES,
-            Column.CAR_TYPES_NAME, Column.CAR_TYPES_REQUIRED_LICENSE_ID);
     private static final String DELETE_CAR_TYPE_BY_ID_QUERY = String.format(
             "DELETE FROM %s WHERE %s = ?;",
             Table.CAR_TYPES, Column.CAR_TYPES_ID);
@@ -45,7 +41,7 @@ public class CarTypeDAOImpl extends AbstractDAO implements CarTypeDAO {
 
     @Override
     public CarType findById(int carTypeId) throws DAOException {
-        CarType carType;
+        CarType carType = null;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -56,8 +52,6 @@ public class CarTypeDAOImpl extends AbstractDAO implements CarTypeDAO {
             resultSet = statement.executeQuery();
             if (resultSet.next()){
                 carType = BuilderFactory.getCarTypeBuilder().build(resultSet);
-            } else {
-                carType = new CarType();
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
@@ -94,26 +88,17 @@ public class CarTypeDAOImpl extends AbstractDAO implements CarTypeDAO {
         int rowsAffected;
         Connection connection = null;
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
         try {
             connection = ConnectionPool.getInstance().takeConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(SAVE_NEW_CAR_TYPE_QUERY);
             statement.setString(1, carType.getTypeName());
             statement.setInt(2, carType.getRequiredLicense().getId());
             rowsAffected = statement.executeUpdate();
-            statement = connection.prepareStatement(GET_SAVED_CAR_TYPE_ID_QUERY);
-            statement.setString(1, carType.getTypeName());
-            statement.setInt(2, carType.getRequiredLicense().getId());
-            resultSet = statement.executeQuery();
-            connection.commit();
-            if (resultSet.next()) {
-                carType.setCarTypeId(resultSet.getInt(Column.CAR_TYPES_ID));
-            }
+            carType.setCarTypeId(getGeneratedKey(statement));
         } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
         } finally {
-            closeConnection(connection, statement, resultSet);
+            closeConnection(connection, statement);
         }
         return rowsAffected;
     }

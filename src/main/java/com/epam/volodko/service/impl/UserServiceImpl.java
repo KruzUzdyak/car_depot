@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserValidator userValidator = new UserValidator();
     private final DriverLicenseValidator licenseValidator = new DriverLicenseValidator();
-    private final UserDAO<User> userDAO = DAOFactory.getInstance().getUserDAO();
+    private final UserDAO<User> userDAO = DAOFactory.getInstance().getUserDAO(null);
     private final DAOFactory daoFactory = DAOFactory.getInstance();
     private final DriverLicenseDAO licenseDAO = DAOFactory.getInstance().getLicenseDAO();
 

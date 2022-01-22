@@ -32,9 +32,6 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
             "INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?);",
             Table.CAR_MODELS, Column.CAR_MODELS_NAME, Column.CAR_MODELS_CAPACITY, Column.CAR_MODELS_LOAD_TYPE,
             Column.CAR_MODELS_FUEL_TANK, Column.CAR_MODELS_TYPE_ID);
-    private static final String GET_SAVED_CAR_MODEL_ID_QUERY = String.format(
-            "SELECT %s FROM %s WHERE %s = ?;",
-            Column.CAR_MODELS_ID, Table.CAR_MODELS, Column.CAR_MODELS_NAME);
     private static final String DELETE_CAR_MODEL_BY_ID_QUERY = String.format(
             "DELETE FROM %s WHERE %s = ?;",
             Table.CAR_MODELS, Column.CAR_MODELS_ID);
@@ -125,10 +122,7 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
                     Statement.RETURN_GENERATED_KEYS);
             prepareCarModelStatement(carModel, statement);
             rowsAffected = statement.executeUpdate();
-            if (rowsAffected == 0) {
-                throw new DAOException("Saving new car model failed, no rows affected.");
-            }
-        carModel.setId(getGeneratedKey(statement));
+            carModel.setId(getGeneratedKey(statement));
         } catch (ConnectionPoolException | SQLException e) {
             e.printStackTrace();
         } finally {

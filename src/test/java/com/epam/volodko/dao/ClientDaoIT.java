@@ -41,7 +41,7 @@ public class ClientDaoIT extends DataBaseIT{
     @DataPoints
     public static String[] logins = new String[]{"client1", "client2"};
 
-    private final UserDAO<Client> clientDAO = DAOFactory.getInstance().getClientDAO();
+    private final UserDAO<Client> clientDAO = DAOFactory.getInstance().getUserDAO(Role.CLIENT);
 
     @BeforeClass
     public static void initTables() throws IOException, SQLException {

@@ -47,7 +47,7 @@ public class DriverDaoIT extends DataBaseIT {
     @DataPoints
     public static String[] logins = new String[]{"driver1", "driver2"};
 
-    private final UserDAO<Driver> driverDAO = DAOFactory.getInstance().getDriverDAO();
+    private final UserDAO<Driver> driverDAO = DAOFactory.getInstance().getUserDAO(Role.DRIVER);
 
     @BeforeClass
     public static void initTables() throws IOException, SQLException {
@@ -78,12 +78,18 @@ public class DriverDaoIT extends DataBaseIT {
     }
 
     @Test
-    public void findAll() throws DAOException, SQLException {
+    public void testFindAll() throws DAOException, SQLException {
         List<Driver> actualDrivers = driverDAO.findAll();
         List<Driver> expectedDrivers = getJdbcTemplate()
                 .query(FIND_ALL_DRIVERS_QUERY, driverMapper(), Role.DRIVER.getRoleId());
 
         assertEquals(expectedDrivers, actualDrivers);
+    }
+
+    @Test
+    public void testSaveInfoDisabled() throws DAOException {
+        int result = driverDAO.saveInfo(9000);
+        assertEquals(0, result);
     }
 
     private RowMapper<Driver> driverMapper() {

@@ -1,6 +1,5 @@
 package com.epam.volodko.dao.builder.impl;
 
-import com.epam.volodko.dao.builder.BuilderFactory;
 import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.entity.car.CarType;

@@ -7,6 +7,7 @@ import com.epam.volodko.dao.exception.DAOException;
 import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.entity.car.Car;
 import com.epam.volodko.entity.user.Driver;
+import com.epam.volodko.entity.user.Role;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +30,7 @@ public class CarBuilder {
     private void setDriver(ResultSet resultSet, Car car) throws SQLException, DAOException {
         int driverId = resultSet.getInt(Column.CARS_DRIVER_ID);
         if (driverId != 0) {
-            UserDAO<Driver> driverDAO = DAOFactory.getInstance().getDriverDAO();
+            UserDAO<Driver> driverDAO = DAOFactory.getInstance().getUserDAO(Role.DRIVER);
             Driver driver = driverDAO.findById(driverId);
             car.setDriver(driver);
         }

@@ -58,7 +58,7 @@ public class UserDaoIT extends DataBaseIT {
             {6, "driver20"}
     };
 
-    private final UserDAO<User> userDAO = DAOFactory.getInstance().getUserDAO();
+    private final UserDAO<User> userDAO = DAOFactory.getInstance().getUserDAO(null);
 
     @BeforeClass
     public static void initTables() throws IOException, SQLException {
