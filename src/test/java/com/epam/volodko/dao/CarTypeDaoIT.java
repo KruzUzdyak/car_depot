@@ -15,6 +15,7 @@ import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -124,12 +125,14 @@ public class CarTypeDaoIT extends DataBaseIT{
     }
 
     private RowMapper<CarType> carTypeMapper(){
-        return (rs) -> {
-            int id = rs.getInt(Column.CAR_TYPES_ID);
-            String typeName = rs.getString(Column.CAR_TYPES_NAME);
-            DriverLicenseType licenseType = LicenseTypeProvider
-                    .getLicenseType(rs.getInt(Column.CAR_TYPES_REQUIRED_LICENSE_ID));
-            return new CarType(id, typeName, licenseType);
-        };
+        return CarTypeDaoIT::createCarType;
+    }
+
+    static CarType createCarType(ResultSet rs) throws SQLException {
+        int id = rs.getInt(Column.CAR_TYPES_ID);
+        String typeName = rs.getString(Column.CAR_TYPES_NAME);
+        DriverLicenseType licenseType = LicenseTypeProvider
+                .getLicenseType(rs.getInt(Column.CAR_TYPES_REQUIRED_LICENSE_ID));
+        return new CarType(id, typeName, licenseType);
     }
 }

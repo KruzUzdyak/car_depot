@@ -42,7 +42,7 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
 
     @Override
     public CarModel findById(int carModelId) throws DAOException {
-        CarModel carModel;
+        CarModel carModel = null;
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -53,13 +53,9 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
             resultSet = statement.executeQuery();
             if (resultSet.next()){
                 carModel = BuilderFactory.getModelBuilder().build(resultSet);
-            } else {
-                carModel = new CarModel();
             }
-        } catch (SQLException e) {
-            throw new DAOException("SQLException when try to find car model by id.", e);
-        } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+        } catch (ConnectionPoolException | SQLException e) {
+            e.printStackTrace();
         } finally {
             closeConnection(connection, statement, resultSet);
         }
@@ -113,7 +109,7 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
 
     @Override
     public int saveNew(CarModel carModel) throws DAOException {
-        int rowsAffected = 0;
+        int rowsAffected;
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -123,8 +119,8 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
             prepareCarModelStatement(carModel, statement);
             rowsAffected = statement.executeUpdate();
             carModel.setId(getGeneratedKey(statement));
-        } catch (ConnectionPoolException | SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DAOException(e);
         } finally {
             closeConnection(connection, statement);
         }
@@ -147,9 +143,7 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
             prepareCarModelStatement(carModel, statement);
             statement.setInt(6, carModel.getId());
             rowsAffected = statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException("SQLException when try to update car model.", e);
-        } catch (ConnectionPoolException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
         } finally {
             closeConnection(connection, statement);

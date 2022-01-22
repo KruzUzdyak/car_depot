@@ -11,10 +11,7 @@ import com.epam.volodko.entity.car.CarType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,7 +87,8 @@ public class CarTypeDAOImpl extends AbstractDAO implements CarTypeDAO {
         PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareStatement(SAVE_NEW_CAR_TYPE_QUERY);
+            statement = connection.prepareStatement(SAVE_NEW_CAR_TYPE_QUERY,
+                    Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, carType.getTypeName());
             statement.setInt(2, carType.getRequiredLicense().getId());
             rowsAffected = statement.executeUpdate();

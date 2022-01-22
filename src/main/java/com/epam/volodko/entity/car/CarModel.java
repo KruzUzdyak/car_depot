@@ -83,7 +83,7 @@ public class CarModel implements Serializable {
         CarModel carModel = (CarModel) o;
         return id == carModel.id && capacity == carModel.capacity &&
                 fuelTank == carModel.fuelTank && Objects.equals(modelName, carModel.modelName) &&
-                type == carModel.type && Objects.equals(loadType, carModel.loadType);
+                Objects.equals(type, carModel.type) && Objects.equals(loadType, carModel.loadType);
     }
 
     @Override
