@@ -55,7 +55,7 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
                 carModel = BuilderFactory.getModelBuilder().build(resultSet);
             }
         } catch (ConnectionPoolException | SQLException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         } finally {
             closeConnection(connection, statement, resultSet);
         }
@@ -78,7 +78,7 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
                 carModels.add(carModel);
             }
         } catch (ConnectionPoolException | SQLException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         } finally {
             closeConnection(connection, statement, resultSet);
         }
@@ -100,7 +100,7 @@ public class CarModelDAOImpl extends AbstractDAO implements CarModelDAO {
                 carModels.add(carModel);
             }
         } catch (ConnectionPoolException | SQLException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         } finally {
             closeConnection(connection, statement, resultSet);
         }

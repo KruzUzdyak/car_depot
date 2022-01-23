@@ -51,7 +51,7 @@ public class RepairRecordDAOImpl extends AbstractDAO implements RepairRecordDAO 
                 record = BuilderFactory.getRepairRecordBuilder().build(resultSet);
             }
         } catch (SQLException | ConnectionPoolException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         } finally {
             closeConnection(connection, statement, resultSet);
         }
@@ -73,7 +73,7 @@ public class RepairRecordDAOImpl extends AbstractDAO implements RepairRecordDAO 
                 records.add(record);
             }
         } catch (SQLException | ConnectionPoolException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         } finally {
             closeConnection(connection, statement, resultSet);
         }
@@ -92,7 +92,7 @@ public class RepairRecordDAOImpl extends AbstractDAO implements RepairRecordDAO 
             rowsAffected = statement.executeUpdate();
             record.setId(getGeneratedKey(statement));
         } catch (SQLException | ConnectionPoolException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         } finally {
             closeConnection(connection, statement);
         }
@@ -116,7 +116,7 @@ public class RepairRecordDAOImpl extends AbstractDAO implements RepairRecordDAO 
             statement.setInt(5, record.getId());
             rowsAffected = statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         } finally {
             closeConnection(connection, statement);
         }

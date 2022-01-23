@@ -198,18 +198,8 @@ public class CarDaoIT extends DataBaseIT {
     }
 
     private RowMapper<Car> carMapper() {
-        return (rs) -> {
-            int id = rs.getInt(Column.CARS_ID);
-            String plateNumber = rs.getString(Column.CARS_PLATE_NUMBER);
-            int fuelLevel = rs.getInt(Column.CARS_FUEL_LEVEL);
-            int mileage = rs.getInt(Column.CARS_MILEAGE);
-            boolean broken = rs.getBoolean(Column.CARS_BROKEN);
-            CarModel model = createCarModel(rs);
-            Driver driver = null;
-            if (rs.getInt(Column.CARS_DRIVER_ID) != 0) {
-                driver = createDriver(rs);
-            }
-            return new Car(id, plateNumber, fuelLevel, mileage, broken, model, driver);
-        };
+        return this::createCar;
     }
+
+
 }

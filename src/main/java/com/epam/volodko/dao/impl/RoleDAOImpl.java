@@ -35,7 +35,7 @@ public class RoleDAOImpl extends AbstractDAO{
             resultSet.next();
             role = BuilderFactory.getRoleBuilder().build(resultSet);
         } catch (ConnectionPoolException | SQLException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         } finally {
             closeConnection(connection, statement, resultSet);
         }
@@ -55,7 +55,7 @@ public class RoleDAOImpl extends AbstractDAO{
             resultSet.next();
             role = BuilderFactory.getRoleBuilder().build(resultSet);
         } catch (ConnectionPoolException | SQLException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         } finally {
             closeConnection(connection, statement, resultSet);
         }

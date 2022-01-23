@@ -48,7 +48,7 @@ public class RefuelRecordDAOImpl extends AbstractDAO implements RefuelRecordDAO 
                 record = BuilderFactory.getRefuelRecordBuilder().build(resultSet);
             }
         } catch (ConnectionPoolException | SQLException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         } finally {
             closeConnection(connection, statement, resultSet);
         }
@@ -70,7 +70,7 @@ public class RefuelRecordDAOImpl extends AbstractDAO implements RefuelRecordDAO 
                 records.add(record);
             }
         } catch (ConnectionPoolException | SQLException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         } finally {
             closeConnection(connection, statement, resultSet);
         }
