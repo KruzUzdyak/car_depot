@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 public class DriverLicenseDaoIT extends DataBaseIT {
 
     private static final String GET_DRIVER_LICENSE = String.format(
-            "SELECT * FROM %s WHERE %s=? AND %s=?;",
+            "SELECT * FROM %s dl WHERE dl.%s=? AND dl.%s=?;",
             Table.DRIVER_LICENSES, Column.DRIVER_LICENSES_USER_ID, Column.DRIVER_LICENSES_LICENSE_ID);
 
     private final DriverLicenseDAO licenseDAO = DAOFactory.getInstance().getLicenseDAO();
@@ -78,12 +78,8 @@ public class DriverLicenseDaoIT extends DataBaseIT {
     }
 
     private RowMapper<DriverLicense> licenseMapper(){
-        return (rs) -> {
-            DriverLicenseType licenseType = LicenseTypeProvider
-                    .getLicenseType(rs.getInt(Column.DRIVER_LICENSES_LICENSE_ID));
-            Date obtainingDate = new Date(rs.getLong(Column.DRIVER_LICENSES_OBTAINING_DATE));
-            String licenseNumber = rs.getString(Column.DRIVER_LICENSES_LICENSE_NUMBER);
-            return new DriverLicense(licenseType, obtainingDate, licenseNumber);
-        };
+        return this::createDriverLicense;
     }
+
+
 }

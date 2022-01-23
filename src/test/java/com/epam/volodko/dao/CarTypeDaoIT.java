@@ -125,14 +125,8 @@ public class CarTypeDaoIT extends DataBaseIT{
     }
 
     private RowMapper<CarType> carTypeMapper(){
-        return CarTypeDaoIT::createCarType;
+        return this::createCarType;
     }
 
-    static CarType createCarType(ResultSet rs) throws SQLException {
-        int id = rs.getInt(Column.CAR_TYPES_ID);
-        String typeName = rs.getString(Column.CAR_TYPES_NAME);
-        DriverLicenseType licenseType = LicenseTypeProvider
-                .getLicenseType(rs.getInt(Column.CAR_TYPES_REQUIRED_LICENSE_ID));
-        return new CarType(id, typeName, licenseType);
-    }
+
 }

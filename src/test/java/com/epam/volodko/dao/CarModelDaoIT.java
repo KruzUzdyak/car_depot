@@ -151,15 +151,9 @@ public class CarModelDaoIT extends DataBaseIT {
     }
 
     private RowMapper<CarModel> carModelMapper() {
-        return (rs) -> {
-            int id = rs.getInt(Column.CAR_MODELS_ID);
-            String modelName = rs.getString(Column.CAR_MODELS_NAME);
-            int capacity = rs.getInt(Column.CAR_MODELS_CAPACITY);
-            int fuelTank = rs.getInt(Column.CAR_MODELS_FUEL_TANK);
-            String loadType = rs.getString(Column.CAR_MODELS_LOAD_TYPE);
-            CarType carType = CarTypeDaoIT.createCarType(rs);
-            return new CarModel(id, modelName, capacity, fuelTank, loadType, carType);
-        };
+        return this::createCarModel;
     }
+
+
 }
 

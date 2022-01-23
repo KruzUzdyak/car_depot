@@ -55,7 +55,7 @@ public class CarDAOImpl extends AbstractDAO implements CarDAO {
             "DELETE FROM %s WHERE %s = ?;",
             Table.CARS, Column.CARS_ID);
     private static final String UPDATE_CAR_QUERY = String.format(
-            "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=? %s=? WHERE %s=?;",
+            "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?;",
             Table.CARS, Column.CARS_PLATE_NUMBER, Column.CARS_FUEL_LEVEL, Column.CARS_MILEAGE,
             Column.CARS_BROKEN, Column.CARS_MODEL_ID, Column.CARS_DRIVER_ID, Column.CARS_ID);
 
@@ -124,8 +124,8 @@ public class CarDAOImpl extends AbstractDAO implements CarDAO {
             prepareInsertCarStatement(car, statement);
             rowsAffected = statement.executeUpdate();
             car.setId(getGeneratedKey(statement));
-        } catch (ConnectionPoolException | SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException| ConnectionPoolException e ) {
+            throw new DAOException(e);
         } finally {
             closeConnection(connection, statement);
         }
@@ -149,7 +149,7 @@ public class CarDAOImpl extends AbstractDAO implements CarDAO {
             statement.setInt(7, car.getId());
             rowsAffected = statement.executeUpdate();
         } catch (ConnectionPoolException | SQLException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         } finally {
             closeConnection(connection, statement);
         }

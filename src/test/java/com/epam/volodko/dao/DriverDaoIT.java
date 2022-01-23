@@ -93,40 +93,7 @@ public class DriverDaoIT extends DataBaseIT {
     }
 
     private RowMapper<Driver> driverMapper() {
-        return (rs) -> {
-            int id = rs.getInt(Column.USERS_ID);
-            String login = rs.getString(Column.USERS_LOGIN);
-            String name = rs.getString(Column.USERS_NAME);
-            String phone = rs.getString(Column.USERS_PHONE);
-            Role role = RoleProvider.getRole(rs.getInt(Column.USERS_ROLE_ID));
-            Driver driver = new Driver(id, login, null, name, phone, role);
-            mapDriverLicenses(rs, driver);
-            return driver;
-        };
-    }
-
-    private void mapDriverLicenses(ResultSet rs, Driver driver) throws SQLException {
-        int id = driver.getId();
-        driver.addLicense(createLicense(rs));
-        while (rs.next()) {
-            int nextDriverId = rs.getInt(Column.USERS_ID);
-            if (id == nextDriverId) {
-                driver.addLicense(createLicense(rs));
-            } else {
-                rs.previous();
-                break;
-            }
-        }
-    }
-
-    private DriverLicense createLicense(ResultSet rs) throws SQLException {
-        DriverLicenseType type = LicenseTypeProvider.getLicenseType(rs.getInt(Column.LICENSE_ID));
-        Date obtainingDate = null;
-        if (type != null) {
-            obtainingDate = new Date(rs.getLong(Column.DRIVER_LICENSES_OBTAINING_DATE));
-        }
-        String licenseNumber = rs.getString(Column.DRIVER_LICENSES_LICENSE_NUMBER);
-        return new DriverLicense(type, obtainingDate, licenseNumber);
+        return this::createDriver;
     }
 
 

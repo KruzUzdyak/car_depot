@@ -3,9 +3,12 @@ package com.epam.volodko.dao.builder.impl;
 import com.epam.volodko.dao.builder.BuilderFactory;
 import com.epam.volodko.dao.table_name.Column;
 import com.epam.volodko.entity.user.Driver;
+import com.epam.volodko.entity.user.DriverLicense;
+import com.epam.volodko.entity.user.LicenseTypeProvider;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class DriverBuilder extends UserBuilder {
 
@@ -21,6 +24,7 @@ public class DriverBuilder extends UserBuilder {
         DriverLicenseBuilder licenseBuilder = BuilderFactory.getDriverLicenseBuilder();
         driver.addLicense(licenseBuilder.build(resultSet));
         int currentDriverId = driver.getId();
+
         while (resultSet.next()) {
             int nextDriverId = resultSet.getInt(Column.USERS_ID);
             if (currentDriverId == nextDriverId) {
@@ -30,5 +34,17 @@ public class DriverBuilder extends UserBuilder {
                 break;
             }
         }
+    }
+
+    public DriverLicense sdasda(ResultSet resultSet) throws SQLException {
+        DriverLicense license = new DriverLicense();
+        license.setLicenseType(LicenseTypeProvider.getLicenseType(resultSet.getInt(Column.LICENSE_ID)));
+        if (license.getLicenseType() != null){
+            license.setObtainingDate(new Date(resultSet.getLong(Column.DRIVER_LICENSES_OBTAINING_DATE)));
+        } else{
+            license.setObtainingDate(null);
+        }
+        license.setLicenseNumber(resultSet.getString(Column.DRIVER_LICENSES_LICENSE_NUMBER));
+        return license;
     }
 }
