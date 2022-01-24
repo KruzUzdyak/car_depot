@@ -9,7 +9,6 @@ public class BuilderFactory {
     private static final ClientBuilder clientBuilder = new ClientBuilder();
     private static final DriverBuilder driverBuilder = new DriverBuilder();
     private static final RoleBuilder roleBuilder = new RoleBuilder();
-    private static final LicenseTypeBuilder licenseTypeBuilder = new LicenseTypeBuilder();
     private static final DriverLicenseBuilder driverLicenseBuilder = new DriverLicenseBuilder();
     private static final CarBuilder carBuilder = new CarBuilder();
     private static final CarModelBuilder modelBuilder = new CarModelBuilder();
@@ -36,10 +35,6 @@ public class BuilderFactory {
 
     public static DriverBuilder getDriverBuilder() {
         return driverBuilder;
-    }
-
-    public static LicenseTypeBuilder getLicenseTypeBuilder() {
-        return licenseTypeBuilder;
     }
 
     public static DriverLicenseBuilder getDriverLicenseBuilder() {

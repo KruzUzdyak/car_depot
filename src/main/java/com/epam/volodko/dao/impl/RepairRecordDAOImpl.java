@@ -82,7 +82,7 @@ public class RepairRecordDAOImpl extends AbstractDAO implements RepairRecordDAO 
 
     @Override
     public int saveNew(RepairRecord record) throws DAOException {
-        int rowsAffected = 0;
+        int rowsAffected;
         Connection connection = null;
         PreparedStatement statement = null;
         try{
@@ -106,7 +106,7 @@ public class RepairRecordDAOImpl extends AbstractDAO implements RepairRecordDAO 
 
     @Override
     public int update(RepairRecord record) throws DAOException {
-        int rowsAffected = 0;
+        int rowsAffected;
         Connection connection = null;
         PreparedStatement statement = null;
         try{

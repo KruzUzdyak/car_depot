@@ -35,16 +35,4 @@ public class DriverBuilder extends UserBuilder {
             }
         }
     }
-
-    public DriverLicense sdasda(ResultSet resultSet) throws SQLException {
-        DriverLicense license = new DriverLicense();
-        license.setLicenseType(LicenseTypeProvider.getLicenseType(resultSet.getInt(Column.LICENSE_ID)));
-        if (license.getLicenseType() != null){
-            license.setObtainingDate(new Date(resultSet.getLong(Column.DRIVER_LICENSES_OBTAINING_DATE)));
-        } else{
-            license.setObtainingDate(null);
-        }
-        license.setLicenseNumber(resultSet.getString(Column.DRIVER_LICENSES_LICENSE_NUMBER));
-        return license;
-    }
 }

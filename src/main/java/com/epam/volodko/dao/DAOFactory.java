@@ -34,22 +34,6 @@ public class DAOFactory {
         return instance;
     }
 
-//    public UserDAO<User> getUserDAO() {
-//        return userDAO;
-//    }
-//
-//    public UserDAO<Admin> getAdminDAO() {
-//        return adminDAO;
-//    }
-//
-//    public UserDAO<Client> getClientDAO() {
-//        return clientDAO;
-//    }
-//
-//    public UserDAO<Driver> getDriverDAO() {
-//        return driverDAO;
-//    }
-
     public DriverLicenseDAO getLicenseDAO() {
         return licenseDAO;
     }
