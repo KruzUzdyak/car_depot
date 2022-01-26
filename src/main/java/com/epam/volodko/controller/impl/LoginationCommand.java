@@ -9,6 +9,7 @@ import com.epam.volodko.entity.user.User;
 import com.epam.volodko.service.ServiceFactory;
 import com.epam.volodko.service.UserService;
 import com.epam.volodko.service.exception.ServiceException;
+import com.epam.volodko.service.exception.UserValidationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -37,18 +38,16 @@ public class LoginationCommand implements Command {
         User user;
         try {
             user = userService.processLogination(login, password);
-            if (user != null){
-                HttpSession session = request.getSession();
-                session.setAttribute(ParameterName.USER_ID, user.getId());
-                session.setAttribute(ParameterName.USER_ROLE, user.getRole());
-                response.sendRedirect(LOGINATION_REDIRECT_COMMAND);
-            } else {
-                log.warn(String.format("Logination failed with user login - %s.", login));
-                forwardOnFail(request, response, PagePath.LOGINATION_PAGE, Message.LOGINATION_FAILED);
-            }
+            HttpSession session = request.getSession();
+            session.setAttribute(ParameterName.USER_ID, user.getId());
+            session.setAttribute(ParameterName.USER_ROLE, user.getRole());
+            response.sendRedirect(LOGINATION_REDIRECT_COMMAND);
         } catch (ServiceException e) {
             log.error("Catching:", e);
             forwardOnFail(request, response, PagePath.LOGINATION_PAGE, Message.LOGINATION_EXCEPTION);
+        } catch (UserValidationException e) {
+            log.warn(String.format("Logination failed with user login - %s.", login));
+            forwardOnFail(request, response, PagePath.LOGINATION_PAGE, Message.LOGINATION_FAILED);
         }
     }
 

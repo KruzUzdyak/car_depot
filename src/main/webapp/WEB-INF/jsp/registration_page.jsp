@@ -44,6 +44,7 @@
 </head>
 <body>
 <c:set var="userRole" value="${sessionScope.get(ParameterName.USER_ROLE)}"/>
+<c:set var="registerRole" value="${param.get(ParameterName.REGISTER_ROLE)}"/>
 
 <c:if test="${!userRole.equals(Role.ADMIN)}">
     <nav class="navbar navbar-default">
@@ -133,10 +134,10 @@
     <div class="col-6">
         <form action="Controller" method="post" autocomplete="off">
             <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.REGISTRATION}">
-            <input type="hidden" name="${ParameterName.USER_ROLE}" value="${param.get(ParameterName.REGISTER_ROLE)}">
+            <input type="hidden" name="${ParameterName.REGISTER_ROLE}" value="${registerRole}">
             <div class="row">
                 <p class="text-center text-info">
-                    ${register_new_note} (${param.get(ParameterName.REGISTER_ROLE.toLowerCase())}):
+                    ${register_new_note} (${registerRole.toLowerCase()})
                 </p>
                 <div class="col-5 text-end">
                     <label for="login">${login_note}</label>

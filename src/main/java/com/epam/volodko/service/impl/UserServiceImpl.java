@@ -9,6 +9,7 @@ import com.epam.volodko.entity.user.Role;
 import com.epam.volodko.entity.user.User;
 import com.epam.volodko.service.UserService;
 import com.epam.volodko.service.exception.ServiceException;
+import com.epam.volodko.service.exception.UserValidationException;
 import com.epam.volodko.service.validator.DriverLicenseValidator;
 import com.epam.volodko.service.validator.UserValidator;
 import org.mindrot.jbcrypt.BCrypt;
@@ -18,6 +19,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private static final String ROLE_CANT_BE_NULL = "Role can't be null";
+    private static final String USER_VALIDATION_FAILED = "Login rejected, reason: user validation failed.";
 
     private final UserValidator userValidator = new UserValidator();
     private final DriverLicenseValidator licenseValidator = new DriverLicenseValidator();
@@ -50,15 +52,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User processLogination(String login, String password) throws ServiceException {
-        if (!userValidator.validateLoginAndPassword(login, password)) {
-            return null;
+    public User processLogination(String login, String password)
+            throws ServiceException, UserValidationException {
+        if (userValidator.validateLoginAndPassword(login, password)) {
+            String storedPasswordHash = getStoredPasswordHash(login);
+            if (verifyPassword(password, storedPasswordHash)) {
+                return getUserFromDB(login);
+            }
         }
-        String storedPasswordHash = getStoredPasswordHash(login);
-        if (verifyPassword(password, storedPasswordHash)) {
-            return getUserFromDB(login);
-        }
-        return null;
+        throw new UserValidationException(USER_VALIDATION_FAILED);
     }
 
     @Override

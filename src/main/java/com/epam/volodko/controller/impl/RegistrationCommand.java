@@ -49,8 +49,10 @@ public class RegistrationCommand implements Command {
         User user = prepareUserForSave(request);
         if (userService.processRegistration(user)) {
             HttpSession session = request.getSession();
-            session.setAttribute(ParameterName.USER_ID, user.getId());
-            session.setAttribute(ParameterName.USER_ROLE, user.getRole());
+            if (session.getAttribute(ParameterName.USER_ROLE) == null){
+                session.setAttribute(ParameterName.USER_ID, user.getId());
+                session.setAttribute(ParameterName.USER_ROLE, user.getRole());
+            }
             response.sendRedirect(REGISTRATION_REDIRECT_COMMAND);
         } else {
             log.info("Registration failed - wrong user data.");
@@ -69,7 +71,7 @@ public class RegistrationCommand implements Command {
         String passwordHash = userService.encodePassword(request.getParameter(ParameterName.USER_PASS));
         String name = request.getParameter(ParameterName.USER_NAME).trim();
         String phone = request.getParameter(ParameterName.USER_PHONE).trim();
-        Role role = Role.valueOf(request.getParameter(ParameterName.USER_ROLE).toUpperCase());
+        Role role = Role.valueOf(request.getParameter(ParameterName.REGISTER_ROLE).toUpperCase());
         return new User(0, login, passwordHash, name, phone, role);
     }
 

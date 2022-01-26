@@ -5,6 +5,7 @@ import com.epam.volodko.entity.user.DriverLicense;
 import com.epam.volodko.entity.user.Role;
 import com.epam.volodko.entity.user.User;
 import com.epam.volodko.service.exception.ServiceException;
+import com.epam.volodko.service.exception.UserValidationException;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface UserService {
 
     boolean processPasswordValidation(String password, String passwordRepeat) throws ServiceException;
 
-    User processLogination(String login, String password) throws ServiceException;
+    User processLogination(String login, String password) throws ServiceException, UserValidationException;
 
     String encodePassword(String password);
 
