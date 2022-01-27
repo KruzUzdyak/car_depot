@@ -31,8 +31,6 @@
 
 <c:set var="userRole" scope="page" value="${sessionScope.get(ParameterName.USER_ROLE)}"/>
 <c:set var="errorMessage" scope="page" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
-<c:set var="order" scope="page" value="${requestScope.get(ParameterName.ORDER)}"/>
-
 
 <nav class="navbar navbar-default">
     <div class="container-fluid bg-light">
@@ -91,81 +89,67 @@
 
     </div>
     <div class="col-4 ">
-        <table class="table table-borderless table-striped text-center">
-            <tr>
-                <th colspan="3">ORDER</th>
-            </tr>
-            <c:if test="${not empty errorMessage}">
-                <tr class="bg-warning">
-                    <td colspan="3">ORDER_LOAD_FAILED</td>
-                </tr>
-            </c:if>
-            <c:if test="${empty errorMessage}">
+        <form action="Controller" method="post">
+            <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.CREATE_ORDER}">
+            <table class="table table-borderless table-striped text-center">
                 <tr>
-                    <th>order id</th>
-                    <td colspan="2">${order.id}</td>
+                    <th colspan="3">CREATE ORDER</th>
                 </tr>
                 <tr>
                     <th>destination from</th>
-                    <td colspan="2">${order.destFrom}</td>
+                    <td colspan="2">
+                        <input type="text" name="${ParameterName.ORDER_DEST_FROM}" placeholder="INPUT YOUR FIRST ADDRESS">
+                    </td>
                 </tr>
                 <tr>
                     <th>destination to</th>
-                    <td colspan="2">${order.destTo}</td>
+                    <td colspan="2">
+                        <input type="text" name="${ParameterName.ORDER_DEST_TO}" placeholder="INPUT YOUR SECOND ADDRESS">
+                    </td>
                 </tr>
                 <tr>
                     <th>distance, km</th>
-                    <td colspan="2">${order.distance}</td>
+                    <td colspan="2">
+                        <input type="number" min="0" name="${ParameterName.ORDER_DISTANCE}" value="" placeholder="INPUT DISTANCE BETWEEN ADDRESSES">
+                    </td>
                 </tr>
                 <tr>
                     <th>date start</th>
-                    <td colspan="2">${order.dateStart}</td>
+                    <td colspan="2">
+                        <input type="date" name="${ParameterName.ORDER_DATE_START}">
+                    </td>
                 </tr>
                 <tr>
                     <th>deadline</th>
-                    <td colspan="2">${order.dateEnd}</td>
+                    <td colspan="2">
+                        <input type="date" name="${ParameterName.ORDER_DATE_END}">
+                    </td>
                 </tr>
                 <tr>
                     <th>load</th>
-                    <td colspan="2">${order.load}</td>
+                    <td colspan="2">
+                        <input type="number" min="0" name="${ParameterName.ORDER_LOAD}" placeholder="INPUT SIZE OF THE CARGO">
+                    </td>
                 </tr>
                 <tr>
                     <th>load note</th>
-                    <td colspan="2">${order.loadNote}</td>
-                </tr>
-                <tr>
-                    <th>completed</th>
-                    <td colspan="2">${order.completed}</td>
+                    <td colspan="2">
+                        <textarea name="${ParameterName.ORDER_LOAD_NOTE}" maxlength="200" cols="30" rows="3"
+                                  placeholder="MAX 200 SYMBOLS"></textarea>
+                    </td>
                 </tr>
                 <tr>
                     <th>payment, $</th>
-                    <td colspan="2">${order.payment}</td>
+                    <td colspan="2">
+                        <input type="number" min="0" name="${ParameterName.ORDER_PAYMENT}" placeholder="PLEASE INPUT THE REWARD VALUE">
+                    </td>
                 </tr>
                 <tr>
-                    <th>client</th>
-                    <td colspan="2">${order.client.name}</td>
+                    <td colspan="3">
+                        <input type="submit" class="btn btn-success" value="CREATE">
+                    </td>
                 </tr>
-                <tr>
-                    <th>admin</th>
-                    <td colspan="2">${order.admin.name}</td>
-                </tr>
-                <tr>
-                    <th>car model</th>
-                    <td colspan="2">${order.car.model.modelName}</td>
-                </tr>
-                <tr>
-                    <th>car plate number</th>
-                    <td colspan="2">${order.car.plateNumber}</td>
-                </tr>
-            </c:if>
-        </table>
-
-        <br/>
-
-        <form action="Controller" method="get">
-            <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_ALL_ORDERS_PAGE}">
-            <input type="hidden" name="${ParameterName.ORDER_LIST_TYPE}" value="${sessionScope.get(ParameterName.ORDER_LIST_TYPE)}">
-            <input type="submit" class="btn btn-secondary" value="Back to orders table">
+            </table>
         </form>
     </div>
 </div>

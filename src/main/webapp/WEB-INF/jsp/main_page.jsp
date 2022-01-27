@@ -40,6 +40,9 @@
 <body>
 
 <c:set var="userRole" scope="page" value="${sessionScope.get(ParameterName.USER_ROLE)}"/>
+<c:set var="greeting_message" value="${param.get(ParameterName.GREETING_MESSAGE)}"/>
+<c:set var="errorMessage" scope="page" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
+<c:set var="carsList" scope="page" value="${requestScope.get(ParameterName.CAR_LIST)}"/>
 
 <nav class="navbar navbar-default">
     <div class="container-fluid bg-light">
@@ -84,21 +87,33 @@
     </div>
 </nav>
 
-<div class="text-center">
-    <c:set var="greeting_message" value="${param.get(ParameterName.GREETING_MESSAGE)}"/>
+<div class="container-fluid row">
+    <div class="col-3">
+
+    </div>
     <c:if test="${not empty greeting_message}">
-        <h3 style="color: limegreen">
-            <c:if test="${greeting_message eq Message.REGISTRATION_SUCCESSFUL}">
-                <c:out value="${registration_successful_mess}"/>
-            </c:if>
-            <c:if test="${greeting_message eq Message.LOGINATION_SUCCESSFUL}">
-                <c:out value="${logination_successful_mess}"/>
-            </c:if>
-        </h3>
+        <div class="col-6 text-center text-success">
+            <h4>
+                <c:if test="${greeting_message eq Message.REGISTRATION_SUCCESSFUL}">
+                    <c:out value="${registration_successful_mess}"/>
+                </c:if>
+                <c:if test="${greeting_message eq Message.LOGINATION_SUCCESSFUL}">
+                    <c:out value="${logination_successful_mess}"/>
+                </c:if>
+            </h4>
+            <br/>
+            <br/>
+        </div>
     </c:if>
     <c:if test="${empty greeting_message}">
-        <br/>
+        <div class="col-6">
+            <br/>
+            <br/>
+            <br/>
+        </div>
     </c:if>
+
+
 </div>
 
 <div class="container-fluid row">
@@ -106,11 +121,14 @@
 
     </div>
     <div class="col-6">
-        <c:set var="errorMessage" scope="page" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
-        <c:set var="carsList" scope="page" value="${requestScope.get(ParameterName.CAR_LIST)}"/>
         <table class="table table-bordered table-striped text-center">
             <tr>
-                <th colspan="5">${table_name}</th>
+                <c:if test="${userRole != Role.ADMIN}">
+                    <th colspan="5">${table_name}</th>
+                </c:if>
+                <c:if test="${userRole eq Role.ADMIN}">
+                    <th colspan="6">${table_name}</th>
+                </c:if>
             </tr>
             <tr>
                 <th>${th_car_model}</th>
@@ -118,6 +136,9 @@
                 <th>${th_load_type}</th>
                 <th>${th_capacity}</th>
                 <th>${th_availability}</th>
+                <c:if test="${userRole eq Role.ADMIN}">
+                    <th><fmt:message bundle="${loc}" key="main.table.th.info"/></th>
+                </c:if>
             </tr>
             <c:if test="${errorMessage eq Message.CARS_LOAD_FAILED}">
                 <tr class="bg-warning">
@@ -161,7 +182,7 @@
         </div>
         <div class="col-2 text-center">
             <form action="Controller" method="get">
-                <input type="hidden" name="stub" value="stub">
+                <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_CREATE_ORDER_PAGE}">
                 <input type="submit" class="btn btn-success" value="CREATE_ORDER">
             </form>
         </div>

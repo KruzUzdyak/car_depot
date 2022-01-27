@@ -57,8 +57,21 @@ public final class ParameterName {
 
     public static final String CAR_MODEL_LIST = "car_model_list";
 
+    public static final String CREATE_ORDER = "create_order";
     public static final String ORDER = "order";
     public static final String ORDER_ID = "order_id";
+    public static final String ORDER_DEST_FROM = "order_dest_from";
+    public static final String ORDER_DEST_TO = "order_dest_to";
+    public static final String ORDER_DISTANCE = "order_distance";
+    public static final String ORDER_DATE_START = "order_date_start";
+    public static final String ORDER_DATE_END = "order_date_end";
+    public static final String ORDER_LOAD = "order_load";
+    public static final String ORDER_LOAD_NOTE = "order_load_note";
+    public static final String ORDER_COMPLETED = "order_completed";
+    public static final String ORDER_PAYMENT = "order_payment";
+    public static final String ORDER_CLIENT_ID = "order_client_id";
+    public static final String ORDER_ADMIN_ID = "order_admin_id";
+    public static final String ORDER_CAR_ID = "order_car_id";
 
     public static final String ORDER_LIST_TYPE = "order_list_type";
     public static final String ORDER_LIST_ALL = "order_list_all";

@@ -12,6 +12,7 @@ public final class PagePath {
 
     public static final String ALL_ORDERS_PAGE = "/WEB-INF/jsp/all_orders_page.jsp";
     public static final String ORDER_INFO_PAGE = "/WEB-INF/jsp/order_info_page.jsp";
+    public static final String ORDER_CREATE_PAGE = "/WEB-INF/jsp/order_create_page.jsp";
 
     public static final String CAR_INFO_PAGE = "/WEB-INF/jsp/car_info_page.jsp";
 

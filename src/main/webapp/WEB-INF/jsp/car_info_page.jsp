@@ -91,12 +91,7 @@
 <c:if test="${not newCar}">
     <div class="container-fluid row">
         <div class="col-4 text-center">
-            <c:if test="${userRole eq Role.ADMIN}">
-                <form action="Controller" method="get">
-                    <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_ADD_NEW_CAR}">
-                    <input type="submit" value="ADD NEW CAR">
-                </form>
-            </c:if>
+
         </div>
         <div class="col-4 ">
             <table class="table table-borderless table-striped text-center">
