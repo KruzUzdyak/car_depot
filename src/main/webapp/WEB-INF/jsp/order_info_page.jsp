@@ -33,7 +33,6 @@
 <c:set var="errorMessage" scope="page" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
 <c:set var="order" scope="page" value="${requestScope.get(ParameterName.ORDER)}"/>
 
-
 <nav class="navbar navbar-default">
     <div class="container-fluid bg-light">
         <div class="navbar-header row">
@@ -165,6 +164,17 @@
         <form action="Controller" method="get">
             <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.GO_TO_ALL_ORDERS_PAGE}">
             <input type="hidden" name="${ParameterName.ORDER_LIST_TYPE}" value="${sessionScope.get(ParameterName.ORDER_LIST_TYPE)}">
+            <c:if test="${sessionScope.get(ParameterName.ORDER_LIST_TYPE) == null}">
+                <c:if test="${userRole eq Role.ADMIN}">
+                    <input type="hidden" name="${ParameterName.ORDER_LIST_TYPE}" value="${ParameterName.ORDER_LIST_ADMIN}">
+                </c:if>
+                <c:if test="${userRole eq Role.CLIENT}">
+                    <input type="hidden" name="${ParameterName.ORDER_LIST_TYPE}" value="${ParameterName.ORDER_LIST_CLIENT}">
+                </c:if>
+                <c:if test="${userRole eq Role.DRIVER}">
+                    <input type="hidden" name="${ParameterName.ORDER_LIST_TYPE}" value="${ParameterName.ORDER_LIST_CAR}">
+                </c:if>
+            </c:if>
             <input type="submit" class="btn btn-secondary" value="Back to orders table">
         </form>
     </div>

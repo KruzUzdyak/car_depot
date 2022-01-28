@@ -44,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean saveOrder(Order order) throws ServiceException{
-        if (!validator.validate()){
+        if (!validator.validateForSave(order)){
             return false;
         }
         int rowsAffected;
