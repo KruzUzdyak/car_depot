@@ -98,50 +98,50 @@
                 <tr>
                     <th>destination from</th>
                     <td colspan="2">
-                        <input type="text" name="${ParameterName.ORDER_DEST_FROM}" placeholder="INPUT YOUR FIRST ADDRESS">
+                        <input type="text" required name="${ParameterName.ORDER_DEST_FROM}" placeholder="INPUT YOUR FIRST ADDRESS">
                     </td>
                 </tr>
                 <tr>
                     <th>destination to</th>
                     <td colspan="2">
-                        <input type="text" name="${ParameterName.ORDER_DEST_TO}" placeholder="INPUT YOUR SECOND ADDRESS">
+                        <input type="text" required  name="${ParameterName.ORDER_DEST_TO}" placeholder="INPUT YOUR SECOND ADDRESS">
                     </td>
                 </tr>
                 <tr>
                     <th>distance, km</th>
                     <td colspan="2">
-                        <input type="number" min="0" name="${ParameterName.ORDER_DISTANCE}" value="" placeholder="INPUT DISTANCE BETWEEN ADDRESSES">
+                        <input type="number" required  min="0" name="${ParameterName.ORDER_DISTANCE}" value="" placeholder="INPUT DISTANCE BETWEEN ADDRESSES">
                     </td>
                 </tr>
                 <tr>
                     <th>date start</th>
                     <td colspan="2">
-                        <input type="date" name="${ParameterName.ORDER_DATE_START}">
+                        <input type="date" required  name="${ParameterName.ORDER_DATE_START}">
                     </td>
                 </tr>
                 <tr>
                     <th>deadline</th>
                     <td colspan="2">
-                        <input type="date" name="${ParameterName.ORDER_DATE_END}">
+                        <input type="date" required  name="${ParameterName.ORDER_DATE_END}">
                     </td>
                 </tr>
                 <tr>
                     <th>load</th>
                     <td colspan="2">
-                        <input type="number" min="0" name="${ParameterName.ORDER_LOAD}" placeholder="INPUT SIZE OF THE CARGO">
+                        <input type="number" required  min="0" name="${ParameterName.ORDER_LOAD}" placeholder="INPUT SIZE OF THE CARGO">
                     </td>
                 </tr>
                 <tr>
                     <th>load note</th>
                     <td colspan="2">
-                        <textarea name="${ParameterName.ORDER_LOAD_NOTE}" maxlength="200" cols="30" rows="3"
+                        <textarea required  name="${ParameterName.ORDER_LOAD_NOTE}" maxlength="200" cols="30" rows="3"
                                   placeholder="MAX 200 SYMBOLS"></textarea>
                     </td>
                 </tr>
                 <tr>
                     <th>payment, $</th>
                     <td colspan="2">
-                        <input type="number" min="0" name="${ParameterName.ORDER_PAYMENT}" placeholder="PLEASE INPUT THE REWARD VALUE">
+                        <input type="number" required  min="0" name="${ParameterName.ORDER_PAYMENT}" placeholder="PLEASE INPUT THE REWARD VALUE">
                     </td>
                 </tr>
                 <tr>
@@ -151,6 +151,19 @@
                 </tr>
             </table>
         </form>
+
+<%--        WARN MESSAGES       --%>
+        <div class="text-warning text-center">
+            <c:if test="${errorMessage eq Message.CREATE_ORDER_ERROR}">
+                <p>CREATE ORDER ERROR</p>
+            </c:if>
+            <c:if test="${errorMessage eq Message.CREATE_ORDER_FAILED}">
+                <p>CREATE ORDER FAILED</p>
+            </c:if>
+            <c:if test="${errorMessage eq Message.INVALID_DATE}">
+                <p>INPUT CORRECT DATES</p>
+            </c:if>
+        </div>
     </div>
 </div>
 

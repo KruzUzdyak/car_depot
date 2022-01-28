@@ -87,7 +87,7 @@
     <div class="col-10">
         <c:set var="errorMessage" scope="page" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
         <c:set var="orderList" scope="page" value="${requestScope.get(ParameterName.ORDER_LIST)}"/>
-        <table class="table table-bordered table-striped text-center">
+        <table class="table table-bordered text-center">
             <tr>
                 <th colspan="14">ORDERS_TABLE</th>
             </tr>

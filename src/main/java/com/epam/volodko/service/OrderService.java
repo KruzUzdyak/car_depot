@@ -10,4 +10,6 @@ public interface OrderService {
     List<Order> getOrderList(String orderListType, int id) throws ServiceException;
 
     Order getOrderById(int id) throws ServiceException;
+
+    boolean saveOrder(Order order) throws ServiceException;
 }

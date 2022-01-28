@@ -57,7 +57,6 @@ public final class ParameterName {
 
     public static final String CAR_MODEL_LIST = "car_model_list";
 
-    public static final String CREATE_ORDER = "create_order";
     public static final String ORDER = "order";
     public static final String ORDER_ID = "order_id";
     public static final String ORDER_DEST_FROM = "order_dest_from";

@@ -8,6 +8,7 @@ import com.epam.volodko.entity.car.Car;
 import com.epam.volodko.entity.order.Order;
 import com.epam.volodko.service.OrderService;
 import com.epam.volodko.service.exception.ServiceException;
+import com.epam.volodko.service.validator.OrderValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,6 +18,7 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderDAO orderDAO = DAOFactory.getInstance().getOrderDAO();
+    private final OrderValidator validator = new OrderValidator();
 
     @Override
     public List<Order> getOrderList(String orderListType, int id) throws ServiceException {
@@ -38,6 +40,20 @@ public class OrderServiceImpl implements OrderService {
             throw new ServiceException(e);
         }
         return order;
+    }
+
+    @Override
+    public boolean saveOrder(Order order) throws ServiceException{
+        if (!validator.validate()){
+            return false;
+        }
+        int rowsAffected;
+        try {
+            rowsAffected = orderDAO.saveNew(order);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return rowsAffected > 0;
     }
 
     private List<Order> processOrderListRequest(String orderListType, int userId) throws DAOException {

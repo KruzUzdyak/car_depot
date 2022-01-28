@@ -6,6 +6,7 @@ import com.epam.volodko.controller.impl.cars_page.AddNewCarCommand;
 import com.epam.volodko.controller.impl.cars_page.GoToAddNewCarCommand;
 import com.epam.volodko.controller.impl.cars_page.GoToCarInfoPageCommand;
 import com.epam.volodko.controller.impl.main_page.GoToMainPageCommand;
+import com.epam.volodko.controller.impl.orders_page.CreateOrderCommand;
 import com.epam.volodko.controller.impl.orders_page.GoToAllOrdersPageCommand;
 import com.epam.volodko.controller.impl.orders_page.GoToCreateOrderPageCommand;
 import com.epam.volodko.controller.impl.orders_page.GoToOrderInfoPageCommand;
@@ -29,6 +30,7 @@ public final class CommandProvider {
         commands.put(CommandName.GO_TO_ALL_ORDERS_PAGE, new GoToAllOrdersPageCommand());
         commands.put(CommandName.GO_TO_ORDER_INFO_PAGE, new GoToOrderInfoPageCommand());
         commands.put(CommandName.GO_TO_CREATE_ORDER_PAGE, new GoToCreateOrderPageCommand());
+        commands.put(CommandName.CREATE_ORDER, new CreateOrderCommand());
         commands.put(CommandName.GO_TO_USER_CABINET_PAGE, new GoToUserCabinetPage());
         commands.put(CommandName.UPDATE_LOGIN, new GoToUpdateLoginCommand());
         commands.put(CommandName.UPDATE_LOGIN_CONFIRM, new UpdateLoginCommand());
