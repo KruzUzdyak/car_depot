@@ -32,6 +32,7 @@
 <c:set var="userRole" scope="page" value="${sessionScope.get(ParameterName.USER_ROLE)}"/>
 <c:set var="errorMessage" scope="page" value="${requestScope.get(ParameterName.ERROR_MESSAGE)}"/>
 <c:set var="order" scope="page" value="${requestScope.get(ParameterName.ORDER)}"/>
+<c:set var="carList" scope="page" value="${requestScope.get(ParameterName.CAR_LIST)}"/>
 
 <nav class="navbar navbar-default">
     <div class="container-fluid bg-light">
@@ -134,7 +135,20 @@
                 </tr>
                 <tr>
                     <th>completed</th>
-                    <td colspan="2">${order.completed}</td>
+                    <c:if test="${order.completed || userRole.equals(Role.CLIENT)}">
+                        <td colspan="2"> ${order.completed}</td>
+                    </c:if>
+
+                    <c:if test="${!order.completed && (userRole.equals(Role.ADMIN) || userRole.equals(Role.DRIVER))}">
+                        <td colspan="2">
+                            <form action="Controller" method="post">
+                                <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.ORDER_COMPLETE}">
+                                <input type="hidden" name="${ParameterName.ORDER_ID}" value="${order.id}">
+                                <input type="hidden" name="${ParameterName.ORDER_COMPLETED}" value="${true}">
+                                <input type="submit" class="btn btn-outline-success" value="COMPLETE">
+                            </form>
+                        </td>
+                    </c:if>
                 </tr>
                 <tr>
                     <th>payment, $</th>
@@ -146,16 +160,48 @@
                 </tr>
                 <tr>
                     <th>admin</th>
-                    <td colspan="2">${order.admin.name}</td>
+                    <c:if test="${(order.admin != null) || !userRole.equals(Role.ADMIN)}">
+                        <td colspan="2">${order.admin.name}</td>
+                    </c:if>
+                    <c:if test="${(order.admin == null) && userRole.equals(Role.ADMIN)}">
+                        <td colspan="2">
+                            <form action="Controller" method="post">
+                                <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.ORDER_SET_ADMIN}">
+                                <input type="hidden" name="${ParameterName.ORDER_ID}" value="${order.id}">
+                                <input type="hidden" name="${ParameterName.ORDER_ADMIN_ID}" value="${sessionScope.get(ParameterName.USER_ID)}">
+                                <input type="submit" class="btn btn-outline-success" value="TAKE TO WORK">
+                            </form>
+                        </td>
+                    </c:if>
                 </tr>
-                <tr>
-                    <th>car model</th>
-                    <td colspan="2">${order.car.model.modelName}</td>
-                </tr>
-                <tr>
-                    <th>car plate number</th>
-                    <td colspan="2">${order.car.plateNumber}</td>
-                </tr>
+                <c:if test="${(order.car != null) || !userRole.equals(Role.ADMIN)}">
+                    <tr>
+                        <th>car model</th>
+                        <td colspan="2">${order.car.model.modelName}</td>
+                    </tr>
+                    <tr>
+                        <th>car plate number</th>
+                        <td colspan="2">${order.car.plateNumber}</td>
+                    </tr>
+                </c:if>
+                <c:if test="${(order.car == null) && userRole.equals(Role.ADMIN)}">
+                    <form action="Controller" method="post">
+                        <input type="hidden" name="${CommandName.COMMAND}" value="${CommandName.ORDER_SET_CAR}">
+                        <input type="hidden" name="${ParameterName.ORDER_ID}" value="${order.id}">
+                        <tr>
+                            <th>car model</th>
+                            <td colspan="2">
+                                <select required name="${ParameterName.ORDER_CAR_ID}">
+                                    <option selected disabled value="0">SELECT CAR</option>
+                                    <c:forEach var="car" items="${carList}">
+                                        <option value="${car.id}">${car.id} : ${car.plateNumber} : ${car.model.modelName}</option>
+                                    </c:forEach>
+                                </select>
+                                <input type="submit" class="btn btn-outline-success" value="APPOINT CAR">
+                            </td>
+                        </tr>
+                    </form>
+                </c:if>
             </c:if>
         </table>
 

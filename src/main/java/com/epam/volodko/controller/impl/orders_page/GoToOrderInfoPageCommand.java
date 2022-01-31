@@ -4,6 +4,9 @@ import com.epam.volodko.controller.Command;
 import com.epam.volodko.controller.constant.Message;
 import com.epam.volodko.controller.constant.PagePath;
 import com.epam.volodko.controller.constant.ParameterName;
+import com.epam.volodko.entity.order.Order;
+import com.epam.volodko.entity.user.Role;
+import com.epam.volodko.service.CarService;
 import com.epam.volodko.service.OrderService;
 import com.epam.volodko.service.ServiceFactory;
 import com.epam.volodko.service.exception.ServiceException;
@@ -19,6 +22,8 @@ import java.io.IOException;
 public class GoToOrderInfoPageCommand implements Command {
 
     private final Logger log = LogManager.getLogger(GoToOrderInfoPageCommand.class);
+    private final OrderService orderService = ServiceFactory.getInstance().getOrderService();
+    private final CarService carService = ServiceFactory.getInstance().getCarService();
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
@@ -40,7 +45,24 @@ public class GoToOrderInfoPageCommand implements Command {
             id = Integer.parseInt(orderId);
         }
 
-        OrderService orderService = ServiceFactory.getInstance().getOrderService();
-        request.setAttribute(ParameterName.ORDER, orderService.getOrderById(id));
+        Order order = orderService.getOrderById(id);
+        if (needCarList(request, order)){
+            setCarList(request);
+        }
+        request.setAttribute(ParameterName.ORDER, order);
+    }
+
+    private void setCarList(HttpServletRequest request) {
+        try {
+            request.setAttribute(ParameterName.CAR_LIST, carService.getAllCars());
+        } catch (ServiceException e) {
+            log.error("Catching: ", e);
+            request.setAttribute(ParameterName.ERROR_MESSAGE, Message.CARS_LOAD_FAILED);
+        }
+    }
+
+    private boolean needCarList(HttpServletRequest request, Order order) {
+        return order.getCar() == null &&
+                request.getSession().getAttribute(ParameterName.USER_ROLE).equals(Role.ADMIN);
     }
 }

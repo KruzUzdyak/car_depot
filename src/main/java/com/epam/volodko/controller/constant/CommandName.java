@@ -34,7 +34,9 @@ public final class CommandName {
     public static final String GO_TO_CREATE_ORDER_PAGE = "go_to_create_order_page";
     public static final String CREATE_ORDER = "create_order";
     public static final String GO_TO_ORDER_INFO_PAGE = "go_to_order_info_page";
-    public static final String UPDATE_ORDER = "update_order";
+    public static final String ORDER_SET_ADMIN = "order_set_admin";
+    public static final String ORDER_SET_CAR = "order_set_car";
+    public static final String ORDER_COMPLETE = "order_complete";
 
     public static final String GO_TO_CAR_INFO_PAGE = "go_to_car_info_page";
     public static final String GO_TO_ADD_NEW_CAR = "go_to_add_new_car";

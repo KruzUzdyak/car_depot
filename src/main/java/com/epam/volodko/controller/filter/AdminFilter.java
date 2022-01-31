@@ -21,6 +21,8 @@ public class AdminFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         adminCommands.add(CommandName.ADD_NEW_CAR);
         adminCommands.add(CommandName.GO_TO_ADD_NEW_CAR);
+        adminCommands.add(CommandName.ORDER_SET_ADMIN);
+        adminCommands.add(CommandName.ORDER_SET_CAR);
     }
 
     @Override

@@ -51,6 +51,9 @@ public class OrderDAOImpl extends AbstractDAO implements OrderDAO {
     private static final String SET_CAR_QUERY = String.format(
             "UPDATE %s SET %s = ? WHERE %s = ?;",
             Table.ORDERS, Column.ORDERS_CAR_ID, Column.ORDERS_ORDER_ID);
+    private static final String UPDATE_COMPLETED_QUERY = String.format(
+            "UPDATE %s SET %s = ? WHERE %s = ?;",
+            Table.ORDERS, Column.ORDERS_COMPLETED, Column.ORDERS_ORDER_ID);
 
     @Override
     public Order findById(int id) throws DAOException {
@@ -177,6 +180,25 @@ public class OrderDAOImpl extends AbstractDAO implements OrderDAO {
         return processQuery(carId, orderId, SET_CAR_QUERY);
     }
 
+    @Override
+    public int updateCompleted(int orderId, boolean completed) throws DAOException {
+        int rowsAffected;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(UPDATE_COMPLETED_QUERY);
+            statement.setBoolean(1, completed);
+            statement.setInt(2, orderId);
+            rowsAffected = statement.executeUpdate();
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeConnection(connection, statement);
+        }
+        return rowsAffected;
+    }
+
     private List<Order> processFindById(int id, String query) throws DAOException {
         List<Order> orders = new ArrayList<>();
         Connection connection = null;
@@ -210,6 +232,5 @@ public class OrderDAOImpl extends AbstractDAO implements OrderDAO {
         statement.setBoolean(8, order.isCompleted());
         statement.setInt(9, order.getPayment());
         statement.setInt(10, order.getClient().getId());
-
     }
 }

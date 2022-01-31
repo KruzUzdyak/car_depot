@@ -7,7 +7,6 @@ import java.util.Date;
 public class OrderValidator extends AbstractValidator{
 
     public boolean validateForSave(Order order){
-
         return notEmptyString(order.getDestFrom()) &&
                 notEmptyString(order.getDestTo()) &&
                 notEmptyString(order.getLoadNote()) &&
@@ -17,6 +16,22 @@ public class OrderValidator extends AbstractValidator{
                 order.getPayment() > 0 &&
                 order.getClient() != null &&
                 !order.isCompleted();
+    }
+
+    public boolean validateUpdate(Order order){
+        return notEmptyString(order.getDestFrom()) &&
+                notEmptyString(order.getDestTo()) &&
+                notEmptyString(order.getLoadNote()) &&
+                order.getDistance() > 0 &&
+                order.getLoad() > 0 &&
+                order.getPayment() > 0 &&
+                order.getClient() != null &&
+                !order.isCompleted();
+    }
+
+    public boolean validateSetEntity(int orderId, int adminId){
+        return orderId > 0 &&
+                adminId > 0;
     }
 
     private boolean isDateCorrect(Date dateStart, Date dateEnd) {

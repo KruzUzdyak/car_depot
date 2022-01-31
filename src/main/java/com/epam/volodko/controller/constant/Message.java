@@ -39,4 +39,6 @@ public final class Message {
     public static final String INVALID_DATE = "invalid_date";
     public static final String CREATE_ORDER_ERROR = "create_order_error";
     public static final String CREATE_ORDER_FAILED = "create_order_failed";
+    public static final String UPDATE_ORDER_FAILED = "update_order_failed";
+    public static final String UPDATE_ORDER_ERROR = "update_order_error";
 }

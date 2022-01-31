@@ -12,4 +12,12 @@ public interface OrderService {
     Order getOrderById(int id) throws ServiceException;
 
     boolean saveOrder(Order order) throws ServiceException;
+
+    boolean update(Order order) throws ServiceException;
+
+    boolean setAdmin(int orderId, int adminId) throws ServiceException;
+
+    boolean setCar(int orderId, int carId) throws ServiceException;
+
+    boolean updateCompleted(int orderId, boolean completed) throws ServiceException;
 }

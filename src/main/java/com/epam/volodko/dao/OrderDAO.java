@@ -28,4 +28,6 @@ public interface OrderDAO {
 
     int setCar(int orderId, int carId) throws DAOException;
 
+    int updateCompleted(int orderId, boolean completed) throws DAOException;
+
 }
